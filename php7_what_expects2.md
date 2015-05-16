@@ -1,10 +1,6 @@
-<div class="content-master">
+>What to Expect When You're Expecting: PHP 7, Part 2
+https://blog.engineyard.com/2015/what-to-expect-php-7-2
 
-<div class="panel panel-info">
-
-<div class="panel-body">This is part two in our Expecting PHP 7 miniseries. [Read part one](/2015/what-to-expect-php-7).</div>
-
-</div>
 
 As you probably already know, PHP 7 is a thing, and it’s coming this year! Which makes this as good a time as any to go over what’s new and improved.
 
@@ -12,9 +8,9 @@ In the [first part of this series](/2015/what-to-expect-php-7), we looked at the
 
 ## Unicode Codepoint Escape Syntax
 
-The addition of a new escape character, `\u`, allows us to specify Unicode character code points (in hexidecimal) unambiguously inside PHP strings:
 
 The syntax used is `\u{CODEPOINT}`, for example the green heart, 💚, can be expressed as the PHP string: "\u{1F49A}".
+The addition of a new escape character, `\u`, allows us to specify Unicode character code points (in hexidecimal) unambiguously inside PHP strings:
 
 <a name="read-more" class="read-more-anchor"></a>
 
@@ -26,11 +22,9 @@ The important thing is that it will not raise a notice if the left operand is a 
 
 You can also chain the operators to return the first non-null of a given set:
 
-<div class="highlight">
-
-    $config = $config ?? $this->config ?? static::$defaultConfig;
-
-</div>
+```php
+$config = $config ?? $this->config ?? static::$defaultConfig;
+```
 
 ## Bind Closure on Call
 
@@ -38,54 +32,47 @@ With PHP 5.4 we saw the addition of `Closure->bindTo()` and `Closure::bind()` wh
 
 PHP 7 now adds an easy way to do this at call time, binding both `$this` and the calling scope to the same object with the addition of `Closure->call()`. This method takes the object as it’s first argument, followed by any arguments to pass into the closure, like so:
 
-<div class="highlight">
+```php
+class HelloWorld {
+     private $greeting = "Hello";
+}
 
-    class HelloWorld {
-         private $greeting = "Hello";
-    }
+$closure = function($whom) { echo $this->greeting . ' ' . $whom; }
 
-    $closure = function($whom) { echo $this->greeting . ' ' . $whom; }
-
-    $obj = new HelloWorld();
-    $closure->call($obj, 'World'); // Hello World
-
-</div>
+$obj = new HelloWorld();
+$closure->call($obj, 'World'); // Hello World
+```
 
 ## Group Use Declarations
 
 If you’ve ever had to import many classes from the same namespace, you’ve probably been very happy if your IDE will auto-complete them for you. For others, and for brevity, PHP 7 now has [Group Use Declarations](https://wiki.php.net/rfc/group_use_declarations). This allows you to quickly specify many similar imports with better clarity:
 
-<div class="highlight">
+```php
+// Original
+use Framework\Component\SubComponent\ClassA;
+use Framework\Component\SubComponent\ClassB as ClassC;
+use Framework\Component\OtherComponent\ClassD;
+```
 
-    // Original
-    use Framework\Component\SubComponent\ClassA;
-    use Framework\Component\SubComponent\ClassB as ClassC;
-    use Framework\Component\OtherComponent\ClassD;
 
-</div>
-
-<div class="highlight">
-
-    // With Group Use
-    use Framework\Component\{
-         SubComponent\ClassA,
-         SubComponent\ClassB as ClassC,
-         OtherComponent\ClassD
-    };
-
-</div>
+```php
+// With Group Use
+use Framework\Component\{
+     SubComponent\ClassA,
+     SubComponent\ClassB as ClassC,
+     OtherComponent\ClassD
+};
+```
 
 It can also be used with constant and function imports with use function, and use const, as well as supporting mixed imports:
 
-<div class="highlight">
-
-    use Framework\Component\{
-         SubComponent\ClassA,
-         function OtherComponent\someFunction,
-         const OtherComponent\SOME_CONSTANT
-    };
-
-</div>
+```php
+use Framework\Component\{
+     SubComponent\ClassA,
+     function OtherComponent\someFunction,
+     const OtherComponent\SOME_CONSTANT
+};
+```
 
 ## Generators Improvements
 
@@ -101,27 +88,25 @@ If the generator has completed but there was no return, null is returned.
 
 Here’s an example:
 
-<div class="highlight">
+```php
+function gen() {
+    yield "Hello";
+    yield " ";
+    yield "World!";
 
-    function gen() {
-        yield "Hello";
-        yield " ";
-        yield "World!";
+    return "Goodbye Moon!";
+}
 
-        return "Goodbye Moon!";
-    }
+$gen = gen();
 
-    $gen = gen();
+foreach ($gen as $value) {
+    echo $value; 
+}
 
-    foreach ($gen as $value) {
-        echo $value; 
-    }
+// Outputs "Hello" on iteration 1, " " on iterator 2, and "World!" on iteration 3
 
-    // Outputs "Hello" on iteration 1, " " on iterator 2, and "World!" on iteration 3
-
-    echo $gen->getReturn(); // Goodbye Moon!
-
-</div>
+echo $gen->getReturn(); // Goodbye Moon!
+```
 
 ### Generator Delegation
 
@@ -133,28 +118,26 @@ This is also true when sending data or exceptions into a generator. They are pas
 
 This is done using the `yield from <expression>` syntax, like so:
 
-<div class="highlight">
+```php
+function hello() {
+     yield "Hello";
+     yield " ";
+     yield "World!";
 
-    function hello() {
-         yield "Hello";
-         yield " ";
-         yield "World!";
+     yield from goodbye();
+}
 
-         yield from goodbye();
-    }
+function goodbye() {
+     yield "Goodbye";
+     yield " ";
+     yield "Moon!";
+}
 
-    function goodbye() {
-         yield "Goodbye";
-         yield " ";
-         yield "Moon!";
-    }
-
-    $gen = hello();
-    foreach ($gen as $value) {
-         echo $value;
-    }
-
-</div>
+$gen = hello();
+foreach ($gen as $value) {
+     echo $value;
+}
+```
 
 On each iteration, this will output:
 
@@ -181,49 +164,31 @@ Additionally, parse errors in `eval()`’ed code will throw a `\ParseException`,
 
 Here’s an example:
 
-<div class="highlight">
+```php
+try {
+    nonExistentFunction();
+} catch (\EngineException $e) {
+     var_dump($e);
+}
 
-    try {
-        nonExistentFunction();
-    } catch (\EngineException $e) {
-         var_dump($e);
-    }
-
-    object(EngineException)#1 (7) {
-      ["message":protected]=>
-      string(32) "Call to undefined function nonExistantFunction()"
-      ["string":"BaseException":private]=>
-      string(0) ""
-      ["code":protected]=>
-      int(1)
-      ["file":protected]=>
-      string(17) "engine-exceptions.php"
-      ["line":protected]=>
-      int(1)
-      ["trace":"BaseException":private]=>
-      array(0) {
-      }
-      ["previous":"BaseException":private]=>
-      NULL
-    }
-
-</div>
-
-<div class="inline-interest-prompt">
-
-<div class="prompt ey">[
-
-<div class="row">
-
-<div class="details col-sm-8">Run your next PHP project on Engine Yard</div>
-
-<div class="action col-sm-4">Start Free Trial<span class="ss-navigateright"></span></div>
-
-</div>
-
-](http://engineyard.com/trial "Run your next PHP project on Engine Yard")</div>
-
-</div>
+object(EngineException)#1 (7) {
+  ["message":protected]=>
+  string(32) "Call to undefined function nonExistantFunction()"
+  ["string":"BaseException":private]=>
+  string(0) ""
+  ["code":protected]=>
+  int(1)
+  ["file":protected]=>
+  string(17) "engine-exceptions.php"
+  ["line":protected]=>
+  int(1)
+  ["trace":"BaseException":private]=>
+  array(0) {
+  }
+  ["previous":"BaseException":private]=>
+  NULL
+}
+```
 
 ## Coming Soon!
 
@@ -252,33 +217,3 @@ PHP 7 is going to be _great_!
 Go test your applications. Help migrate extensions.
 
 P.S. Are you already playing around with PHP 7? How do you feel about the new features? Is there anything you disagree with, or that you wish had made it in that didn’t? When do you think you’ll be making the switch? Let us know your thoughts!
-
-<div class="comments">
-
-<div class="row">
-
-<div class="col-sm-12">
-
-[Share your thoughts with <span class="text-red">@engineyard</span> on <span class="text-blue">Twitter</span>](https://www.twitter.com/intent/tweet?text=@engineyard%20&related=engineyard&url=https://blog.engineyard.com/2015/what-to-expect-php-7-2)
-
-<span id="socialor">OR</span>
-
-[Talk about it on <span class="text-red">reddit</span>](https://www.reddit.com/r/PHP/comments/31rc56/what_to_expect_when_youre_expecting_php_7_part_2/)
-
-</div>
-
-</div>
-
-</div>
-
-<div class="author-info">
-
-#### About Davey Shafik
-
-Davey Shafik is a full time PHP Developer with 12 years experience in PHP and related technologies. A Community Engineer for Engine Yard, he has written three books (so far!), numerous articles and spoken at conferences the globe over.
-
-Davey is best known for his books, the [Zend PHP 5 Certification Study Guide](http://zceguide.com) and [PHP Master: Write Cutting Edge Code](https://learnable.com/books/php-master-write-cutting-edge-code), and as the originator of [PHP Archive (PHAR)](http://php.net/phar) for PHP 5.3.
-
-</div>
-
-</div>
