@@ -211,8 +211,8 @@ object(EngineException)#1 (7) {
 
 ## Заключение
 
-PHP 7 is going to be _great_!
+РНР 7 будет _великим_!
 
-Протестируйте ваши приложения. Помогите перенести расширения
+Протестируйте ваши приложения. Помогите перенести расширения.
 
-P.S. Are you already playing around with PHP 7? How do you feel about the new features? Is there anything you disagree with, or that you wish had made it in that didn’t? When do you think you’ll be making the switch? Let us know your thoughts!
+P.S. вы уже пробовали PHP7? Как вы относитесь к нововведениям? Если что-то с чем несогласны? Когда вы планируете перейти на новую версию? Напишите свои мысли по этому поводу в комментариях.
