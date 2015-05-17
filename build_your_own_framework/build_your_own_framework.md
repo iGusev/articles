@@ -14,10 +14,11 @@ http://www.sitepoint.com/build-php-framework-symfony-components/
 
 <habracut/>
 
+## Создание проекта
 
-We’ll start from scratch with a simple `index.php` file at the root of our project directory, and use [Composer](https://getcomposer.org/doc/00-intro.md) to install the dependencies.
+Начнем с нуля, с простого `index.php` файла в корневом каталоге нашего проекта и с использования [Composer](https://getcomposer.org/doc/00-intro.md) для установки зависимостей.
 
-For now, our file will only contain this simple piece of code:
+Теперь, напишем простой кусок кода:
 
 ```php
 switch($_SERVER['PATH_INFO']) {
@@ -32,7 +33,7 @@ switch($_SERVER['PATH_INFO']) {
 }
 ```
 
-This code just maps the requested URL (contained in `$_SERVER['PATH_INFO']`) to the right `echo` instruction. It’s a very, very primitive router.
+Это очерь примитивный маршрутизатор, который просто смотрит адрес запрошенного URL-адреса (содержится в `$_SERVER['PATH_INFO']`) и выводит нужное `echo`.
 
 ## The HttpFoundation component
 
