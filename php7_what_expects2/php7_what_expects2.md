@@ -109,13 +109,13 @@ echo $gen->getReturn(); // Goodbye Moon!
 
 ### Делегирование генератора
 
-The second feature is much more exciting: [Generator Delegation](https://wiki.php.net/rfc/generator-delegation). This allows you to return another iterable structure that can itself be traversed — whether that is an array, an iterator, or another generator.
+Вторая особенность является гораздо более захватывающей: [делегирование генератора](https://wiki.php.net/rfc/generator-delegation). Это позволяет вернуть другую итерабельную структуру - будь то массив, итератор или другой генератор.
 
-It is important to understand that iteration of sub-structures is done by the outer-most original loop as if it were a single flat structure, rather than a recursive one.
+Важно понимать, что итерации под-структур осуществляются именно через самую внешнюю петлю, как если бы это была одна плоская структура, а не рекурсивные вызовы.
 
-This is also true when sending data or exceptions into a generator. They are passed directly onto the sub-structure as if it were being controlled directly by the call.
+Это утверждение также справедливо при отправке данных в генератор или выбросе исключений. Они передаются в суб-структуру, как если бы это был ее непосредственный вызов.
 
-This is done using the `yield from <expression>` syntax, like so:
+Синтаксис такой - `yield from <expression>`. Посмотрим на примере:
 
 ```php
 function hello() {
@@ -138,7 +138,7 @@ foreach ($gen as $value) {
 }
 ```
 
-При каждой итерации, будет выводиться:
+При каждой итерации будет выводиться:
 
 1.  "Hello"
 2.  " "
@@ -147,7 +147,7 @@ foreach ($gen as $value) {
 5.  " "
 6.  "Moon!"
 
-One other caveat worth mentioning is that because the sub-structure can yield it’s own keys, it is entirely possibly that the same key will be returned for multiple iterations — it is your responsibility to avoid that, if it matters to you.
+Стоит упомянуть еще один ньюанс: поскольку суб-структуры привносят свои собственные ключи, вполне возможно, что один и тот же ключ будет возвращен за несколько итераций. Недопущение подобного - это ваша ответственность, конечно же, если для вас это важно.
 
 ## Исключения движка
 
