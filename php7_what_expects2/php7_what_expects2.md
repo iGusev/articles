@@ -191,9 +191,9 @@ object(EngineException)#1 (7) {
 
 ## Скоро!
 
-PHP 7.0.0 is only eight months away, making it quite possibly the quickest major version in PHP’s history. While it’s still alpha quality, PHP 7 is shaping up really nicely.
+РНР 7.0.0 исполнилось всего восемь месяцев, и, вполне возможно, это будет самым быстрым релизом мажорной версии в истории PHP. Пока все еще в альфа-версии, но уже сейчас все складывается очень хорошо.
 
-И вы можете помочь сделать его лучше.
+И вы можете помочь сделать еще лучше.
 
 ### Проверь свой код
 
