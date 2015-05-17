@@ -197,7 +197,7 @@ object(EngineException)#1 (7) {
 
 ### Проверь свой код
 
-Grab Rasmus’s [PHP 7 vagrant box](http://github.com/rlerdorf/php7dev) and start running your test suites, or performing your regular QA. Report [bugs](http://bugs.php.net) to the project, and try again regularly.
+Возьмите [PHP7 vagrant box](http://github.com/rlerdorf/php7dev) от Расмуса и запустите свои тесты или проверьте по своему чек-листу ваше приложение. Сообщите о [багах](http://bugs.php.net) в проект, повторяйте регулярно :)
 
 ### Помоги GoPHP7-ext
 
