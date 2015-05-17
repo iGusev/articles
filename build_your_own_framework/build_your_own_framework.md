@@ -1,17 +1,19 @@
 >Build your own PHP Framework with Symfony Components
 http://www.sitepoint.com/build-php-framework-symfony-components/
 
-You’ve probably met Symfony in your PHP career – or have at least heard of it. What you may not know is that Symfony is, at its core, composed of separate libraries called _components_, which can be reused in any PHP application.
 
-For example, the popular PHP framework [Laravel](http://laravel.com/) was developed using several Symfony components we will also be using in this tutorial. The next version of the popular CMS Drupal is also being built on top of some of the main Symfony components.
+Наверняка вы встречали Symfony в своей PHP-карьере, или по крайней мере слышали о нем. Но то, что вы можете не знать о Symfony, это то, что он состоит из отдельных библиотек, называемых _компоненты_, которые можно повторно использовать в любом PHP-приложении.
 
-We’ll see how to build a minimal PHP framework using these components, and how they can interact to create a basic structure for any web application.
+Например, популярный PHP фреймворк [Laravel](http://laravel.com/) был разработан с использованием нескольких Symfony компонентов, о которых и пойдет речь в этой статье. Очередная версия популярной CMS Drupal также строится на некоторых основных компонентах Symfony.
 
-![](http://dab1nmslvvntp.cloudfront.net/wp-content/uploads/2014/09/1412092488Fotolia_65666354_Subscription_Monthly_M.jpg)
+В этом уроке мы узнаем как построить PHP фреймворк с помощью этих компонентов, посмотрим как они могут взаимодействовать для создания базовой структуры любого веб-приложения.
 
-**Note:** This tutorial won’t cover _every_ Symfony component and _every_ feature of each one. We’ll see only the main things that we need to build a minimal functional framework. If you want to go deeper into Symfony components, I encourage you to read their excellent [documentation](http://symfony.com/doc/current/components/index.html).
+![](http://habrastorage.org/files/32e/3bd/48d/32e3bd48d1194cdd9ee4bbc7461df419.jpg)
 
-## Creating the project
+**Примечание:** Этот урок не охватывает _все_ Symfony компоненты и _все_ функции каждого из них. Посмотрим только на основные моменты, которые необходимы для создание минимально функциональной основы. Если вы хотите копнуть глубже, я рекомендую вам почитать отличную [документацию Symfony](http://symfony.com/doc/current/components/index.html).
+
+<habracut/>
+
 
 We’ll start from scratch with a simple `index.php` file at the root of our project directory, and use [Composer](https://getcomposer.org/doc/00-intro.md) to install the dependencies.
 
