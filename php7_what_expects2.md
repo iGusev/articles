@@ -4,9 +4,7 @@ https://blog.engineyard.com/2015/what-to-expect-php-7-2
 
 Как вы наверное уже знаете, PHP7 придет в этом году! И сейчас как раз самое время узнать что же он нам принесет.
 
-In the [first part of this series](/2015/what-to-expect-php-7), we looked at the some of the most important inconsistency fixes coming up in PHP 7 as well as two of the biggest new features. In this post, we take a look another six big features to land in PHP 7 that you’ll want to know about.
-
-В первой части данной серии статей мы рассмотрели некоторые наиболее важные изменения в PHP7 и две крупные новые возможности. В этой статье мы рассмотрим еще шесть, о которых вы точно захотите узнать.
+В [первой части данной серии статей](http://habrahabr.ru/post/257237/) мы рассмотрели некоторые наиболее важные изменения в PHP7 и две крупные новые возможности. В этой статье мы рассмотрим еще шесть, о которых вы точно захотите узнать.
 
 ## Unicode Codepoint Escape Syntax
 
