@@ -26,11 +26,11 @@ https://blog.engineyard.com/2015/what-to-expect-php-7-2
 $config = $config ?? $this->config ?? static::$defaultConfig;
 ```
 
-## Привязка замыканий к вызову
+## Привязка замыканий во время вызова
 
-With PHP 5.4 we saw the addition of `Closure->bindTo()` and `Closure::bind()` which allows you change the binding of `$this` and the calling scope, together, or separately, creating a duplicate closure.
+С PHP5.4 к нам пришли нововведения `Closure->bindTo()` и `Closure::bind()`, которые позволяют изменить привязку `$this` и области вызова, вместе, или по отдельности, создавая дубликат замыкания.
 
-PHP 7 now adds an easy way to do this at call time, binding both `$this` and the calling scope to the same object with the addition of `Closure->call()`. This method takes the object as it’s first argument, followed by any arguments to pass into the closure, like so:
+PHP7 теперь добавляет легкий способ сделать это прямо во время вызова, связывая `$this` и область вызова с помощью `Closure->call()`. Этот метод принимает объект в качестве своего первого аргумента, а затем любые другие аргументы, которые пойдут в замыкание:
 
 ```php
 class HelloWorld {
