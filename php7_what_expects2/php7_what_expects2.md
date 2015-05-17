@@ -207,7 +207,7 @@ object(EngineException)#1 (7) {
 
 ### Документация
 
-Every new feature in PHP 7 has an RFC. They can all be found on the [PHP.net wiki](http://wiki.php.net/rfc) and are a good starting point for writing new documentation. You can do that [online in a GUI environment](https://edit.php.net), including commiting (if you have karma) or by submitting patches for review.
+Каждая новая фича PHP7 имеет свой RFC. Все они могут быть найдены в [вики PHP.net](http://wiki.php.net/rfc) и являются хорошей отправной точкой для написания новой документации. Вы можете сделать это [онлайн в GUI среде](https://edit.php.net), в том числе и закоммитить (если у вас есть карма) или отправить патч на проверку.
 
 ## Заключение
 
