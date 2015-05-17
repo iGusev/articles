@@ -45,7 +45,7 @@ $closure->call($obj, 'World'); // Hello World
 
 ## Группировка деклараций `use`
 
-If you’ve ever had to import many classes from the same namespace, you’ve probably been very happy if your IDE will auto-complete them for you. For others, and for brevity, PHP 7 now has [Group Use Declarations](https://wiki.php.net/rfc/group_use_declarations). This allows you to quickly specify many similar imports with better clarity:
+Если вам когда-либо приходилось импортировать много классов из одного и того же пространства имен, вы, наверное, были очень счастливы, когда IDE делала всю основную работу за вас. Для всех остальных, и для краткости, в PHP7 теперь есть возможность [группировать декларирование операторов `use`](https://wiki.php.net/rfc/group_use_declarations). Это позволит быстрее и удобнее работать с большим количеством импортов и сделает код читаемее:
 
 ```php
 // Original
@@ -53,7 +53,6 @@ use Framework\Component\SubComponent\ClassA;
 use Framework\Component\SubComponent\ClassB as ClassC;
 use Framework\Component\OtherComponent\ClassD;
 ```
-
 
 ```php
 // With Group Use
@@ -64,7 +63,7 @@ use Framework\Component\{
 };
 ```
 
-Группировка также может использоваться с константами и импортируемыми функциями, вы можете смешивать все вместе:
+Группировка может использоваться с константами и импортируемыми функциями, вы можете смешивать все вместе:
 
 ```php
 use Framework\Component\{
