@@ -149,17 +149,17 @@ foreach ($gen as $value) {
 
 Стоит упомянуть еще один ньюанс: поскольку суб-структуры привносят свои собственные ключи, вполне возможно, что один и тот же ключ будет возвращен за несколько итераций. Недопущение подобного - это ваша ответственность, конечно же, если для вас это важно.
 
-## Исключения движка
+## Engine исключения
 
-Handling of fatal and catchable fatal errors has traditionally been impossible, or at least difficult, in PHP. But with the addition of [Engine Exceptions](https://wiki.php.net/rfc/engine_exceptions_for_php7), many of these errors will now throw exceptions instead.
+Обработка фатальный и catchable фатальных ошибок в PHP традиционна была невозможна, или по крайней мере очень сложна. Но с добавлением [Engine исключений](https://wiki.php.net/rfc/engine_exceptions_for_php7), многие из этих ошибок будут теперь выбрасывать исключение вместо самой ошибки.
 
-Now, when a fatal or catchable fatal error occurs, it will throw an exception, allowing you to handle it gracefully. If you do not handle it at all, it will result in a traditional fatal error as an uncaught exception.
+Теперь, когда фатальная или catchable фатальная неустранимая ошибка возникнут, выбросится исключение, позволяющее обработать ошибку корректно. Если его не трогать, то это приведет к традиционной фатальной ошибке необработанного исключения.
 
-These exceptions are `\EngineException` objects, and unlike all userland exceptions, do not extend the base `\Exception` class. This is to ensure that existing code that catches the `\Exception` class does not start catching fatal errors moving forward. It thus maintains backwards compatibility.
+Эти исключения являются `\EngineException` объектами, и в отличии от всех пользовательских исключений, они не наследуются от базового класса `\Exception`. Это сделано специально, чтобы существующий код, который ловит класс `\Exception` не отлавливал и фатальные ошибки, изменяя свое поведение. Таким образом сохраняется обратная совместимость.
 
-In the future, if you wish to catch both traditional exceptions _and_ engine exceptions, you will need to catch their new shared parent class, `\BaseException`.
+В будущем, если вы хотите поймать как традиционные исключения, так и engine-исключения, вам нужно будет отлавливать их новый общий родительский класс `\BaseException`.
 
-Additionally, parse errors in `eval()`’ed code will throw a `\ParseException`, while type mismatches will throw a `\TypeException`.
+Кроме того, ошибки парсинга в выполняемом функцией `eval()` коде теперь будут выбрасывать `\ParseException`, а несоответствие типов приведет к `\TypeException`.
 
 Пример:
 
