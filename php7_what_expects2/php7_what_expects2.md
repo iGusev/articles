@@ -77,15 +77,15 @@ use Framework\Component\{
 
 ### `return` в генераторах
 
-There are two new features added to generators. The first is [Generator Return Expressions](https://wiki.php.net/rfc/generator-return-expressions), which allows you to now return a value upon (successful) completion of a generator.
+Есть две новых фичи, добавленных для генераторов. Первая - [Generator Return Expressions](https://wiki.php.net/rfc/generator-return-expressions), которая позволяет возвращать значение после (успешного) завершения работы генератора.
 
-Prior to PHP 7, if you tried to return anything, this would result in an error. However, now you can call `$generator->getReturn()` to retrieve the return value.
+До PHP7, если вы пытались что-нибудь вернуть в генераторе, это приводило к ошибке. Однако, теперь вы можете вызвать `$generator->getReturn()`, чтобы получить возвращаемое значение.
 
-If the generator has not yet returned, or has thrown an uncaught exception, calling `$generator->getReturn()` will throw an exception.
+Если генератор еще завершился или выбросил непойманное исключение, вызов `$generator->getReturn()` сгенерирует исключение.
 
-If the generator has completed but there was no return, null is returned.
+Если же генератор завершен, но не объявлен `return`, то метод вернет `NULL`.
 
-Here’s an example:
+Пример:
 
 ```php
 function gen() {
