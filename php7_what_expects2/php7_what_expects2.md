@@ -201,9 +201,9 @@ object(EngineException)#1 (7) {
 
 ### Помоги GoPHP7-ext
 
-One of the major hurdles for PHP 7 is ensuring that all extensions are updated to work with the new Zend Engine 3.
+Одним из основных препятствий для PHP7 является большое количество работы по обновлению всех расширений для работы с новым Zend Engine 3.
 
-If you use an extension that isn’t well known, and doesn’t get much love from it’s maintainers – or if you have your own extensions – check out the [GoPHP7-ext project](http://gophp7.org/gophp7-ext/) and get involved in making sure that everything is ready to go on day one.
+Если вы используете расширение, которое не слишком популярно и известно, и вам не нравится уровень его поддержки, или же у вас есть свои собственные расширения - посмотрите на [проект GoPHP7-ext](http://gophp7.org/gophp7-ext/) и примите участие, перенеся свои расширения на новый движок.
 
 ### Документация
 
