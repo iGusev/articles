@@ -105,19 +105,19 @@ case '/':
 $response->send();
 ```
 
-## Use HttpKernel to wrap the framework core
+## Используем `HttpKernel` для обертки ядра фреймворка
 
 ```bash
 php composer.phar require symfony/http-kernel 2.5.*
 ```
 
-For now, as simple as it is, the framework logic is still located in our front controller, the _index.php_ file. If we wanted to add more code, it would be better to wrap it into another class, which would become the “core” of our framework.
+Сейчас, в самом простом случае, логика фреймворка расположена в нашем front-контроллере _index.php_. Если мы хотим добавить больше кода, то было бы лучше обернуть его в другой класс, который и стал бы "ядром" фреймворка.
 
-The [HttpKernel](http://symfony.com/doc/current/components/http_kernel/index.html) component was conceived with that goal in mind. It is intended to work with HttpFoundation to convert the Request instance to a Response one, and provides several classes for us to achieve this. The only one we will use, for the moment, is the `HttpKernelInterface` interface. This interface defines only one method: `handle`.
+Компонент [`HttpKernel`](http://symfony.com/doc/current/components/http_kernel/index.html) был задуман именно с этой целью. Он работает с `HttpFoundation`, преобразуя запрос в ответ и обесплечивает нас несколькими классами для достижения результата. На данный момент мы пока используем только `HttpKernelInterface` и определяемый им метод: `handle`.
 
-This method takes a `Request` instance as an argument, and is supposed to return a `Response`. So, each class implementing this interface is able to process a `Request` and return the appropriate `Response` object.
+Этот метод принимает в качестве аргумента `Request` и возвращает `Response`. Каждый класс реализующий этот интерфейс способен обработать запрос и вернуть соответстующий `Response` объект.
 
-Let’s create the class `Core` of our framework that implements the `HttpKernelInterface`. Now create the `Core.php` file under the `lib/Framework` directory:
+Давайте создадим класс `Core` в нашем фреймворке имплементирующий `HttpKernelInterface`. Положим файл `Core.php` в директорию `lib/Framework`:
 
 ```php
 namespace Framework;
@@ -148,9 +148,9 @@ class Core implements HttpKernelInterface
 }
 ```
 
-**Note:** The `handle` method takes two more optional arguments: the request type, and a boolean indicating if the kernel should throw an exception in case of error. We won’t use them in this tutorial, but we need to implement the exact same method defined by `HttpKernelInterface`, otherwise PHP will throw an error.
+**Примечание:** В методе `handle` есть два необязательных аргумента: Тип запроса и булево значение, указывающее, должно ли ядро выбрасывать исключение в случае возникновения ошибки. Мы не будем использовать их в этом уроке, но нужно реализовать метод с входными параметрами как в интерфейсе `HttpKernelInterface`, в ином случае PHP выдаст ошибку.
 
-The only thing we did here is move the existing code into the `handle` method. Now we can get rid of this code in `index.php` and use our freshly created class instead:
+Единственное, что мы сделали тут - это переместили существующий код в метод `handle`. Теперь избавимся от него в `index.php` и заменим на только что созданный класс:
 
 ```php
 require 'lib/Framework/Core.php';
