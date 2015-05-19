@@ -222,13 +222,14 @@ $response = $app->handle($request);
 php composer.phar require symfony/routing 2.5.*
 ```
 
-Using the Routing component allows us to load `Route` objects into a `UrlMatcher` that will map the requested URI to a matching route. This `Route` object can contain any attributes that can help us execute the right part of the application. In our case, such an object will contain the PHP callback to execute if the route matches. Also, any dynamic parameters contained in the URL will be present in the route attributes.
+Использование компонента маршрутизации позволяет нам загрузить объекты `Route` в `UrlMatcher`, что и будет являться картой запрошенных URI и соответствующих маршрутов. Объект `Route` может содержать любые атрибуты, которые могут помочь нам выполнить правильную часть приложения. В нашем случае, такой объект будет содержать коллбэк для выполнения, в случае если маршрут совпадает. Кроме того, все динамические параметры, содержащиеся в URL-адресе также будут присутствовать в объекте в виде атрибутов.
 
-In order to implement this, we need to do the following changes:
+Для того чтобы реализовать все это, мы должны сделать следующие изменения:
 
-*   Replace the `routes` array with a `RouteCollection` instance to hold our routes.
-*   Change the `map` method so it registers a `Route` instance into this collection.
-*   Create a `UrlMatcher` instance and tell it how to match its routes against the requested URI by providing a context to it, using a `RequestContext` instance.
+* Заменить массив `routes`, содержащий наши маршруты, на экземпляр `RouteCollection`
+* Изменить метод `map` для регистрации маршрутов из этой коллекции
+* Создать экземпляр `UrlMatcher` и сообщить ему какие маршруты совпадают с запрошенными URI с помощью `RequestContext`
+
 
 ```php
 use Symfony\Component\Routing\Matcher\UrlMatcher;
@@ -276,7 +277,8 @@ class Core implements HttpKernelInterface
 }
 ```
 
-The `match` method tries to match the URL against a known route pattern, and returns the corresponding route attributes in case of success. Otherwise it throws a `ResourceNotFoundException` that we can catch to display a 404 page.
+Метод `match` будет сопостовлять известные паттерны маршрутов и возвращать соответствующие атрибуты в случае успеха. В обратной ситуации он выбросит `ResourceNotFoundException`, который мы отловим для отображения 404 страницы.
+
 
 We can now take advantage of the Routing component to retrieve any URL parameters. After getting rid of the `controller` attribute, we can call our callback function by passing other parameters as arguments (using the `call_user_func_array` function):
 
