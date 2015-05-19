@@ -164,11 +164,12 @@ $response = $app->handle($request);
 $response->send();
 ```
 
-## A better routing system
+## Улучшаем систему роутинга
 
-There is still a problem with our class: it is holding the routing logic of our application. If we wanted to add more URLs to match, we would have to modify the code inside our framework – which is clearly not a good idea. Moreover, this would mean adding a `case` block for each new route. No, we definitely don’t want to go down that dirty road.
+Есть проблема с нашим классом: он содержит логику маршрутизации нашего приложения. Если мы захотим добавить еще несколько URL-адресов, то придется модифицировать код внутри фреймворка, что явно не слишком хорошая идея. Кроме того, это означает добавление блока `case` для каждого нового маршрута. Нет, мы определенно не хотим скатываться до такого.
 
-The solution is to add a routing system to our framework. We can do this by creating a `map` method that binds a URI to a PHP callback that will be executed if the right URI is matched:
+Решение заключается в добавлении системы маршрутизации в наш фреймворк. Мы можем сделать это через метод `map`, который будет связывать URI и вызов соответствующего кода для выполнения:
+
 
 ```php
 class Core implements HttpKernelInterface
@@ -199,7 +200,7 @@ class Core implements HttpKernelInterface
 }
 ```
 
-Now application routes can be set directly in the front controller:
+Теперь маршруты могут быть установлены непосредственно в фронт-контроллере:
 
 ```php
 $app->map('/', function () {
@@ -213,9 +214,9 @@ $app->map('/about', function () {
 $response = $app->handle($request);
 ```
 
-This tiny routing system is working well, but it has major flaws: what if we wanted to match dynamic URLs that hold parameters? We could imagine a URL like `posts/:id` where `:id` is a variable parameter that could map to a post ID in a database.
+Такая крошечная система маршрутизации работает хорошо, но имеет серьезные недостатки: а что если мы захотим понимать динамические URL-адреса, содержащие параметры? Например URL `posts/:id`, где `id` - переменная, по которой находится необходимый пост в базе данных
 
-We need a more flexible and powerful system: that’s why we’ll use the Symfony [Routing](http://symfony.com/doc/current/book/routing.html) component.
+Нам нужна более гибкая и мощная система, поэтому мы будем использовать еще один Symfony-компонент - [Routing](http://symfony.com/doc/current/book/routing.html).
 
 ```bash
 php composer.phar require symfony/routing 2.5.*
