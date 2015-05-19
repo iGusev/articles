@@ -410,8 +410,10 @@ $app->on('request', function (RequestEvent $event) {
 
 This is a very basic security system, but you could imagine implementing anything you want, because we now have the ability to hook into the framework at any moment, which makes it much more scalable.
 
-## Conclusion
+## Заключение
 
-You’ve seen, by reading this tutorial, that Symfony components are great standalone libraries. Moreover, they can interact together to build a framework that fits your needs. There are many more of them which are really interesting, like the [DependencyInjection](http://symfony.com/doc/current/components/dependency_injection/introduction.html) component or the [Security](http://symfony.com/doc/current/components/security/introduction.html) component.
+Читая этот урок, вы увидели, что Symfony-компоненты являются не только отличными автономными библиотеками, но и могут взаимодействовать для построения фреймворка именно под ваши нужды. Есть еще много действительно интересных компонентов, таких как [`DependencyInjection`](http://symfony.com/doc/current/components/dependency_injection/introduction.html) или [`Security`](http://symfony.com/doc/current/components/security/introduction.html)
 
-Of course, full-stack frameworks such as Symfony itself or Laravel have pushed these components to their limits, to create the powerful tools we know today.
+И конечно же, такие гиганты как Symfony или Laravel отточили свои компоненты до предела, дав мощные инструменты для решения наших задач.
+
+P.S. Как вы думаете, ушло ли время велосипедостроения? Делают ли сейчас разработчики свои фреймворки полностью с нуля? Есть ли тренд?
