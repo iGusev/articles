@@ -1,7 +1,7 @@
 >PSR-7 Accepted!
 https://mwop.net/blog/2015-05-18-psr-7-accepted.html
 
-I'm pleased to announce that as of 22:00 CDT on 18 May 2015, [http://www.php-fig.org/psr/psr-7](http://www.php-fig.org/psr/psr-7) PSR-7 (HTTP Message Interfaces) has been accepted!
+Рад сообщить, что по состоянию на 06:00 18 мая 2015 года [http://www.php-fig.org/psr/psr-7](http://www.php-fig.org/psr/psr-7) PSR-7 (HTTP Message Interfaces) был принят!
 
 ## The road to PSR-7
 
