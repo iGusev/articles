@@ -11,13 +11,13 @@ https://mwop.net/blog/2015-05-18-psr-7-accepted.html
 
 В определенный момент (я точно не знаю, до сих пор не нашел никакого формального анонса в архивах группы) эстафету передали Майклу Доулингу _([Michael Dowling](http://mtdowling.com/))_. Большим вкладом стало его предложение моделирования тела сообщения в виде потока. Это было довольно спорным внедрением, которое летом 2014го вытекло в [большой пост](http://mtdowling.com/blog/2014/07/03/a-case-for-higher-level-php-streams/) с подробным описанием зачем и почему было принято такое решение. По-моему, это потрясающе! Я проверил, каждый язык имеет превосходную HTTP абстракцию, моделирующую тело сообщения в виде потока: это позволяет работать асинхронно (что увы, довольно долго не поддерживалось в PHP), и также гарантирует, что большие сообщения не съедят всю доступную память. Сам PHP имеет модель сообщений как стримов (`php://input` и выходной буфер), поэтому именно этот путь является самым естественным.
 
-Shortly after that blog post was written, I was playing heavily with [node.js](https://nodejs.org), and was immediately struck by how uniform various modules were in terms of handling HTTP. This was in large part due to Node having a built-in, well designed (mostly!) HTTP abstraction. The other part was a side effect of that: middleware essentially arises naturally in the language due to that abstraction, meaning that middleware is abundant and works pretty much anywhere you're writing web-facing applications.
+Вскоре после написания этого поста в блоге, я сильно заигрался с [node.js](https://nodejs.org) и был поражен тем, как работают различные модули в плане обработки http. Это в значительной степени обусловлено тем, что в node.js по-умолчанию хорошо разработанная абстракция протокола http. Побочным эффектом наличия абстракции является возможность использовать одинаковую работу с http практически везде.
 
-I decided to port [Connect](https://github.com/senchalabs/connect), the middleware library that gave rise to [Express](http://expressjs.com/), the arguably dominant node web framework, to PHP. In doing so, I had one huge hurdle to jump immediately: HTTP abstraction.
+Я решил портировать [Connect](https://github.com/senchalabs/connect), промежуточную библиотеку, которая поставлялается с [Express](http://expressjs.com/), возможно самой распространенной библиотекой в node.js. Но делая это я столкнулся с непреодолимым препятствием: http в абстракции.
 
-Sure, every framework has an HTTP abstraction. I even contribute to one in Zend Framework. But my thought process was: I want to expose as many PHP developers to these concepts as possible, but my choice of HTTP abstraction might end up raising tribal flags. And then I remembered seeing Michael's post on PSR-7 streams and thought, "maybe I should target PSR-7!"
+Конечно, каждый фреймворк имееет HTTP абстракцию. Я даже контрибьютил в один, предназначенный для Zend Framework. Но мои мысли были следующими: я хочу разобраться, как и многие PHP-разработчики, в этих понятиях, узнать как это работает, но мой выбор конкретной http абстракции мог повлиять на дальнейнее развитие проекта. И тогда я вспомнил, что видел пост  Михаэля о PSR-7 и потоках. Тогда-то и пришло понимание - "мне нужно нацелиться на PSR-7!"
 
-The problem was there was no implementation yet.
+Проблема заключалась в отсутствии имплементации.
 
 So, I put together an implementation over a weekend, and went to the list with it. About two days after Michael posted saying he was going to abandon PSR-7 due to time constraints.
 
