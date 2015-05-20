@@ -39,10 +39,10 @@ So, we cancelled the vote around 24 hours before acceptance, and went back to dr
 
 And that took us to a second vote, which puts us where we are today: with a new PSR now accepted!
 
-## Thanks
+## Спасибо
 
-Many people helped contribute to this proposal. While I may be the editor and largely the public face for it at this point, it was the result of years of work before I even stepped in, and many folks contributed after I did. In particular, I want to thank:
+Я, как редактор и в значительной степени публичное лицо, не могу не отметить, что это был результат многолетней работы множества людей. И особенно я хочу поблагодарить:
 
-*   [Larry Garfield](http://wwww.garfieldtech.com/), who tested PSR-7 out on some sample projects, which enabled me to get concrete feedback from a usage perspective.
-*   [Evert Pot](http://evertpot.com), who ultimately voted against the proposal, but who provided fantastic feedback and discussion throughout the lifetime of it. His help was invaluable.
-*   Phil, Beau, and Paul for enduring my rants, frustrations, and self-doubts the last few months!
+* _([Larry Garfield](http://wwww.garfieldtech.com/))_, который протестировал PSR-7 на некоторых проектах, и позволил получить фидбек о перспективах использования.
+* _([Evert Pot](http://evertpot.com))_, который в конечном итоге проголосовал против принятия стандарта, но предоставил фантастические отзывы, принимая участие в обсуждении на протяжении всей жизни черновика. Его помощь была неоценима.
+* Phil, Beau, и Paul, которые читали мои тирады, полные разочарования и неуверенности в себе на протяжении последних нескольких месяцев!
