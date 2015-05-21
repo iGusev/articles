@@ -1,7 +1,7 @@
 >How I Use Traits
 http://rosstuck.com/how-i-use-traits/
 
-Recently, a few folks asked about a trait in a new project I wrote. Right around the same time, Rafael Dohms showed me his new talk about complex cognitive processes we don’t notice. Because my brain is a big mushy sack, the two blended together. The result was this post, which tries to capture how I use traits but also how I decide to use them in the first place.
+Недавно несколько человек просили меня рассказать об использовании трейтов в новом проекте, который я пишу. Примерно в тоже время, Рафаэль Домс показал мне его новую речь о сложных когнитивных процессах, которые мы не замечаем. Так как наш мозг - это большой мешок, перемешивающий все, в результате получился пост, который пытается охватить и то как я используют трейты, и то как я решаю где они нужны. 
 
 ## Leverage vs Abstraction
 
