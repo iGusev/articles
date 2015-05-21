@@ -18,15 +18,15 @@ http://rosstuck.com/how-i-use-traits/
 
 В вышеупомянутом посте говорится, что как абстракции, так и воздействия хороши. Абстракция - немного лучше, потому что она всегда дает вам возможность воздействовать, но воздействие не дает вам абстракции. Тем не менее, я хотел бы добавить, что хорошая абстракция является более трудозатратной в создании и не на всех уровнях возможна. Так что это компромис.
 
-## What’s this have to do with traits?
+## Как это связано с трейтами?
 
-Some language features are better than others at producing either Leverage or Abstraction. Interfaces, for example, are great at helping us build and enforce abstractions.
+Некоторые возможности языка лучше, чем другие в создании либо воздействия, либо абстракции. Интерфейсы, например, отлично помогают нам строить и применять абстракции.
 
-Inheritance, on the other hand, is great at providing leverage. It lets us override select parts of the parent code without having to copy it or extract every method to a reusable (but not necessarily abstracted) class. So, to answer the original question, when do I use traits?
+Наследование, с другой стороны, великолепно в предоставлении воздействия. Оно позволяет нам переопределить части родительского кода без необходимости копировать или извлекать каждый метод, использовать код класса (но не обязательно абстрактного) несколько раз. Так, отвечая на первоначальный вопрос, когда же я могу использовать трейты?
 
-I use traits when I want leverage, not abstraction.
+Я использую трейты, когда я хочу создать воздействие, не абстракцию.
 
-Sometimes.
+Иногда.
 
 ## Sometimes?
 
