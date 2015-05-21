@@ -3,20 +3,20 @@ http://rosstuck.com/how-i-use-traits/
 
 Недавно несколько человек просили меня рассказать об использовании трейтов в новом проекте, который я пишу. Примерно в тоже время, Рафаэль Домс показал мне его новую речь о сложных когнитивных процессах, которые мы не замечаем. Так как наш мозг - это большой мешок, перемешивающий все, в результате получился пост, который пытается охватить и то как я используют трейты, и то как я решаю где они нужны. 
 
-## Leverage vs Abstraction
+## Воздействие vs Абстракция
 
-The first thing you should do is go read this blog post: [“Abstraction or Leverage” from Michael Nygard](http://thinkrelevance.com/blog/2013/04/04/abstraction-or-leverage). It’s an excellent article.
+Первое, что вы должны сделать - это пойти почитать пост [“Abstraction or Leverage” от Майкла Найгарда](http://thinkrelevance.com/blog/2013/04/04/abstraction-or-leverage). Это отличная статья.
 
-If you’re short on time, the relevant part is that chunks of code (functions, classes, methods, etc) can be split out for either abstraction or leverage. The difference is:
+Если же у вас мало времени, основная суть поста состоит в том, что части кода (функции, классы, методы и т.д.) могут предназначаться либо для абстракции, либо для воздействия. Разница в:
 
-*   **Abstraction** gathers similar code behind a higher level concept that’s more concise for other code to work with.
-*   **Leverage** gathers similar code together so you only have one place to change it.
+* **Абстракция** содержит высокоуровневый концептуальный код, позволяющий более лаконично работать с ним другому коду.
+* **Воздействие** содержит код, изменения в котором влияют лишь на определенную часть.
 
-A common abstraction would be a Repository: you don’t know how an object is being stored or where but you don’t care. The details are _behind_ the concept of a Repository.
+Общей абстракцией будет паттерн [Репозиторий](http://habrahabr.ru/post/248505/): вы не знаете как объект хранится или где, вам все равно. Детали лежат _вне_ концепции Репозитория.
 
-Common leverage would be something like your framework’s Controller base class. It doesn’t hide much, it just adds some nifty shortcuts that are easier to work with.
+Общим воздействием будет что-то вроде базового класса конроллера в вашем фреймворке. Он многое не скрывает, просто добавляет некоторые классные фичи, облегчающие работу.
 
-As the original blogpost points out, both abstraction and leverage are good. Abstraction is slightly better because it always gives you leverage but leverage doesn’t give you abstraction. However, I would add that a good abstraction is more expensive to produce and isn’t possible at every level. So, it’s a trade off.
+В вышеупомянутом посте говорится, что как абстракции, так и воздействия хороши. Абстракция - немного лучше, потому что она всегда дает вам возможность воздействовать, но воздействие не дает вам абстракции. Тем не менее, я хотел бы добавить, что хорошая абстракция является более трудозатратной в создании и не на всех уровнях возможна. Так что это компромис.
 
 ## What’s this have to do with traits?
 
