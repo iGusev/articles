@@ -28,17 +28,19 @@ http://rosstuck.com/how-i-use-traits/
 
 Иногда.
 
-## Sometimes?
+## Иногда?
 
-Benjamin Eberlei makes a good argument that [traits have basically the same problems as static access](http://www.whitewashing.de/2013/04/12/traits_are_static_access.html). You can’t exchange or override them and they’re lousy for testing.
+Бенджамин Эберлей высказа хороший аргумент, что [трейты имеют в основном те же проблемы, что и статический доступ](http://www.whitewashing.de/2013/04/12/traits_are_static_access.html). Вы не можете заменить или переорпеделить их, они откровенно плохо поддаются тестированию.
 
-Still, static methods are useful. If you’ve got a single function with no state and you wouldn’t want to exchange it for another implementation, there’s nothing wrong with a static method. Think about named constructors (you rarely want to mock your domain models) or array/math operations (well defined input/output, stateless, deterministic). It makes you wonder if static state, rather than methods, are the real evil.
+Но все же статические методы полезны. Если у вас одна функция без состояния и вы не хотите заменить ее на другую реализацию, то нет ничего плохого в том, чтобы сделать ее статической. Именованные конструкторы (вы же редко хотите именно пустой объект) или получение массива/результата математических операций с хорошо определенными вводом/выводом, без состояния, детерминированные: все это вам интересно. Статическое состояние, а не методы, вот реальное зло.
 
-Traits have roughly the same constraints, plus they can only be used when mixed into a class. They’re more macro than object.
+Трейты имеют примерно те же ограничения, плюс они могут быть использовании только внутри класса. Они более глобальны, чем объект.
 
-This does gives traits an extra feature though: they can read and write the internal state of the class they’re mixed into. This makes them more suitable for some behavior than a static method would be.
+Это дает дополнительную особенность, хотя черты: они могут читать и писать внутреннее состояние класса они подмешивали. Это делает их более подходящими для некоторых поведение, чем статический метод будет.
 
-An example I often use is generating domain events on an entity:
+Это дает трейтам дополнительную особенность: они могут работать (читать и писать) с внутренним состоянием класса, в который подмешаны. В некоторых случаях это делает их более подходящими чем статические методы
+
+Например, я часто использую генерацию доменных событий в сущности:
 
 ```php
 trait GeneratesDomainEvents
