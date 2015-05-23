@@ -85,15 +85,15 @@ trait GeneratesDomainEvents
 
 Так что, в случае генерации событий, я все-таки предпочту трейт, потому что создание событий - это вспомогательный функционал.
 
-## Interfaces
+## Интерфейсы
 
-I rarely (if ever) extend a class or create a trait without also creating an interface.
+Я редко (если вообще) расширяю класс или создаю трейт без сопутствующего создания интерфейса.
 
-If you follow this rule closely, you’ll find that traits can complement the Interface Segregation Principle well. It’s easy to define an interface for a secondary concern and then ship a trait with a simple default implementation.
+Если вы будете следовать этому правилу, вы обнаружите, что трейты хорошо дополняют принципы разделения интерфейсов. Легко определить интерфейс для дополнительной функциональности и сделать простую реализацию в трейте по-умолчанию.
 
-This allows the concrete class to implement its own version of the interface or stick with the trait’s default version for unimportant cases. When your choices are boilerplate or forcing a poor abstraction, traits can be a powerful ally.
+Это позволяет целевому классу реализовывать свою собственную версию интерфейса или использовать трейт по-умолчанию для неважных случаев. Если ваш выбор - это шаблоны и форсирование бедной абстракции, трейты могут быть мощным союзником.
 
-Still, if you’ve only got one class implementing the interface in your code and you don’t expect anyone else to use that implementation, don’t bother with a trait. You’re probably not making your code any more maintainable or readable.
+И еще, если у вас только один реализующий интерфейс класс в коде и вы не планируете, то имплементируйте функционал прямо в нем, не беспокойтесь о трейтах. Таким образом вы сделаете ваш код более читабельным и поддерживаемым.
 
 ## When I do not use traits
 
