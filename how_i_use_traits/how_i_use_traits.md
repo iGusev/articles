@@ -73,17 +73,17 @@ trait GeneratesDomainEvents
 
 Так что заявляю: Я использую трейты, когда я хочу воздействия, которому требуется доступ к внутреннему состоянию объекта.
 
-## Parent Classes
+## Родительские классы
 
-Everything we’ve seen is also possible through inheritance. An `EventGeneratingEntity` would arguably be even better since [the events array would be truly private](http://3v4l.org/M80Zl). However, traits offer the possibility of multiple inheritance instead of a single base class. Aside from their feature set, is there a good heuristic for choosing?
+Все что мы перечислили также можно реализовать через наследование. В `EventGeneratingEntity` возможно такой подход был бы даже лучше, поскольку [массив событий действительно будет индивидуальным](http://3v4l.org/M80Zl). Однако, трейты дают возможность множественного наследования вместо одного базового класса. Помимо набора функций, есть ли еще хорошие аргументы за такой подход?
 
-All things being equal, I like to fallback on something akin to the “Is-A vs Has-A” rule. It’s not an exact fit because _traits are not composition_ but it’s a reasonable guideline.
+При прочих равных, я бы ориентировался на правило вроде "Является-A против Имеет-A". Конечно, это не точное правило, потому что _трейты не являются композицией_, но разумный ориентир.
 
-In other words, use parent classes for functionality that’s intrinsic to what the object is. A parent class is good at communicating this to other developers: “Employee is a Person”. Just because we’re going for leverage doesn’t mean the code shouldn’t be communicative.
+Другими словами, родительские классы нужно использовать для функций, которые присуще какому-то объекту. Родительские классы хорошо передают другим разработчикам смысл кода: "Сотрудник - это человек". Если нам необходимо воздействие, это не означает, что код не должен быть коммуникативным.
 
-For other non-core functionality on an object (fancy logging, event generation, boiler-plate code, etc), then a trait is an appropriate tool. It doesn’t define the nature of the class, it’s a supporting feature or better yet, an implementation detail. Whatever you get from a trait is just in service of the main object’s goal: traits can’t even pass a type check, that’s how unimportant they are.
+Для другой непрофильной функциональности объекта (логирование, события и т.д.) трейты являются подходящим инструментом. Они не определяют характер класса, это вспомогательные функции, или еще лучше - деталь реализации. Все что вы получите от трейта должно находиться на службе у главной цели объекта, трейты не должны стать важной частью функциональности.
 
-So, in the case of the event generation, I prefer the trait to a base `EventGeneratingEntity` because Event Generation is a supporting feature.
+Так что, в случае генерации событий, я все-таки предпочту трейт, потому что создание событий - это вспомогательный функционал.
 
 ## Interfaces
 
