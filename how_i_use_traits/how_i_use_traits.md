@@ -95,14 +95,14 @@ trait GeneratesDomainEvents
 
 И еще, если у вас только один реализующий интерфейс класс в коде и вы не планируете, то имплементируйте функционал прямо в нем, не беспокойтесь о трейтах. Таким образом вы сделаете ваш код более читабельным и поддерживаемым.
 
-## When I do not use traits
+## Когда я не использую трейты
 
-To be quite honest, I don’t use traits very often, perhaps once every few months. The heuristic I’ve outlined (leverage requiring access to internal state) is extremely niche. If you’re running into it very often, you probably need to step back and reexamine your style of programming. There’s a good chance you’ve got tons of objects waiting to be extracted.
+Честно говоря, я не использую трейты довольно часто, возможно раз в несколько месяцев я создаю трейт при постоянной работе над проектами. Вся эта эвристика, которую я обрисовывал (воздействие, требующее доступа к внутреннему состоянию), является крайне нишевой. Если вы используете их слишком часто, возможно вам нужно сделать шаг назад и пересмотреть свой стиль программирования. Есть хороший шанс, что тысячи классов только и ждут, чтобы быть реализованными.
 
-There’s a few places I don’t like to use traits due to style preferences:
+Есть несколько мест, где я не люблю использовать трейты из-за стилевых предпочтений:
 
-*   If the code you’re sharing is just a couple of getters and setters, I wouldn’t bother. IDEs can be your leverage here and adding a trait will only add mental overhead.
-*   Don’t use traits for dependency injection. That’s less to do with traits themselves and more to do with setter injection, which I’m rather opposed to.
-*   I don’t like traits for mixing in large public APIs or big pieces of functionality. Skip the leverage step and moving directly to finding an abstraction.
+* Если код, с которым вы работаете - это просто пара геттеров и сеттеров, я бы не стал заморачиваться. IDE могут быть тут хорошим козерем, а добавление трейта оставит после себя только снижение читаемости.
+* Не используйте трейты для внедрения зависимостей. Не столько из-за особенностей трейтов, сколько из-за особенностей сеттеров зависимостей, я против этого.
+* Мне не нравится использования трейтов в больших общедоступных API или крупных кусках функциоанльности. Пропустите этап воздействия и переходите непосредственно к абстракции.
 
-Finally, remember that while traits do not offer abstraction and they are not composition, they can still have a place in your toolbox. They’re useful for providing leverage over small default implementations or duplicate code. Always be ready to refactor them to a better abstraction once the code smells pile up.
+И наконец, следует помнить, что трейты не предполагают абстракцию и они не являются композицией, но все равно имеют право занять место среди ваших инструментов. Они полезны для предоставления воздействия по-умолчанию при более мелких реализацияю или дублировании кода. Всегда будьте готовы реорганизовать их для лучшей абстракции, как только почувствуете признаки кода "c запашком".
