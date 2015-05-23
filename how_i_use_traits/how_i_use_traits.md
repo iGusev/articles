@@ -61,17 +61,17 @@ trait GeneratesDomainEvents
 }
 ```
 
-[While we can refactor this to an abstraction](https://gist.github.com/rosstuck/09804eed5fb9020a1ff0), it’s still a nice example of how a trait can work with local object state in a way static methods can’t. We don’t want to expose the events array blindly or place it outside the object. We might not want to force another abstraction inside our model but we certainly don’t want to copy and paste this boiler plate everywhere. Plain as they are, traits help us sidestep these issues.
+Мы можем [сделать рефакторинг и превратить этот код в абстракцию](https://gist.github.com/rosstuck/09804eed5fb9020a1ff0), но это все равно будет хорошим примером того, как трейты могут работать с локальным состоянием объекта в отличии от статических методов. Мы не хотим работать с массивом событий вслепую или перемещать его из объекта. Возможно, мы не хотим добавлять еще одну абстракцию внутрь модели, и нам, конечно же, не хочется копипастить этот шаблонный код везде. И тут опять же нам помогут трейты. 
 
-Other practical examples might be custom logging functions that dump several properties at once or common iteration/searching logic. Admittedly, we could solve these with a parent class but we’ll talk about that in a moment.
+Другими практическими примерами могут служить настраиваемое логгирование функций, дамп нескольких свойств сразу или общая итерационная/поисковая логика. Мы могли бы решить все эти задачи родительским классом, но поговорим об этом чуть позже.
 
-So traits are a solid fit here but that doesn’t make static methods useless. In fact, I prefer static methods for behavior that doesn’t need the object’s internal state since it’s always safer to not provide it. Static methods are also more sharply defined and don’t require a mock class to be tested.
+Итак, трейты являются хорошей заменой в подобных случаях, но это не значит, что статические методы бесполезны. На самом деле, я все же предпочитаю использовать статические методы, в случаях, когда не нужно изменять внутреннее состояние объекта, поскольку это всегда безопасней. Статические методы также намного удобнее в тестировании, не требуют mock класса.
 
-Assertions are a good example of where I prefer static methods, despite seeing them commonly placed in traits. Still, I find `Assertion::positiveNumber($int)` gives me the aforementioned benefits and it’s easier to understand what it is (or isn’t) doing to the calling class.
+Создание утверждений является хорошим примером тех случаев, где я предпочитаю статические методы, несмотря на то, что их обычно можно поместить в трейты. Я нахожу, что `Assertion::positiveNumber($int)` дает мне вышеупомянутые преемущества и мне легче понять что делает вызываемый класс.
 
-If you do have an assertion you’re tempted to turn into a trait, I’d treat it as a code smell. Perhaps it needs several parameters you’re tired of giving it. Perhaps validating `$this->foo` relies on the value of `$this->bar`. In either of these cases, refactoring to a value object can be a better alternative. Remember, it’s best if leverage eventually gives way to abstraction.
+Если у вас есть подобные методы утверждений, всегда возникает соблазн превратить их в трейты, но подобный код уже начинает "попахивать". Возможно метод требует несколько параметров и вы устали их передавать. Возможно проверка `$this->foo` требует значения `$this->bar`. В любом из этих случаев рефакторинг класса будет лучшей альтернативой. Помните, всегда лучше, если воздействие уступает место абстракции.
 
-So, to restate: I use traits when I want leverage that needs access to an object’s internal state.
+Так что заявляю: Я использую трейты, когда я хочу воздействия, которому требуется доступ к внутреннему состоянию объекта.
 
 ## Parent Classes
 
