@@ -1,0 +1,82 @@
+Процесс разработки Phalcon с момента выхода 2.0.0 значительно ускорился. Все больше и больше контрибьюторов находит <a href="http://zephir-lang.com/">Zephir</a> легким и понятным для работы. Результатом этого стал релиз Phalcon 2.0.2. Эта версия включает в себя множество новой функциональности, исправлений ошибок и улучшения производительности:
+
+<ul>
+	<li>Добавлен метод <code>stats()</code> в Beanstalk</li>
+	<li>Устранено падение при doc-блоке без аннотаций #10301</li>
+	<li>Исправлено неверное количество передаваемых параметров при срабатывании события в <code>Mvc\Collection</code></li>
+	<li>Теперь <code>Mvc\Model</code> проверяет есть ли у атрибута значение по умолчанию, указанное в схеме БД и игнорирует его при генерации SQL для вставки/обновления</li>
+	<li>Исправлен критический баг при вызове <code>Http\Request::hasPut()</code> #10283</li>
+	<li>Phalcon\Text: добавлен метод <code>reduceSlashes()</code> - убирает множественные слешы, заменяя их одиночными</li>
+	<li>Phalcon\Text: добавлен метод <code>concat()</code> - объединяет строки с использованием разделителя без дублирования в местах конкатенации.</li>
+	<li>Добавлено условие в адаптере <code>start()</code> сессии для проверки наличия уже начатой сессии</li>
+	<li>Добавлен метод status() в адаптере сессии для проверки факта начала сессии</li>
+	<li>Внедрение подзапросов в PHQL</li>
+	<li>Повышение производительности, ориентированное на PHP5.6</li>
+</ul><habracut/>
+<h4>Подзапросы (Subqueries)</h4>
+Одна из наиболее востребованных сообществом фич наконец реализована в Phalcon 2.0.2. Теперь вы можете использовать подзапросы:
+
+<source lang="php">
+$phql = "SELECT c.* FROM Shop\Cars c
+WHERE c.brandId IN (SELECT id FROM Shop\Brands)
+ORDER BY c.name";
+$cars = $this->modelsManager->executeQuery($phql);
+</source>
+Модели должны принадлежать к той же базе данных для того, чтобы использоваться в качестве источника в подзапросе.
+
+<h4>Значения БД по умолчанию</h4>
+Теперь, в случаях, если столбец имеет значение по умолчанию, описанное в схеме, оно будет использоваться вместо вставки <code>NULL</code>:
+
+<source lang="php">
+$robots = new Robots();
+$robots->save(); // use all <code>default</code> values
+</source>
+<h4>Обновление</h4>
+Данная версия может быть установлена из master ветки, если у Вас еще не установлен Zephir, выполните следующие действия:
+
+<source lang="bash">
+git clone http://github.com/phalcon/cphalcon
+git checkout master
+cd ext
+sudo ./install
+</source>
+Стандартный метод установки также работает:
+
+<source lang="bash">
+git clone http://github.com/phalcon/cphalcon
+git checkout master
+cd build
+sudo ./install
+</source>
+Если Zephir у вас установлен:
+
+<source lang="bash">
+git clone http://github.com/phalcon/cphalcon
+git checkout master
+zephir fullclean
+zephir build
+</source>
+Обратите внимание, что при запуске установочный скрипт заменит любую установленную ранее версию Phalcon.
+
+DLL библиотеки для Windows доступны <a href="http://phalconphp.com/ru/download/windows">на странице загрузки</a>.
+
+См. раздел <a href="http://blog.phalconphp.com/post/115773676765/guide-upgrading-to-phalcon-2">обновление до 2.0.х</a> для получения дополнительных сведений об обновлении с версии 1.3.х.
+
+<h4>Скоро</h4>
+В будущих 2.0.x версияю мы сконцентрируем наши усилия на запросах сообщества:
+
+<ul>
+	<li>Eager-Loading в PHQL</li>
+	<li>Опциональные пустые строки в ORM</li>
+	<li>PHQL пользовательские функции</li>
+	<li>Case Statements в PHQL</li>
+	<li>Алиасы неймспейсов в PHQL</li>
+</ul>
+В дальнейшем мы будем планировать функциональность для включения ее в 2.1, сейчас это:
+
+<ul>
+	<li>Отказ от PHP 5.3</li>
+	<li>Унификация <code>Phalcon\Mvc\Model\Validation</code> и <code>Phalcon\Validation</code></li>
+</ul>
+<h4>Спасибо</h4>
+Спасибо всем кто принимал участие в создании этой версии, всему сообществу, за их непрырывную работу и обратную связь!
