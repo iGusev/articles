@@ -1,7 +1,3 @@
-The development of Phalcon has been accelerated since we released 2.0.0\. More and more contributors find [Zephir](http://zephir-lang.com/) very easy to understand and work with, and as a result it is time to release Phalcon 2.0.2\. This version includes many features, bug fixes and improvements in terms of performance:
-
-Развитие в процесс ускорился с момента выхода 2.0.0\\. Все больше и больше вкладчиков найти [Зефир](для http://зефир-Ланг.сом/) очень легко понять и работать, и в результате пришло время релиза 2.0.2 разработчика phalcon\\. Эта версия включает в себя множество функций, исправлений ошибок и улучшений в плане производительности:
-
 Процесс разработки Phalcon с момента выхода 2.0.0 значительно ускорился. Все больше и больше контрибьюторов находит [Zephir](http://zephir-lang.com/) легким и понятным для работы. Результатом этого стал релиз Phalcon 2.0.2. Эта версия включает в себя множество новой функциональности, исправлений ошибок и улучшения производительности:
 
 * Добавлен метод `stats()` в Beanstalk
