@@ -1,20 +1,24 @@
 The development of Phalcon has been accelerated since we released 2.0.0\. More and more contributors find [Zephir](http://zephir-lang.com/) very easy to understand and work with, and as a result it is time to release Phalcon 2.0.2\. This version includes many features, bug fixes and improvements in terms of performance:
 
-*   Added `stats()` methods to Beanstalk
-*   Fixed segfault when a docblock does not have annotations #10301
-*   Fixed wrong number of parameters passed when triggering an event in Mvc\Collection
-*   Now Mvc\Model checks if an attribute has a default value associated in the database and ignores it from the insert/update generated SQL
-*   Readded Http\Request::hasPut() (#10283)
-*   Phalcon\Text: Added method reduceSlashes() - Reduces multiple slashes in a string to single slashes
-*   Phalcon\Text: Added method concat() - Concatenates strings using the separator only once without duplication in places concatenation
-*   Added conditional on Session adapter start() to check if the session has already been started
-*   Added status() function in Session adapter to return the status of the session (disabled/none/started)
-*   Implementation of subqueries as expressions in PHQL
-*   Performance improvements focused on PHP 5.6
+Развитие в процесс ускорился с момента выхода 2.0.0\\. Все больше и больше вкладчиков найти [Зефир](для http://зефир-Ланг.сом/) очень легко понять и работать, и в результате пришло время релиза 2.0.2 разработчика phalcon\\. Эта версия включает в себя множество функций, исправлений ошибок и улучшений в плане производительности:
 
-### Subqueries
+Процесс разработки Phalcon с момента выхода 2.0.0 значительно ускорился. Все больше и больше контрибьюторов находит [Zephir](http://zephir-lang.com/) легким и понятным для работы. Результатом этого стал релиз Phalcon 2.0.2. Эта версия включает в себя множество новой функциональности, исправлений ошибок и улучшения производительности:
 
-One of the most requested requests by the community is now available in Phalcon 2.0.2\. Now, you can take advantage of subqueries as shown below:
+* Добавлен метод `stats()` в Beanstalk
+* Устранено падение при doc-блоке без аннотаций #10301
+* Исправлено неверное количество передаваемых параметров при срабатывании события в `Mvc\Collection`
+* Теперь `Mvc\Model` проверяет есть ли у атрибута значение по умолчанию, указанное в схеме БД и игнорирует его при генерации SQL для вставки/обновления
+* Исправлен критический баг при вызове `Http\Request::hasPut()` #10283
+* Phalcon\Text: добавлен метод `reduceSlashes()` - убирает множественные слешы, заменяя их одиночными
+* Phalcon\Text: добавлен метод `concat()` - объединяет строки с использованием разделителя без дублирования в местах конкатенации.
+* Добавлено условие в адаптере `start()` сессии для проверки наличия уже начатой сессии
+* Добавлен метод status() в адаптере сессии для проверки факта начала сессии
+* Внедрение подзапросов в PHQL
+* Повышение производительности, ориентированное на PHP5.6
+
+## Подзапросы (Subqueries)
+
+Одна из наиболее востребованных сообществом фич наконец реализована в Phalcon 2.0.2. Теперь вы можете использовать подзапросы:
 
 ```php
 $phql = "SELECT c.* FROM Shop\Cars c
@@ -23,68 +27,68 @@ ORDER BY c.name";
 $cars = $this->modelsManager->executeQuery($phql);
 ```
 
-Models must belong to the same database in order to be used as source in a subquery.
+Модели должны принадлежать к той же базе данных для того, чтобы использоваться в качестве источника в подзапросе.
 
-### Default Database Values
+## Значения БД по умолчанию
 
-Now in the case that a column has a ‘default’ value declared in the field of the mapped table, this 'default’ value will be used instead of inserting 'NULL’:
+Теперь, в случаях, если столбец имеет значение по умолчанию, описанное в схеме, оно будет использоваться вместо вставки `NULL`:
 
 ```php
 $robots = new Robots();
 $robots->save(); // use all `default` values
 ```
 
-### Update/Upgrade
+## Обновление
 
-This version can be installed from the master branch, if you don’t have Zephir installed follow these instructions:
+Данная версия может быть установлена из master ветки, если у Вас еще не установлен Zephir, выполните следующие действия:
 
 ```bash
-git clone [http://github.com/phalcon/cphalcon](http://github.com/phalcon/cphalcon)
+git clone http://github.com/phalcon/cphalcon
 git checkout master
 cd ext
 sudo ./install
 ```
 
-The standard installation method also works:
+Стандартный метод установки также работает:
 
 ```bash
-git clone [http://github.com/phalcon/cphalcon](http://github.com/phalcon/cphalcon)
+git clone http://github.com/phalcon/cphalcon
 git checkout master
 cd build
 sudo ./install
 ```
 
-If you have Zephir installed:
+Если Zephir у вас установлен:
 
 ```bash
-git clone [http://github.com/phalcon/cphalcon](http://github.com/phalcon/cphalcon)
+git clone http://github.com/phalcon/cphalcon
 git checkout master
 zephir fullclean
 zephir build
 ```
 
-Note that running the installation script will replace any version of Phalcon installed before.
+Обратите внимание, что при запуске установочный скрипт заменит любую установленную ранее версию Phalcon.
 
-Windows DLLs are available in the [download page](http://phalconphp.com/en/download/windows).
+DLL библиотеки для Windows доступны [на странице загрузки](http://phalconphp.com/ru/download/windows).
 
-See the [upgrading guide](http://blog.phalconphp.com/post/115773676765/guide-upgrading-to-phalcon-2) for more information about upgrading to Phalcon 2.0.x from 1.3.x.
+См. раздел [обновление до 2.0.х](http://blog.phalconphp.com/post/115773676765/guide-upgrading-to-phalcon-2) для получения дополнительных сведений об обновлении с версии 1.3.х.
 
-### Comming soon
+## Скоро
 
-In the future 2.0.x series, we will be concentrating our efforts on requests from the community:
+В будущих 2.0.x версияю мы сконцентрируем наши усилия на запросах сообщества:
 
-*   Eager-Loading in PHQL
-*   Optional string empty values in the ORM
-*   PHQL custom functions
-*   Case Statements in PHQL
-*   Aliases for namespaces in PHQL
+*   Eager-Loading в PHQL
+*   Опциональные пустые строки в ORM
+*   PHQL пользовательские функции
+*   Case Statements в PHQL
+*   Алиасы неймспейсов в PHQL
 
-Later on, we will be planning the features to include in Phalcon 2.1, for now:
+В дальнейшем мы будем планировать функциональность для включения ее в 2.1, сейчас это:
 
-*   Complete deprecation of PHP 5.3
-*   Unification of Phalcon\Mvc\Model\Validation and Phalcon\Validation
+*   Отказ от PHP 5.3
+*   Унификация `Phalcon\Mvc\Model\Validation` и `Phalcon\Validation`
 
-### Спасибо
+## Спасибо
 
-Thanks to everyone involved in making this version as well to the community for their continuous input and feedback!
+Спасибо всем кто принимал участие в создании этой версии, всему сообществу, за их непрырывную работу и обратную связь!
 
