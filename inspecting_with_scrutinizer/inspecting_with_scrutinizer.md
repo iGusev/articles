@@ -1,18 +1,14 @@
 >Inspecting PHP Code Quality with Scrutinizer
 http://www.sitepoint.com/inspecting-php-code-quality-scrutinizer/
 
-<section class="article_body">
+У нас уже было приличное количество руководств по качеству кода, тестированию, системам сбора билдов и так далее:
 
-_This article has been slightly revised based on the feedback from the people behind Scrutinizer. For the most part, the changes are in the “Configuration” section which is now noticeably simpler._
-
-We’ve gone through a decent number of tutorials about code quality, inspections, auto-build systems and so on here at SitePoint:
-
-*   [PHP Quality Assurance with Jenkins](http://www.sitepoint.com/series/php-quality-assurance-with-jenkins/) [4-part series]
+*   [PHP Quality Assurance with Jenkins](http://www.sitepoint.com/series/php-quality-assurance-with-jenkins/) [в 4-х частях]
 *   [PHP and Continuous Integration with Travis CI](http://www.sitepoint.com/php-continuous-integration-travis-ci/)
 *   [Visualize your Code Quality with PhpMetrics](http://www.sitepoint.com/visualize-codes-quality-phpmetrics/)
 *   [Continuous Integration with PHP-CI](http://www.sitepoint.com/continuous-integration-php-ci/)
 
-In this article, we’ll take a look at [Scrutinizer CI](https://scrutinizer-ci.com/) – a continuous integration tool that’s quite expensive and closed to private projects, but very handy for public ones.
+В этой статье мы взглянем на [Scrutinizer CI](https://scrutinizer-ci.com/) - инструмент для непрерывной интегракции, довольно дорогой и закрытый для коммерческих проектов, но очень удобный для публичных.
 
 ![](https://avatars1.githubusercontent.com/u/2988888?v=3)
 
