@@ -4,9 +4,9 @@
 
 One of the exciting things about PHP 7, aside from the incredible performance improvements, is the introduction of [scalar type hinting](https://wiki.php.net/rfc/scalar_type_hints_v5) coupled with an optional "strict" mode. When reading the RFC I noticed that PHP 7 code written with type hinting begins to look a lot like [Hack](http://hacklang.org/). I wanted to find out if you could execute the same code in PHP 7 and Hack, and what the differences in execution might be. Here's what I found out.
 
-## The Setup
+## Установка
 
-Just to get this out of the way:
+Получите следующий результат:
 
 ```bash
 $ php --version
@@ -23,7 +23,7 @@ Compiler: heads/master-0-gd71bec94dedc8ca2e722f5619f565a06ef587efc
 Repo schema: fa9b8305f616ca35f368f3c24ed30d00563544d1
 ```
 
-In order to execute the PHP code in HHVM without modifying the opening tags in the source code files I had to execute hhvm with the `-vEval.EnableHipHopSyntax=true` flag set.
+Для того, чтобы выполнять PHP-код в HHVM, не изменяя открывающих тегов в исходных файлах исполняйте `hhvm` с флагом `-vEval.EnableHipHopSyntax=true`.
 
 ## Some Examples
 
