@@ -25,9 +25,9 @@ Repo schema: fa9b8305f616ca35f368f3c24ed30d00563544d1
 
 Для того, чтобы выполнять PHP-код в HHVM, не изменяя открывающих тегов в исходных файлах исполняйте `hhvm` с флагом `-vEval.EnableHipHopSyntax=true`.
 
-## Some Examples
+## Некоторые примеры
 
-Let's look at a simple example.
+Рассмотрим простой пример:
 
 ```php
 declare(strict_types=1);
@@ -45,22 +45,24 @@ $result = add(1, 3);
 echo $result;
 ```
 
-Executing this in PHP 7 returns:
+Выполнение этого в PHP 7 вернет:
 
 ```bash
 Fatal error: Argument 1 passed to myLog() must be of the type string, integer given, called in /home/vagrant/basic/main.php on line 9 and defined in /home/vagrant/basic/main.php on line 4
 ```
 
-Looks good! PHP 7 is correctly telling us that we're passing an integer (`$a + $b`) into a function that is expecting a string and throws an appropiate error. Let's see what HHVM says:
+Выглядит хорошо! PHP7 правильно говорит нам, что мы передаем целое число (`$a + $b`) в фунцию, которая ожидает строку, и выдает соответствующее сообщение об ошибке. Посмотрим, что скажет HHVM:
+
 
 ```bash
 Catchable fatal error: Argument 1 passed to myLog() must be an instance of string, int given in /home/vagrant/basic/main.php on line 6
 ```
 
-There are a couple differences evident here:
+Появилась пара различий:
 
-*   HHVM calls this a "catchable" fatal error. This is interesting as in the [RFC](https://wiki.php.net/_export/code/rfc/scalar_type_hints_v5?codeblock=9) the error shown actually matches HHVM's error.
-*   HHVM says the error occurred on line 6 where PHP says it occurred on line 9\. I prefer HHVM's approach here as it shows us where we called the function with the bad data, not where the function is defined that we are calling with bad data. **UPDATE**: I was confused, PHP 7 is the one telling us more information here. I always like more information with my errors. :) Thanks commenters! Here's another example that illustrates an important difference between PHP 7 and Hack.
+* HHVM называет это "catchable" фатальной ошибкой. Это интересно, так как в [RFC](https://wiki.php.net/_export/code/rfc/scalar_type_hints_v5?codeblock=9) сказано, что ошибка фактически должна совпадать с HHVM.
+* HHVM говорит, что ошибка в строке 6, а PHP, что это произошло в строке 9. В подобных случаях я бы предпочел PHP подход, нам показывается и где функция была некорректно вызвана и где определена.
+
 
 ```
 <?hh
@@ -79,13 +81,13 @@ echo myLog("Hello world!\n");
 echo myLog();
 ```
 
-When executed in PHP this function happily executes. When executed in Hack we get this type error:
+PHP с радостью выполняет код. Hack же возвращает ошибку:
 
 ```bash
 /home/vagrant/nullable/main.php:4:16,21: Please add a ?, this argument can be null (Typing[4065])
 ```
 
-Hack doesn't allow default arguments with a value of null as it "conflates the concept of an optional argument with that of a required argument that allows a placeholder value" (See O'Reilly's new book _[Hack and HHVM](http://shop.oreilly.com/product/0636920037194.do)_). Instead, Hack recommends that you make such an argument nullable in addition to providing the default value, like so:
+Hack не позволяет нам иметь дефолтный аргумет со значением null, т.к. смешивает понятие необязательный аргумент с обязательным аргументом, который позволяет иметь дефолтное значение (Подробнее об этом читайте в книге _[Hack and HHVM](http://shop.oreilly.com/product/0636920037194.do)_). Язык предлагает вам сделать аргумент `nullable`:
 
 ```
 <?hh
@@ -104,7 +106,7 @@ echo myLog("Hello world!\n");
 echo myLog();
 ```
 
-Let's try something a bit more complicated. What happens if we mix strict and non-strict files in PHP? Note that defining strict mode at the top of the file has no effect in HHVM.
+Давайте попробуем что-нибудь посложее. Что произойдет, если мы смешаем типизации в PHP? Обратите внимание, что определение strict-режима в верхней части файла не имеет никакого эффекта в HHVM.
 
 ```
 <?php
@@ -142,27 +144,32 @@ $ hhvm -vEval.EnableHipHopSyntax=true main.php
 Catchable fatal error: Argument 1 passed to myLog() must be an instance of string, int given in /home/vagrant/separate_files_mixed/logger.php on line 6
 ```
 
-logger.php is defined as being in strict mode, yet PHP allows us to pass an int into it from a non-strict mode file. HHVM throws an exception in the same scenario. What happens if we make add.php strict?
+Для `logger.php` включился strict-режим, но PHP позволяет передать int в него из nonstrict-файла. HHVM в подобном случае выбрасывает исключение. Что произойдет, если мы переведем `add.php` в режим строгой типизации:
 
 ```bash
 Fatal error: Argument 1 passed to myLog() must be of the type string, integer given, called in /home/vagrant/separate_files_mixed/add.php on line 5 and defined in /home/vagrant/separate_files_mixed/logger.php on line 4
 ```
 
-That's better. So it looks like functions defined in a strict file are only strictly type checked if the calling code is also defined in a strict file. On the flip side, what happens if we call a non-strict function that is type annotated from a strict function? To test this I changed logger.php to be non-strict and made add.php strict:
+Так-то лучше. Strict-режим действует только в тех файлах, где он указан, даже если декларирующий функцию файл подразумевает иное. А что произойдет, если мы вызовем non-strict функцию, из strict-функции? Для реализации я поставил следующие значения для файлов:
+
+```
+logger.php - non-strict
+add.php - strict
+```
 
 ```bash
 Fatal error: Argument 1 passed to myLog() must be of the type string, integer given, called in /home/vagrant/separate_files_mixed/add.php on line 5 and defined in /home/vagrant/separate_files_mixed/logger.php on line 3
 ```
 
-So it appears that functions are only strictly type checked if they are called from a function that is defined in a file declared as strict. However, this only affects direct child calls of the file declared as strict. If we declare main.php strict, PHP happily returns 4 despite the mismatched type we are passing into log().
+Получается, что функция является строго типизированной, если она вызывается из функции, которая объявлена в strict-файле. Впрочем это влияет только на прямые вызовы в этом файле. Если мы объявим `main.php` строго типизированным, PHP радостно вернет нам 4, несмотря на несоответствие типов, которые мы передаем в `log()`.
 
-In Hack this relationship is reversed. If HHVM executes main.php in non-strict mode, and logger is [written in Hack](https://gist.github.com/jazzdan/fe0648a6848dadda5039) (with a hh tag at the top of the file) we still get a type error despite the fact that the file making the call is not written in Hack.
+В Hack соотношение обратное. Если HHVM выполяет main.php в нестрогом режиме, и логгер [написан на Hack](https://gist.github.com/jazzdan/fe0648a6848dadda5039) (c `hh` тегом в верхней части файла), мы все равно получим ошибку типа несмотря на то, что вызываемый файл не написан на Hack.
 
 ```bash
 Catchable fatal error: Argument 1 passed to myLog() must be an instance of string, int given in /home/vagrant/separate_files_mixed/logger.php on line 5
 ```
 
-Another interesting difference between Hack and PHP's type system comes from PHP's handling of the float annotation. Take this code example:
+Другим интересным отличием между системами типизирования Hack и PHP является аннотация float. Возьмем пример:
 
 ```
 <?php
@@ -175,13 +182,13 @@ function add(float $a, float $b): float {
 echo add(1, 2);
 ```
 
-When executed in PHP this returns '3' even though we are passing ints where we have annotated a float, and despite the fact that strict mode is enabled. The reason for this is that [widening primative conversion](http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.1.2) is supported in PHP 7's strict mode. This means that parameters annotated as float can accept an int as ([almost](https://wiki.php.net/rfc/scalar_type_hints_v5#int_-_float_conversion_isn_t_lossless)) any int can be safely converted to a float. HHVM does not support this and will throw a type error when the above code is executed:
+При выполнении в PHp вернется `3`, хотя мы передаем `int` в том месте, где анотировали `float` и несмотря на то, что режим строгой типизации включен. Причина заключается в том, что в PHP7 поддерживается расширенное преобразование примитивов _([Widening primative conversion](http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.1.2))_ при включенном строгом режиме. Это означает, что параметры анотированные как `float` могут иметь значение `int` [в тех случаях](https://wiki.php.net/rfc/scalar_type_hints_v5#int_-_float_conversion_isn_t_lossless), когда возможно безопасное преобразование (почти всегда). HHVM не поддерживает подобное поведение и выбрасывает ошибку типов при исполнении приведенного выше кода:
 
 ```
 Catchable fatal error: Argument 1 passed to add() must be an instance of float, int given in /home/vagrant/main.php on line 6
 ```
 
-If there are any other big differences I've missed, or other scenarios I should enumerate here, please let me know in the comments. I would love to keep exploring!
+Если есть еще какие-то другие различия, которые я упустил, пожалуйста, дайте знать в комментариях ниже. Я бы очень хотел глубже изучить эту тему.
 
 ## Wrapping It Up
 
