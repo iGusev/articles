@@ -1,8 +1,8 @@
 >Comparing the PHP 7 and Hack Type Systems
 >http://www.dmiller.io/blog/2015/4/26/comparing-the-php7-and-hack-type-systems
 
-
-One of the exciting things about PHP 7, aside from the incredible performance improvements, is the introduction of [scalar type hinting](https://wiki.php.net/rfc/scalar_type_hints_v5) coupled with an optional "strict" mode. When reading the RFC I noticed that PHP 7 code written with type hinting begins to look a lot like [Hack](http://hacklang.org/). I wanted to find out if you could execute the same code in PHP 7 and Hack, and what the differences in execution might be. Here's what I found out.
+Одной из интересных вещей в PHP7, кроме невероятной производительности, является введение [скалярного type-hinting'а](https://wiki.php.net/rfc/scalar_type_hints_v5) в сочетании с опциональным "strict" режимом. При чтении RFC я заметил, что PHP код в примерах выглядит очень похожим на [Hack](http://hacklang.org/). Что если выполнить один и тот же в PHP7 и Hack? Какая разница между ними? Вот что я узнал.
+<habracut/>
 
 ## Установка
 
