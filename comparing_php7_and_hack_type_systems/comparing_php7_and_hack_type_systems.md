@@ -1,6 +1,8 @@
 >Comparing the PHP 7 and Hack Type Systems
 >http://www.dmiller.io/blog/2015/4/26/comparing-the-php7-and-hack-type-systems
 
+![](https://habrastorage.org/files/add/f40/35f/addf4035fbbc476bb5d14f1ecab3644a.png)
+
 Одной из интересных вещей в PHP7, кроме невероятной производительности, является введение [скалярного type-hinting'а](https://wiki.php.net/rfc/scalar_type_hints_v5) в сочетании с опциональным "strict" режимом. При чтении RFC я заметил, что PHP код в примерах выглядит очень похожим на [Hack](http://hacklang.org/). Что если выполнить один и тот же код и в PHP7 и в Hack? Какая разница между ними? Вот что я узнал.
 <habracut/>
 
@@ -182,7 +184,7 @@ function add(float $a, float $b): float {
 echo add(1, 2);
 ```
 
-При выполнении в PHp вернется `3`, хотя мы передаем `int` в том месте, где анотировали `float` и несмотря на то, что режим строгой типизации включен. Причина заключается в том, что в PHP7 поддерживается расширенное преобразование примитивов _([Widening primative conversion](http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.1.2))_ при включенном строгом режиме. Это означает, что параметры анотированные как `float` могут иметь значение `int` [в тех случаях](https://wiki.php.net/rfc/scalar_type_hints_v5#int_-_float_conversion_isn_t_lossless), когда возможно безопасное преобразование (почти всегда). HHVM не поддерживает подобное поведение и выбрасывает ошибку типов при исполнении приведенного выше кода:
+При выполнении в PHP вернется `3`, хотя мы передаем `int` в том месте, где аннотировали `float` и несмотря на то, что режим строгой типизации включен. Причина заключается в том, что в PHP7 поддерживается расширяющее примитивное преобразование _([Widening primative conversion](http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.1.2))_ при включенном строгом режиме. Это означает, что параметры аннотированные как `float` могут иметь значение `int` [в тех случаях](https://wiki.php.net/rfc/scalar_type_hints_v5#int_-_float_conversion_isn_t_lossless), когда возможно безопасное преобразование (почти всегда). HHVM не поддерживает подобное поведение и выбрасывает ошибку типов при исполнении приведенного выше кода:
 
 ```
 Catchable fatal error: Argument 1 passed to add() must be an instance of float, int given in /home/vagrant/main.php on line 6
