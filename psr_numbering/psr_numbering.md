@@ -26,9 +26,9 @@ Python выбрал такой подход, отлично, но _почему_
 
 Изначально FIG работал только над одним PSR одновременно. Конечно, `PSR-1` и `PSR-2` вышли одновременно, но только потому, что `PSR-2` откололся от `PSR-1`, сделав `PSR-1` немного менее спорным. Они не были предназначены для разных вещей в тот момент, когда зародились.
 
-## Nicknames are weird
+## Странные названия
 
-After PSR-3, and before anything else was being worked on, people referred to what is now PSR-4 as PSR-X or PSR-next. This was only meant to be a nickname and ended up sticking as a thing. Then people started saying things like PSR-C or PSR-Cache, and PSR-R was some alternative to PSR-X, and it got fucking mental. Bloggers and people on twitter thought those names were legit what was going to be used, and all hell broke loose when they found out it wasn’t PSR-X anymore.
+После `PSR-3` и до утверждения чего-то нового люди ссылались на `PSR-4`, именуя его `PSR-X` или `PSR-next`. Откуда-то им это взбрело в голову, в итоге все запутались еще больше. Постепенно начали придумывать названия вроде `PSR-R`, `PSR-C` или `PSR-Cache` в качестве альтернативы `PSR-x`. Ничего не подозревая блоггеры и пользователи Twitter подхватили тренд, думая, что это официальные названия, и весь ад вырвался на свободу, когда они вдруг обнаружили, что нет больше никакого `PSR-X`, а вышел `PSR-4: Autoloading Standard`.
 
 ## PSR Concurrency
 
