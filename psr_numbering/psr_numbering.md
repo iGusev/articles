@@ -36,13 +36,13 @@ Python выбрал такой подход, отлично, но _почему_
 
 Теоретически можно было бы сделать "номер черновика" и "номер стандарта", но кому все это нужно? Все, что необходимо - это избавить людей от недопонимания в процессе обсуждения конкретного PSR, именно поэтому мы оставляем номер тем же самым, каким он был на стадии присвоения утвержденному черновику.
 
-## But 0, 1, 2, 3, 4…7?!!?
+## Но 0, 1, 2, 3, 4…7?!!?
 
-So what? PSRs are not software, they are not SemVer, and they are not important. They are an arbitrary assignment which could have been A, B, C or Roman Numerals.
+Ну и что? PSR - это не программы, тут нет семантического версионирования. Какая разница какой номер? С тем же успехом мы могли бы нумеровать их A, B, C или римскими цифрами.
 
-If people keep complaining about interruptions in the accepted auto-increment I’d be tempted to suggest switching the version numbers to sha1 hashes of the content like Git commits.
+Если люди продолжат жаловаться на перебои в автоинкременте принятых стандартов, у меня возникнет большой соблазн начать именовать следующие версии SHA-1 хешем содержания, навроде git коммитов.
 
-The identifier does not matter.
+Идентификатор значения не имеет.
 
 ## But what if PSR-5 never comes out?!
 
