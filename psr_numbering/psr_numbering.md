@@ -30,11 +30,11 @@ Python выбрал такой подход, отлично, но _почему_
 
 После `PSR-3` и до утверждения чего-то нового люди ссылались на `PSR-4`, именуя его `PSR-X` или `PSR-next`. Откуда-то им это взбрело в голову, в итоге все запутались еще больше. Постепенно начали придумывать названия вроде `PSR-R`, `PSR-C` или `PSR-Cache` в качестве альтернативы `PSR-x`. Ничего не подозревая блоггеры и пользователи Twitter подхватили тренд, думая, что это официальные названия, и весь ад вырвался на свободу, когда они вдруг обнаружили, что нет больше никакого `PSR-X`, а вышел `PSR-4: Autoloading Standard`.
 
-## PSR Concurrency
+## PSR параллелизм
 
-Now, with people working on caching, HTTP messaging, phpdoc, etc., there is even more room for confusion. We can’t even shorten HTTP messaging because there have been discussions of a HTTP client in the past, so giving these all a single, stable number which can be used regardless of its status just made sense.
+Сейчас, когда люди работают над кэшированием, HTTP сообщениями _([уже вышел](http://habrahabr.ru/post/258423/))_, phpdoc и т.д., есть даже больше места для путаницы. Мы не смогли зарезервировать 5й номер за `HTTP-messaging`, потому что там продолжались бурные обсуждения HTTP-клиента. Эволюционным путем мы пришли к единому стабильному номеру - это единственный вариант, который имеет смысл.
 
-We could potentially have a “draft number” and an “accepted number” but what is the point? Who cares? All we needed was an index to keep track of what is what, avoid multiple conversations confusing which PSR is being talked about, and keep that number the same when and if things are done.
+Теоретически можно было бы сделать "номер черновика" и "номер стандарта", но кому все это нужно? Все, что необходимо - это избавить людей от недопонимания в процессе обсуждения конкретного PSR, именно поэтому мы оставляем номер тем же самым, каким он был на стадии присвоения утвержденному черновику.
 
 ## But 0, 1, 2, 3, 4…7?!!?
 
