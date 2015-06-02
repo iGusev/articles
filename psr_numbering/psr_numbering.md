@@ -54,8 +54,8 @@ Python выбрал такой подход, отлично, но _почему_
 
 `PSR-8` - мертвый номер. Он предназначался для глупой первоапрельской шутки в 2014м: [Huggable Interface](https://github.com/php-fig/fig-standards/blob/master/proposed/psr-8-hug/psr-8-hug.md). `PSR-8` никогда не станет чем-то другим. Он никогда не будет полезным. И никогда не будет принят.
 
-## Fingers crossed for PSR-7
+## Скрестим пальцы за `PSR-7`
 
-I am very impressed with the work and dedication to this PSR. It’s had a few people come and go during the process for various reasons, but an [Acceptance Vote](https://groups.google.com/forum/#!topic/php-fig/0baLqR6Rvcg) is underway and it is looking good.
+Я очень впечатлен работой и преданность этому PSR. Несколько людей приходили и уходили по разным причинам на протяжении всего процесса, но на результат это не повлияло, [голосование идет хорошо](https://groups.google.com/forum/#!topic/php-fig/0baLqR6Rvcg).
 
-Learn more about PSR-7 [from MWOP’s blog](http://mwop.net/blog/2015-01-08-on-http-middleware-and-psr-7.html), or from [MWOP’s interview on PHP Town Hall](http://phptownhall.com/blog/2015/02/02/episode-36-psr-7-the-world-of-tomorrow/).
+Узнать больше о PSR-7 вы можете [из блога MWOP](http://mwop.net/blog/2015-01-08-on-http-middleware-and-psr-7.html) или из [интервью на PHP Town Hall](http://phptownhall.com/blog/2015/02/02/episode-36-psr-7-the-world-of-tomorrow/).
