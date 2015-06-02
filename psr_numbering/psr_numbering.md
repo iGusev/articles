@@ -2,29 +2,29 @@
 https://philsturgeon.uk/php/2015/05/05/psr7-numeric-workflow/
 
 
-The last PSR from the FIG to be sent out into the world, to be used by whoever felt like using it, was [PSR-4: Autoloader](http://www.php-fig.org/psr/psr-4/). Now people are starting to hear about PSR-7, and they’re starting to “lolphp”, wondering what has happened to PSR-5 and PSR-6\. I am no longer part of the FIG after PyroCMS was acquired and the voting seat was swapped to the new owner, but I do have a few things to say on PSR numbering still.
+Последним выпущенным `PSR` от FIG был [PSR-4: Autoloader](http://www.php-fig.org/psr/psr-4/). Сейчас люди начинают узнавать о `PSR-7`, и сразу же начинается "lolphp", всем интересно куда же делись `PSR-5` и `PSR-6`. Я больше не являюсь частью FIG после голосования о смене главного контрибьютора PyroCMS, но я все еще могу сказать пару слов о PSR нумерации.
 
-This is not like [The Neverending Muppet Debate of PHP 6 v PHP 7](/php/2014/07/23/neverending-muppet-debate-of-php-6-v-php-7/), despite it being the first thought to pop into many peoples heads. Instead, this is down to the [Workflow Bylaw](https://github.com/php-fig/fig-standards/blob/master/bylaws/004-psr-workflow.md) I put into place last year.
+Сразу же стоит отметить, что это не похоже на [бесконечные дебаты "PHP6 vs PHP7"](https://philsturgeon.uk/php/2014/07/23/neverending-muppet-debate-of-php-6-v-php-7/), как может показаться на первый взгляд. Предвосхищая подобные случаи был создан специальный [Wokrflow-устав](https://github.com/php-fig/fig-standards/blob/master/bylaws/004-psr-workflow.md) для работы над черновиками будущих PSR.
 
-PSR generation in the FIG used to work like this:
+Раньше работа над PSR выглядела примерно так:
 
-*   **Squabble:** Fuck knows just keep changing stuff
-*   **Accepted:** Oh you were on holiday? Well… it’s done now, and it’s just `$new_id = end($psrs)->id + 1`
+* **Ссора:** Бл**ь, кто-то опять все поменял
+* **Принятие:** Ой, вы были в отпуске? Ну... там приняли пару стандартов, и теперь наш будет просто `$new_id = end($psrs)->id + 1`
 
-Now, with the new workflow, it looks more like this:
+Теперь, с новым рабочим процессом, это выглядит так:
 
-*   **Pre-Draft:** Random markdown on the Internet and nobody cares
-*   **Draft:** The FIG will definitely get to work on this and see what happens. Lets give it a number now
-*   **Review:** Time to check it out Internet, it _should not_ change too much now without going back to Draft
-*   **Accepted:** Done, it passed the vote! Whatever number it was, it still is
+* **Пре-черновик:** Случайные наброски в интернете, всем наплевать
+* **Черновик:** FIG обязательно поработает над этим, чтобы посмотреть что может получиться. Давайте дадим ему номер
+* **Обсуждение:** Время показать наработки миру, _не следует_ вносить слишком большие изменения, в ином случае лучше вернуться к Черновику
+* **Принятие:** Готово! Выдвинули на голосование. Что бы ни произошло, номер по-прежнему остается за проектом
 
-Other than the few extra stages, the main difference is that something doesn’t have to be completely finished before it gets a number.
+Появилось несколько дополнительных этапов, ключевым отличием которых является присвоение номера **ДО** принятия черновика.
 
-At first, that might seem a little complicated, but it is exactly how [PEPs](https://www.python.org/dev/peps/) are done in Python. Just like Python, PSRs have an index [in Git](https://github.com/php-fig/fig-standards/blob/master/index.md), which is also displayed [on the website](http://www.php-fig.org/psr/) for users to see.
+Поначалу это может показаться немного сложным, но именно так сделаны [`PEPs`](https://www.python.org/dev/peps/) в Python. Также как и в Python, `PSRs` имеют [индекс в git](https://github.com/php-fig/fig-standards/blob/master/index.md), также [отображаемый на сайте](http://www.php-fig.org/psr/), для пользователей.
 
-Python do it, great, but _why_ does this help?
+Python выбрал такой подход, отлично, но _почему_ это работает?
 
-Initially the FIG was only working on one PSR at a time. Sure, PSR-1 and PSR-2 landed at the same time, but that was only because PSR-2 was split off from PSR-1 to make PSR-1 a bit less controversial. They were not meant to be two different things at inception.
+Изначально FIG работал только над одним PSR одновременно. Конечно, `PSR-1` и `PSR-2` вышли одновременно, но только потому, что `PSR-2` откололся от `PSR-1`, сделав `PSR-1` немного менее спорным. Они не были предназначены для разных вещей в тот момент, когда зародились.
 
 ## Nicknames are weird
 
