@@ -44,15 +44,15 @@ Python выбрал такой подход, отлично, но _почему_
 
 Идентификатор значения не имеет.
 
-## But what if PSR-5 never comes out?!
+## А что если PSR-5 никогда не выйдет?!
 
-Then PSR-5 will remain in Draft or whatever status it is in until somebody decides to have another go.
+Тогда `PSR-5` останется в статусе Черновика до тех пор, пока кто-нибудь не решит продолжить работу или начать с начала.
 
-Even if PSR-1023482 just came out in the year 2050, PSR-5 could happily make its way to the stage. There is no semantic meaning to the order of these numbers, even though a lot of people inferred meaning from 0, 1, 2 being so closely related.
+Даже если `PSR-1023482` выйдет в 2050 году, `PSR-5` был бы счастлив проделать путь к выходу в свет. Нет никакого семантического смысла в порядке цифр, хотя людям кажется, что 0, 1, 2 так тесно связаны между собой.
 
-We have near unlimited integers to use for these things, so worrying about 5 being a missed opportunity is just not a valid concern, especially when it could come back later.
+У нас есть почти неограниченное количество целых чисел для выпуска новых стандартов, так что беспокоиться о том, что пропустили пятерку - это не веский аргумент, особенно с учетом, что он может вернуться позже.
 
-PSR-8 is a dead number. It is assigned to the silly April Fools joke from 2014: [Huggable Interface](https://github.com/php-fig/fig-standards/blob/master/proposed/psr-8-hug/psr-8-hug.md). PSR-8 will never be anything else. It will never be useful. It will _hopefully_ never be accepted.
+`PSR-8` - мертвый номер. Он предназначался для глупой первоапрельской шутки в 2014м: [Huggable Interface](https://github.com/php-fig/fig-standards/blob/master/proposed/psr-8-hug/psr-8-hug.md). `PSR-8` никогда не станет чем-то другим. Он никогда не будет полезным. И никогда не будет принят.
 
 ## Fingers crossed for PSR-7
 
