@@ -129,9 +129,9 @@ $phql = "SELECT *
 $posts = $modelsManager->executeQuery($phql, ['pattern' => $pattern]);
 ```
 
-#### Improvements in Subqueries
+### Улучшения в подзапросах
 
-In Phalcon 2.0.2 subqueries were introduced in PHQL. Support for this feature had been improved in 2.0.3 by introducing the EXISTS operator:
+В Phalcon 2.0.2 были введены подзапросы PHQL. Поддержка этой функции была улучшена в 2.0.3 путем введения оператора EXISTS:
 
 ```php
 $phql = "SELECT c.* 
