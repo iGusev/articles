@@ -4,7 +4,7 @@ https://blog.phalconphp.com/post/phalcon-2-0-3-released
 
 В рамках нашего расписания регулярных релизов, мы рады сообщить, что Phalcon 2.0.3 был выпущен!
 
-Эта версия содержит множество исправлений, а также новую функциональность, востребованную сообществом.
+Эта версия содержит множество исправлений, а также новые возможности, основанные на фидбеке сообщества.
 
 ## Изменения
 
@@ -15,9 +15,9 @@ https://blog.phalconphp.com/post/phalcon-2-0-3-released
 * Исправлена ошибка, добавляющая двойной `?` в `Mvc\Url::get` при использовании параметров [#10421](https://github.com/phalcon/cphalcon/issues/10421)
 * Строковые атрибуты в моделях теперь имеют опциональную поддержку пустых значений строки [#440](https://github.com/phalcon/cphalcon/issues/440)
 * Добавлена возможность возвращать SQL, генерируемый в экземплярах `Mvc\Model\Query` [#1908](https://github.com/phalcon/cphalcon/issues/1908)
-* Исправление некорректно генерируемого SELECT в `Phalcon\Db\Dialect::select()` [#10439](https://github.com/phalcon/cphalcon/issues/10439)
+* Исправление некорректно генерируемого запроса в `Phalcon\Db\Dialect::select()` [#10439](https://github.com/phalcon/cphalcon/issues/10439)
 * Добавлена поддержка типа Double в MySQL
-* `Phalcon\Tag\Select` теперь обрабатывает массив значений в виде строк избегая принятия нуля за пустую строку [#2921](https://github.com/phalcon/cphalcon/issues/2921)
+* `Phalcon\Tag\Select` теперь обрабатывает массив значений строк, избегая принятия нуля за пустую строку [#2921](https://github.com/phalcon/cphalcon/issues/2921)
 * PHQL теперь поддерживает выражения CASE/WHEN/ELSE [#651](https://github.com/phalcon/cphalcon/issues/651)
 * Исправлена ошибка, возникающая при добавлении нестроковых значений в `Phalcon\Crypt::encrypt` из `Phalcon\Http\Cookies`
 * Исправлена ошибка непередачи имени схемы (PostgreSQL)
@@ -54,7 +54,7 @@ $data = $this->modelsManager->executeQuery("
 ");
 ```
 
-Определения псевдонимов в менеджере моделей:
+Определение псевдонимов в менеджере моделей:
 
 ```php
 use Phalcon\Mvc\Model\Manager as ModelsManager;
@@ -87,7 +87,7 @@ $data = $this->modelsManager->executeQuery("
 
 ### Функции пользовательского диалекта
 
-Эта новая функоциональность поможет вам расширить PHQL с помощью пользовательских функций так, как вам необходимо. В следующем примере мы реализуем поддержку MATCH/BINARY из MySQL. Прежде всего вы должны инстанцировать SQL диалект:
+Эта новая функоциональность поможет вам расширить PHQL с помощью пользовательских функций так как вам необходимо. В следующем примере мы реализуем поддержку MATCH/BINARY из MySQL. Прежде всего вы должны инстанцировать SQL диалект:
 
 ```php
 use Phalcon\Db\Dialect\MySQL as SqlDialect;
@@ -173,7 +173,7 @@ zephir fullclean
 zephir build
 ```
 
-Обратите внимание, что при запуске установочный скрипт заменит уже установленную версию Phalcon.
+_Обратите внимание, что при запуске установочный скрипт заменит уже установленную версию Phalcon._
 
 DLL для Windows доступны на [странице загрузке](http://phalconphp.com/en/download/windows).
 
