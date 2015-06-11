@@ -85,9 +85,9 @@ $data = $this->modelsManager->executeQuery("
 ");
 ```
 
-#### Custom Dialect Functions
+### Функции пользовательского диалекта
 
-This new functionality will help you to extend PHQL as you need using custom functions. In the following example we're going to implement the MySQL's extension MATCH/BINARY. First of all you have to instantiate the SQL dialect
+Эта новая функоциональность поможет вам расширить PHQL с помощью пользовательских функций так, как вам необходимо. В следующем примере мы реализуем поддержку MATCH/BINARY из MySQL. Прежде всего вы должны инстанцировать SQL диалект:
 
 ```php
 use Phalcon\Db\Dialect\MySQL as SqlDialect;
@@ -120,7 +120,7 @@ $connection = new Connection(
 );
 ```
 
-Now you can use this function in PHQL and it internally translates to the right SQL using the custom function:
+Теперь вы можете использовать эту функцию в PHQL и он транслирует ее в правильный SQL:
 
 ```php
 $phql = "SELECT * 
