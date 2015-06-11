@@ -46,7 +46,7 @@ $robots = $this->modelsManager->executeQuery("
 Если вы используете пространства имен для организации ваших моделей, вы нередко оказывались в ситуации, когда для простой ссылки на модель необходимо набирать длинный namespace. Теперь вы можете добавлять псевдонимы для существующих пространств имен, ускоряя вашу разработку:
 
 ```php
-// Before
+// До
 $data = $this->modelsManager->executeQuery("
     SELECT r.*, rp.*
     FROM Store\Backend\Models\Robots AS r
@@ -77,7 +77,7 @@ $di->set(
 И в запросах:
 
 ```php
-// After
+// После
 $data = $this->modelsManager->executeQuery("
     SELECT r.*, rp.*
     FROM bm:Robots AS r
@@ -95,7 +95,7 @@ use Phalcon\Db\Adapter\Pdo\MySQL as Connection;
 
 $dialect = new SqlDialect();
 
-// Register a new function called MATCH_AGAINST
+// Регистрация новой функции MATCH_AGAINST
 $dialect->registerCustomFunction(
     'MATCH_AGAINST', 
     function($dialect, $expression) {
@@ -108,7 +108,7 @@ $dialect->registerCustomFunction(
     }
 );
 
-// The dialect must be passed in the connection constructor
+// Диалект должен быть передан в конструктор соединения
 $connection = new Connection(
     [
         "host"          => "localhost",
