@@ -41,9 +41,9 @@ $robots = $this->modelsManager->executeQuery("
 ");
 ```
 
-#### Namespace Aliases
+## Псевдонимы для Namespace
 
-If you are using namespaces to organize your models, you will often find yourself typing a long namespaced string to just reference one of your models. By using this feature, you can add aliases to existing namespaces, which will speed up development time:
+Если вы используете пространства имен для организации ваших моделей, вы нередко оказывались в ситуации, когда для простой ссылки на модель необходимо набирать длинный namespace. Теперь вы можете добавлять псевдонимы для существующих пространств имен, ускоряя вашу разработку:
 
 ```php
 // Before
@@ -54,7 +54,7 @@ $data = $this->modelsManager->executeQuery("
 ");
 ```
 
-Define aliases in the models manager:
+Определения псевдонимов в менеджере моделей:
 
 ```php
 use Phalcon\Mvc\Model\Manager as ModelsManager;
@@ -74,7 +74,7 @@ $di->set(
 );
 ```
 
-And in the queries:
+И в запросах:
 
 ```php
 // After
