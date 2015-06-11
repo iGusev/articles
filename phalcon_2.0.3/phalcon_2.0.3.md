@@ -2,9 +2,9 @@
 https://blog.phalconphp.com/post/phalcon-2-0-3-released
 
 
-As part of our regular release schedule, we are happy to announce that Phalcon 2.0.3 has been released!
+В рамках нашего расписания регулярных релизов, мы рады сообщить, что Phalcon 2.0.3 был выпущен!
 
-This version contains many bug fixes as well as new functionality that derived from community NFRs.
+Эта версия содержит множество исправлений, а также новую функциональность, востребованную сообществом.
 
 ### Changes
 
