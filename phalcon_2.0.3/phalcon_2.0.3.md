@@ -23,11 +23,11 @@ https://blog.phalconphp.com/post/phalcon-2-0-3-released
 * Исправлена ошибка непередачи имени схемы (PostgreSQL)
 * Атрибут `persistent` был удален из DNS-атрибутов для PDO соединений, в целях избежания ошибок в PostgreSQL [#10484](https://github.com/phalcon/cphalcon/issues/10484)
 
-### Highlights
+## Основные моменты
 
-#### Support for CASE/WHEN/ELSE
+### Поддержка CASE/WHEN/ELSE
 
-Now `CASE/WHEN/ELSE` is available in [PHQL](https://docs.phalconphp.com/en/latest/reference/phql.html) expressions:
+Теперь выражения `CASE/WHEN/ELSE` доступны в [PHQL](https://docs.phalconphp.com/en/latest/reference/phql.html):
 
 ```php
 $robots = $this->modelsManager->executeQuery("
