@@ -1,0 +1,167 @@
+В рамках нашего расписания регулярных релизов, мы рады сообщить, что Phalcon 2.0.3 был выпущен!
+
+Эта версия содержит множество исправлений, а также новые возможности, основанные на фидбеке сообщества.
+
+<h4>Изменения</h4>
+<ul>
+<li>Реализованы псевдонимы для namespace в PHQL</li>
+<li>Возможность определять должен ли виртуальный внешний ключ игнорировать `null`-значения или нет</li>
+<li>Добавлена поддержка `Phalcon\Mvc\Collection` в поведениях (Behaviours)</li>
+<li>Добавлены поведения `SoftDelete` и `Timestampable` в коллекциях</li>
+<li>Исправлена ошибка, добавляющая двойной `?` в `Mvc\Url::get` при использовании параметров <a href="https://github.com/phalcon/cphalcon/issues/10421">#10421</a></li>
+<li>Строковые атрибуты в моделях теперь имеют опциональную поддержку пустых значений строки <a href="https://github.com/phalcon/cphalcon/issues/440">#440</a></li>
+<li>Добавлена возможность возвращать SQL, генерируемый в экземплярах `Mvc\Model\Query` <a href="https://github.com/phalcon/cphalcon/issues/1908">#1908</a></li>
+<li>Исправление некорректно генерируемого запроса в `Phalcon\Db\Dialect::select()` <a href="https://github.com/phalcon/cphalcon/issues/10439">#10439</a></li>
+<li>Добавлена поддержка типа Double в MySQL</li>
+<li>`Phalcon\Tag\Select` теперь обрабатывает массив значений строк, избегая принятия нуля за пустую строку <a href="https://github.com/phalcon/cphalcon/issues/2921">#2921</a></li>
+<li>PHQL теперь поддерживает выражения CASE/WHEN/ELSE <a href="https://github.com/phalcon/cphalcon/issues/651">#651</a></li>
+<li>Исправлена ошибка, возникающая при добавлении нестроковых значений в `Phalcon\Crypt::encrypt` из `Phalcon\Http\Cookies`</li>
+<li>Исправлена ошибка непередачи имени схемы (PostgreSQL)</li>
+<li>Атрибут `persistent` был удален из DNS-атрибутов для PDO соединений, в целях избежания ошибок в PostgreSQL <a href="https://github.com/phalcon/cphalcon/issues/10484">#10484</a></li>
+</ul><habracut/>
+<h4>Основные моменты</h4>
+<h5>Поддержка CASE/WHEN/ELSE</h5>
+Теперь выражения `CASE/WHEN/ELSE` доступны в <a href="https://docs.phalconphp.com/en/latest/reference/phql.html">PHQL</a>:
+
+<source lang="php">
+$robots = $this->modelsManager->executeQuery("
+    SELECT 
+        CASE r.Type
+            WHEN 'Mechanical' THEN 1
+            WHEN 'Virtual' THEN 2
+            ELSE 3
+        END 
+    FROM Store\Robots
+");
+</source>
+<h5>Псевдонимы для Namespace</h5>
+Если вы используете пространства имен для организации ваших моделей, вы нередко оказывались в ситуации, когда для простой ссылки на модель необходимо набирать длинный namespace. Теперь вы можете добавлять псевдонимы для существующих пространств имен, ускоряя вашу разработку:
+
+<source lang="php">
+// До
+$data = $this->modelsManager->executeQuery("
+    SELECT r.*, rp.*
+    FROM Store\Backend\Models\Robots AS r
+    JOIN Store\Backend\Models\RobotsParts AS rp
+");
+</source>
+Определение псевдонимов в менеджере моделей:
+
+<source lang="php">
+use Phalcon\Mvc\Model\Manager as ModelsManager;
+
+// ...
+
+$di->set(
+    'modelsManager', 
+    function() {
+        $modelsManager = new ModelsManager();
+        $modelsManager->registerNamespaceAlias(
+            'bm',
+             'Store\Backend\Models\Robots'
+         );
+        return $modelsManager;
+    }
+);
+</source>
+И в запросах:
+
+<source lang="php">
+// После
+$data = $this->modelsManager->executeQuery("
+    SELECT r.*, rp.*
+    FROM bm:Robots AS r
+    JOIN bm:RobotsParts AS rp
+");
+</source>
+<h5>Функции пользовательского диалекта</h5>
+Эта новая функоциональность поможет вам расширить PHQL с помощью пользовательских функций так как вам необходимо. В следующем примере мы реализуем поддержку MATCH/BINARY из MySQL. Прежде всего вы должны инстанцировать SQL диалект:
+
+<source lang="php">
+use Phalcon\Db\Dialect\MySQL as SqlDialect;
+use Phalcon\Db\Adapter\Pdo\MySQL as Connection;
+
+$dialect = new SqlDialect();
+
+// Register a new function called MATCH_AGAINST
+$dialect->registerCustomFunction(
+    'MATCH_AGAINST', 
+    function($dialect, $expression) {
+        $arguments = $expression['arguments'];
+        return sprintf(
+            " MATCH (%s) AGAINST (%)",
+            $dialect->getSqlExpression($arguments[0]),
+            $dialect->getSqlExpression($arguments[1])
+         );
+    }
+);
+
+// Диалект должен быть передан в конструктор соединения
+$connection = new Connection(
+    [
+        "host"          => "localhost",
+        "username"      => "root",
+        "password"      => "",
+        "dbname"        => "test",
+        "dialectClass"  => $dialect
+    ]
+);
+</source>
+Теперь вы можете использовать эту функцию в PHQL и он транслирует ее в правильный SQL:
+
+<source lang="php">
+$phql = "SELECT * 
+   FROM Posts 
+   WHERE MATCH_AGAINST(title, :pattern:)";
+$posts = $modelsManager->executeQuery($phql, ['pattern' => $pattern]);
+</source>
+<h5>Улучшения в подзапросах</h5>
+В Phalcon 2.0.2 были введены подзапросы PHQL. Поддержка этой функции была улучшена в 2.0.3 путем введения оператора EXISTS:
+
+<source lang="php">
+$phql = "SELECT c.* 
+  FROM Shop\Cars c
+  WHERE EXISTS (
+     SELECT id 
+     FROM Shop\Brands b 
+     WHERE b.id = c.brandId
+  )";
+$cars = $this->modelsManager->executeQuery($phql);
+</source>
+<h4>Обновление/Установка</h4>
+Данная версия может быть установлена из master ветки. Если у вас не установлен Zephir, выполните следующие команды:
+
+<source lang="bash">
+git clone http://github.com/phalcon/cphalcon
+git checkout master
+cd ext
+sudo ./install
+</source>
+Стандартный способ установки также работает:
+
+<source lang="bash">
+git clone http://github.com/phalcon/cphalcon
+git checkout master
+cd build
+sudo ./install
+</source>
+Если у вас уже установлен Zephir:
+
+<source lang="bash">
+git clone http://github.com/phalcon/cphalcon
+git checkout master
+zephir fullclean
+zephir build
+</source>
+<i>Обратите внимание, что при запуске установочный скрипт заменит уже установленную версию Phalcon.</i>
+
+DLL для Windows доступны на <a href="http://phalconphp.com/en/download/windows">странице загрузке</a>.
+
+Смотрите <a href="https://blog.phalconphp.com/post/guide-upgrading-to-phalcon-2">руководство по обновлению</a>, если хотите обновиться до Phalcon 2.0.x с 1.3.x.
+
+<ul>
+<li><a href="https://docs.phalconphp.com">Документация</a></li>
+<li><a href="https://api.phalconphp.com/">API</a> (Спасибо <a href="https://github.com/gsouf">gsouf</a>)</li>
+</ul>
+<h4>Благодарности</h4>
+Спасибо всем, кто принималь участие в создании этой версии: и контрибьюторам и сообществу за обратную связь!
