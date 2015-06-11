@@ -182,6 +182,6 @@ DLL для Windows доступны на [странице загрузке](htt
 *   [Документация](https://docs.phalconphp.com)
 *   [API](https://api.phalconphp.com/) (Спасибо [gsouf](https://github.com/gsouf))
 
-## Thanks
+## Благодарности
 
-Thanks to everyone involved in making this version: collaborators and as well to the community for their continuous input and feedback!
+Спасибо всем, кто принималь участие в создании этой версии: и контрибьюторам и сообществу, за веру в нас и обратную связь!
