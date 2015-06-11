@@ -6,22 +6,22 @@ https://blog.phalconphp.com/post/phalcon-2-0-3-released
 
 Эта версия содержит множество исправлений, а также новую функциональность, востребованную сообществом.
 
-### Changes
+## Изменения
 
-*   Implemented Namespace aliases in PHQL
-*   Ability to define if a virtual foreign key must ignore `null` values or not
-*   Added support for Behaviors in `Phalcon\Mvc\Collection`
-*   Added `SoftDelete` and `Timestampable` behaviors to Collections
-*   Fixed bug that added two ? in `Mvc\Url::get` when using query parameters [#10421](https://github.com/phalcon/cphalcon/issues/10421)
-*   String attributes in models can be marked to allow empty string values [#440](https://github.com/phalcon/cphalcon/issues/440)
-*   Added an option to return the SQL to be generated from a `Mvc\Model\Query` instance [#1908](https://github.com/phalcon/cphalcon/issues/1908)
-*   Fix doesn't correct column domain in `Phalcon\Db\Dialect::select()` [#10439](https://github.com/phalcon/cphalcon/issues/10439)
-*   Added support for DOUBLE type in MySQL
-*   `Phalcon\Tag\Select` now handles array values as strings avoiding that zero will be handled as empty string [#2921](https://github.com/phalcon/cphalcon/issues/2921)
-*   PHQL now supports CASE/WHEN/ELSE expressions [#651](https://github.com/phalcon/cphalcon/issues/651)
-*   Fixed bug that passes non-string values to `Phalcon\Crypt::encrypt` from `Phalcon\Http\Cookies`
-*   Fixed bug that didn't pass the schema name in the sequence name (PostgreSQL)
-*   Attribute persistent is now removed from the DNS attributes in PDO connections to avoid errors in PostgreSQL [#10484](https://github.com/phalcon/cphalcon/issues/10484)
+* Реализованы псевдонимы для namespace в PHQL
+* Возможность определять должен ли виртуальный внешний ключ игнорировать `null`-значения или нет
+* Добавлена поддержка `Phalcon\Mvc\Collection` в поведениях (Behaviours)
+* Добавлены поведения `SoftDelete` и `Timestampable` в коллекциях
+* Исправлена ошибка, добавляющая двойной `?` в `Mvc\Url::get` при использовании параметров [#10421](https://github.com/phalcon/cphalcon/issues/10421)
+* Строковые атрибуты в моделях теперь имеют опциональную поддержку пустых значений строки [#440](https://github.com/phalcon/cphalcon/issues/440)
+* Добавлена возможность возвращать SQL, генерируемый в экземплярах `Mvc\Model\Query` [#1908](https://github.com/phalcon/cphalcon/issues/1908)
+* Исправление некорректно генерируемого SELECT в `Phalcon\Db\Dialect::select()` [#10439](https://github.com/phalcon/cphalcon/issues/10439)
+* Добавлена поддержка типа Double в MySQL
+* `Phalcon\Tag\Select` теперь обрабатывает массив значений в виде строк избегая принятия нуля за пустую строку [#2921](https://github.com/phalcon/cphalcon/issues/2921)
+* PHQL теперь поддерживает выражения CASE/WHEN/ELSE [#651](https://github.com/phalcon/cphalcon/issues/651)
+* Исправлена ошибка, возникающая при добавлении нестроковых значений в `Phalcon\Crypt::encrypt` из `Phalcon\Http\Cookies`
+* Исправлена ошибка непередачи имени схемы (PostgreSQL)
+* Атрибут `persistent` был удален из DNS-атрибутов для PDO соединений, в целях избежания ошибок в PostgreSQL [#10484](https://github.com/phalcon/cphalcon/issues/10484)
 
 ### Highlights
 
