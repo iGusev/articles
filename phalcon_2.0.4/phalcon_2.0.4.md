@@ -1,9 +1,9 @@
 >Phalcon 2.0.4 released
 https://blog.phalconphp.com/post/phalcon-2-0-4-released
 
-As part of our three to five weeks minor release schedule, we are excited to announce that Phalcon 2.0.4 has been released!
+В рамках графика наших трех-пятинедельных минорных релизов, мы рады сообщить, что вышел Phalcon 2.0.4!
 
-The number of improvements and bug fixes are a lot more compared to other releases in the 2.0.x series:
+Число улучшений и исправлений значительно увеличилось по сравнению с другими релизами 2.0.x:
 
 ### Changes
 
