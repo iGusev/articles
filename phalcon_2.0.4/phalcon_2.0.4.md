@@ -7,14 +7,10 @@ https://blog.phalconphp.com/post/phalcon-2-0-4-released
 
 ## Изменения
 
-*   Испавлен баг в  `Phalcon\Mvc\Model::update()` ошибочно выдающий исключение, когда запись действительно существует
+*   Испавлен баг в `Phalcon\Mvc\Model::update()` ошибочно выдающий исключение, когда запись действительно существует
 *   Теперь ссылки в `Phalcon\Debug` указывают на [https://api.phalconphp.com](https://api.phalconphp.com) вместо [http://docs.phalconphp.com](http://docs.phalconphp.com)
-
-*   Implemented a more versatile way to assign variables in Volt allowing to assign properties and array indexes
-*   Реализован универсальный способ назначения переменных в Volt, позволяющий назначать переменные и массив индексов
-
-
-*   Улучшены макросы в Volt через использование анонимных функций, позволяющих связывать адаптер объекта и DI-сервисы вместе
+*   Реализован универсальный способ назначения переменных в Volt, позволяющий назначать переменные и массивы индексов
+*   Улучшены макросы в Volt через использование анонимных функций, позволяющих связывать вместе адаптер объекта и DI-сервисы
 *   Исправлена генерация и валидация стандартных параметров в макросах Volt
 *   Добавлен метод `Phalcon\Assets\Manager::getCollections()` возвращающий все зарегистрированные коллекции [#2488](https://github.com/phalcon/cphalcon/pull/2488)
 *   Теперь `Phalcon\Mvc\Url::getStatic()` генерирует URLы из роутинга
@@ -25,7 +21,7 @@ https://blog.phalconphp.com/post/phalcon-2-0-4-released
 *   Автоматическая привязка Large Object data (LOB) в ORM
 *   Поддержка для MySQL типа `BIT` c привязкой в качестве `boolean`
 *   Добавлен метод `Phalcon\Flash\Direct::output()` позволяющий разместить flash-сообщения в определенном месте шаблона [#629](https://github.com/phalcon/cphalcon/pull/629)
-*   Добавлена опция 'autoescape', которая позволяет включить на глобальном уровне autoescape в любом Volt-шаблоне
+*   Добавлена опция `autoescape`, которая позволяет включить на глобальном уровне autoescape в любом Volt-шаблоне
 *   Добавлены `readAttribute`/`writeAttribute` в `Phalcon\Mvc\Collection\Document`
 *   Добавлен `toArray` в `Phalcon\Mvc\Collection\Document`
 *   Глобальный параметр `db.force_casting` теперь позволяет форсировать приведение указанных типов
@@ -139,7 +135,9 @@ $robots = $modelsManager->executeQuery(
 
 Такой код выбросит следующее исключение:
 
-`` Fatal error: Uncaught exception 'PDOException' with message 'SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''100'' at line 1' in /Users/scott/demo.php:78 ``
+```
+Fatal error: Uncaught exception 'PDOException' with message 'SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''100'' at line 1' in /Users/scott/demo.php:78
+```
 
 Это происходит потому, что 100 - строковая переменная. Поправить легко, нужно всего лишь привести тип к int:
 
