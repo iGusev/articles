@@ -188,9 +188,9 @@ if ($robot->id === 11) {
 }
 ```
 
-#### Relationships with conditionals
+### Связи с условными операторами
 
-With 2.0.4 you can create relationships based on conditionals. Phalcon will take care of the rest :)
+С 2.0.4 вы можете создать отношения, основанные на условных операторах. Phalcon будет заботиться об остальном :)
 
 ```php
 // Companies have invoices issued to them (paid/unpaid)
