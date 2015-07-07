@@ -1,0 +1,342 @@
+В рамках графика наших трех-пятинедельных минорных релизов, мы рады сообщить, что вышел Phalcon 2.0.4!
+
+Число улучшений и исправлений значительно увеличилось по сравнению с другими релизами 2.0.x:
+
+<h4>Изменения</h4>
+<ul>
+    <li>Испавлен баг в  <code>Phalcon\Mvc\Model::update()</code> ошибочно выдающий исключение, когда запись действительно существует</li>
+    <li>Теперь ссылки в <code>Phalcon\Debug</code> указывают на <a href="https://api.phalconphp.com">https://api.phalconphp.com</a> вместо <a href="http://docs.phalconphp.com">http://docs.phalconphp.com</a></li>
+    <li>Реализован универсальный способ назначения переменных в Volt, позволяющий назначать переменные и массивы индексов</li>
+    <li>Улучшены макросы в Volt через использование анонимных функций, позволяющих связывать вместе адаптер объекта и DI-сервисы</li>
+    <li>Исправлена генерация и валидация стандартных параметров в макросах Volt</li>
+    <li>Добавлен метод <code>Phalcon\Assets\Manager::getCollections()</code> возвращающий все зарегистрированные коллекции <a href="https://github.com/phalcon/cphalcon/pull/2488">#2488</a></li>
+    <li>Теперь <code>Phalcon\Mvc\Url::getStatic()</code> генерирует URLы из роутинга</li>
+    <li>Добавлен <code>Phalcon\Mvc\EntityInterface</code> для общей абстракции над <code>Phalcon\Mvc\Model</code> и <code>Phalcon\Mvc\Collection</code>. Этот интерфейс поддерживает <code>Mvc\Model\Validators</code> для использования в <code>Mvc\Collection</code></li>
+    <li>Добавлен метод <code>Phalcon\Session\Adapter::setName()</code> для изменения имени сессии</li>
+    <li>Добавлена поддержка колонки <code>BIGINT</code> в <code>Phalcon\Db</code></li>
+    <li>Добавлены новые типы <code>Phalcon\Db\Column::BLOB</code> и <code>Phalcon\Db\Column::DOUBLE</code> <a href="https://github.com/phalcon/cphalcon/pull/10506">#10506</a></li>
+    <li>Автоматическая привязка Large Object data (LOB) в ORM</li>
+    <li>Поддержка для MySQL типа <code>BIT</code> c привязкой в качестве <code>boolean</code></li>
+    <li>Добавлен метод <code>Phalcon\Flash\Direct::output()</code> позволяющий разместить flash-сообщения в определенном месте шаблона <a href="https://github.com/phalcon/cphalcon/pull/629">#629</a></li>
+    <li>Добавлена опция <code>autoescape</code>, которая позволяет включить на глобальном уровне autoescape в любом Volt-шаблоне</li>
+    <li>Добавлены <code>readAttribute</code>/<code>writeAttribute</code> в <code>Phalcon\Mvc\Collection\Document</code></li>
+    <li>Добавлен <code>toArray</code> в <code>Phalcon\Mvc\Collection\Document</code></li>
+    <li>Глобальный параметр <code>db.force_casting</code> теперь позволяет форсировать приведение указанных типов</li>
+    <li>Введен новый синтаксис в PHQL, позволяющий установить тип: <code>{name:str}</code> или <code>{names:array}</code></li>
+    <li>Теперь вы можете работать с массивами в качестве параметров в PHQL</li>
+    <li>Глобальный параметр <code>orm.cast_on_hydrate</code> позволяет отдавать атрибуты с оригинальными типами из сопоставленной таблицы вместо использования строк</li>
+    <li>Значения в <code>LIMIT</code>/<code>OFFSET</code> теперь возможно добавлять через привязанные параметры в PHQL</li>
+    <li>Поддержка позднего статического связывания в Simple/Complex результатах для переопределения <code>Mvc\Model::cloneResultMap</code></li>
+    <li>Добавлен метод <code>distinct()</code> в <code>Phalcon\Mvc\Model\Criteria</code> <a href="https://github.com/phalcon/cphalcon/issues/10536">#10536</a></li>
+    <li>Добавлен глобальный параметр <code>orm.ignore_unknown_columns</code> для игнорирования неучтенных колонок в ORM. Это убирает лишние вспомогательные столбцы, используемые в <code>Db\Adapter\Pdo\Oracle</code></li>
+    <li>Добавлена поддержка для <code>afterFetch</code> в <code>Mvc\Collection</code></li>
+    <li>Добавлен параметр <code>beforeMatch</code> в <code>@Route</code> аннотацию из <code>Mvc\Router\Annotations</code></li>
+    <li>Добавлены <code>groupBy</code>/<code>getGroupBy</code>/<code>having</code>/<code>getHaving</code> в <code>Mvc\Model\Criteria</code></li>
+    <li><code>Phalcon\Mvc\Model::count()</code> теперь возвращает значение с типом int</li>
+    <li>Удален <code>__construct</code> из <code>Phalcon\Mvc\View\EngineInterface</code></li>
+    <li>Добавлен метод <code>Phalcon\Debug\Dump::toJson()</code> для возврата значения в виде JSON с информацией о переменной</li>
+    <li>Экземпляры в <code>Phalcon\Di</code> строятся с использованием внутренних оптимизаторов вместо <code>\ReflectionClass</code> (PHP 5.6)</li>
+    <li>Добавлен <code>Phalcon\Mvc\Model\Validator\IP</code> из <code>phalcon/incubator</code></li>
+    <li>Добавлен возвращаемый параметр <code>defaultValue</code> в <code>Phalcon\Mvc\Model\Validator::getOption()</code></li>
+    <li>Теперь разработчики могут определять связи с помощью условных операторов</li>
+</ul><habracut/>
+<h4>Основные моменты</h4>
+<h5>Типизированные плейсхолдеры в ORM</h5>
+
+До этой версии, только стандартные плейсхолдеры (строки и численные) поддерживались в <a href="https://docs.phalconphp.com/en/latest/reference/phql.html">PHQL</a>. Они позволяли связать параметры для избежания SQL-инъекций:
+
+<source lang="php">
+$phql = "SELECT * FROM Store\Robots WHERE id > :id:";
+$robots = $this->modelsManager->executeQuery($phql, ['id' => 100]);
+</source>
+
+Впрочем, некоторые СУБД требуют дополнительных действий при использовании плейсхолдеров, таких как указание типа:
+
+<source lang="php">
+use Phalcon\Db\Column;
+
+// ...
+
+$phql = "SELECT * FROM Store\Robots LIMIT :number:";
+$robots = $this->modelsManager->executeQuery(
+    $phql,
+    ['number' => 10],
+    Column::BIND_PARAM_INT
+);
+</source>
+
+Для облегчения этой задачи Phalcon 2.0.4 вводит типизированные плейсхолдеры, работающие точно также как и раньше, но с возможностью указать тип:
+
+<source lang="php">
+$phql = "SELECT * FROM Store\Robots LIMIT {number:int}";
+$robots = $this->modelsManager->executeQuery(
+    $phql,
+    ['number' => 10]
+);
+
+$phql = "SELECT * FROM Store\Robots WHERE name <> {name:str}";
+$robots = $this->modelsManager->executeQuery(
+    $phql,
+    ['name' => $name]
+);
+</source>
+
+Вы можете также опустить указание типа если вам не нужно:
+
+<source lang="php">
+$phql = "SELECT * FROM Store\Robots WHERE name <> {name}";
+$robots = $this->modelsManager->executeQuery(
+    $phql,
+    ['name' => $name]
+);
+</source>
+
+Типизированные плейсхолдеры также более функциональны, так как теперь мы можем привязать статический массив без необходимости передавать каждый элемент отдельноб в качестве плейсхолдера:
+
+<source lang="php">
+$phql = "SELECT * FROM Store\Robots WHERE id IN ({ids:array})";
+$robots = $this->modelsManager->executeQuery(
+    $phql,
+    ['ids' => [1, 2, 3, 4]]
+);
+</source>
+
+Доступны следующие типы:
+<table>
+<thead>
+<tr>
+<th>Тип</th>
+<th>Константа типа</th>
+<th>Пример</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>str</td>
+<td><code>Column::BIND_PARAM_STR</code></td>
+<td><code>{name:str}</code></td>
+</tr>
+<tr>
+<td>int</td>
+<td><code>Column::BIND_PARAM_INT</code></td>
+<td><code>{number:int}</code></td>
+</tr>
+<tr>
+<td>double</td>
+<td><code>Column::BIND_PARAM_DECIMAL</code></td>
+<td><code>{price:double}</code></td>
+</tr>
+<tr>
+<td>bool</td>
+<td><code>Column::BIND_PARAM_BOOL</code></td>
+<td><code>{enabled:bool}</code></td>
+</tr>
+<tr>
+<td>blob</td>
+<td><code>Column::BIND_PARAM_BLOB</code></td>
+<td><code>{image:blob}</code></td>
+</tr>
+<tr>
+<td>null</td>
+<td><code>Column::BIND_PARAM_NULL</code></td>
+<td><code>{exists:null}</code></td>
+</tr>
+<tr>
+<td>array</td>
+<td>Array of <code>Column::BIND_PARAM_STR</code></td>
+<td><code>{codes:array}</code></td>
+</tr>
+<tr>
+<td>array-str</td>
+<td>Array of <code>Column::BIND_PARAM_STR</code></td>
+<td><code>{names:array}</code></td>
+</tr>
+<tr>
+<td>array-int</td>
+<td>Array of <code>Column::BIND_PARAM_INT</code></td>
+<td><code>{flags:array}</code></td>
+</tr>
+</tbody>
+</table>
+
+<h5>Валидация привязанных параметров</h5>
+
+По умолчанию привязанные к плейсхолдерам параметры не поддерживали указание типа, теперь же есть возможность проверять типы параметров прежде, чем начинать работу с PDO.
+
+Классической ситуацией, когда возникает проблема, является передача строки в плейсхолдер <code>LIMIT</code>/<code>OFFSET</code>:
+
+
+<source lang="php">
+$number = '100';
+$robots = $modelsManager->executeQuery(
+    'SELECT * FROM Some\Robots LIMIT {number:int}',
+    ['number' => $number]
+);
+</source>
+
+Такой код выбросит следующее исключение:
+
+</source>
+Fatal error: Uncaught exception 'PDOException' with message 'SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''100'' at line 1' in /Users/scott/demo.php:78
+</source>
+
+Это происходит потому, что 100 - строковая переменная. Поправить легко, нужно всего лишь привести тип к int:
+
+<source lang="php">
+$number = '100';
+$robots = $modelsManager->executeQuery(
+    'SELECT * FROM Some\Robots LIMIT {number:int}',
+    ['number' => (int) $number]
+);
+</source>
+
+Однако такое решение требует от разработчика особого внимания к работе с типами. Чтобы облегчить задачу и избежать неожиданных исключений можно заставить Phalcon делать эту работу за вас:
+
+<source lang="php">
+\Phalcon\Db::setup(['forceCasting' => true]);
+</source>
+
+Следующие действия выполняются согласно привязке указанного типа:
+
+<table>
+<thead>
+<tr>
+<th>Тип</th>
+<th>Действие</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Column::BIND_PARAM_STR</code></td>
+<td>Передает значение как нативный тип PHP string</td>
+</tr>
+<tr>
+<td><code>Column::BIND_PARAM_INT</code></td>
+<td>Передает значение как нативный тип PHP integer</td>
+</tr>
+<tr>
+<td><code>Column::BIND_PARAM_BOOL</code></td>
+<td>Передает значение как нативный тип PHP boolean</td>
+</tr>
+<tr>
+<td><code>Column::BIND_PARAM_DECIMAL</code></td>
+<td>Передает значение как нативный тип PHP double</td>
+</tr>
+</tbody>
+</table>
+
+<h5>Приведение типа в получаемых из PDO значениях</h5>
+Значения, возвращаемые из базы данных системы всегда передаются как строковые значения посредством PDO, независимо от того, принадлежит ли значение числовому или логическому типу данных столбца. Это происходит потому, что некоторые типы столбцов не могут быть представлены с помощью родных типов PHP вследствие ограничения их размера.
+
+Например, значение типа <code>BIGINT</code> в MySQL может хранить большие целые числа, которые нельзя представить в виде 32-битного целого в PHP. Из-за этого, PDO и ORM по умолчанию, выбирают безопасное решение и оставляют все значения в виде строк.
+
+Тем не менее, некоторые разработчики могут найти это неожиданным и неудобным. С версии Phalcon 2.0.4, вы можете настроить ОРМ для автоматического приведения типов к соответствующим примитивам PHP, при условии, что это безопасно:
+
+<source lang="php">
+\Phalcon\Mvc\Model::setup(['castOnHydrate' => true]);
+</source>
+
+Таким образом, вы можете использовать операторы строгого сравнения или делать предположения о типе переменных:
+
+<source lang="php">
+$robot = Robots::findFirst();
+if ($robot->id === 11) {
+    echo $robot->name;
+}
+</source>
+
+<h5>Связи с условными операторами</h5>
+
+С 2.0.4 вы можете создать отношения, основанные на условных операторах. Phalcon будет заботиться об остальном :)
+
+<source lang="php">
+// Companies have invoices issued to them (paid/unpaid)
+// Invoices model
+class Invoices extends Phalcon\Mvc\Model
+{
+    public function getSource()
+    {
+        return 'invoices';
+    }
+}
+
+// Companies model
+class Companies extends Phalcon\Mvc\Model
+{
+    public function getSource()
+    {
+        return 'companies';
+    }
+
+    public function initialize()
+    {
+        // All invoices relationship
+        $this->hasMany(
+            'id',
+            'Invoices',
+            'inv_id',
+            [
+                'alias' => 'invoices',
+                'reusable' => true,
+            ]
+        );
+
+        // Paid invoices relationship
+        $this->hasMany(
+            'id',
+            'Invoices',
+            'inv_id',
+            [
+                'alias'    => 'invoicesPaid',
+                'reusable' => true,
+                'params'   => [
+                    'conditions' => "inv_status = 'paid'"
+                ]
+            ]
+        );
+
+        // Unpaid invoices relationship
+        $this->hasMany(
+            'id',
+            'Invoices',
+            'inv_id',
+            [
+                'alias'    => 'invoicesUnpaid',
+                'reusable' => true,
+                'params'   => [
+                    'conditions' => "inv_status <> 'paid'"
+                ]
+            ]
+        );
+    }
+}
+</source>
+
+<h4>Обновление/Установка</h4>
+Данная версия может быть установлена из master ветки. Если у вас не установлен Zephir, выполните следующие команды:
+
+<source lang="bash">
+git clone http://github.com/phalcon/cphalcon
+git checkout master
+cd ext
+sudo ./install
+</source>
+
+Если у вас уже установлен Zephir:
+
+<source lang="bash">
+git clone http://github.com/phalcon/cphalcon
+git checkout master
+zephir fullclean
+zephir build
+</source>
+<i>Обратите внимание, что при запуске установочный скрипт заменит уже установленную версию Phalcon.</i>
+
+DLL для Windows доступны на <a href="http://phalconphp.com/en/download/windows">странице загрузке</a>.
+
+Смотрите <a href="https://blog.phalconphp.com/post/guide-upgrading-to-phalcon-2">руководство по обновлению</a>, если хотите обновиться до Phalcon 2.0.x с 1.3.x.
+
+<ul>
+<li><a href="https://docs.phalconphp.com">Документация</a></li>
+<li><a href="https://api.phalconphp.com/">API</a> (Спасибо <a href="https://github.com/gsouf">gsouf</a>)</li>
+</ul>
