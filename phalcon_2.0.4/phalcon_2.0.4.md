@@ -167,18 +167,19 @@ $robots = $modelsManager->executeQuery(
 | `Column::BIND_PARAM_BOOL`    | Передает значение как нативный тип PHP boolean   |
 | `Column::BIND_PARAM_DECIMAL` | Передает значение как нативный тип PHP double    |
 
+### Приведение типа в получаемых из PDO значениях
 
-Values returned from the database system are always represented as string values by PDO, no matter if the value belongs to a numerical or boolean type column. This happens because some column types cannot be represented with its corresponding PHP native types due to their size limitations.
+Значения, возвращаемые из базы данных системы всегда передаются как строковые значения посредством PDO, независимо от того, принадлежит ли значение числовому или логическому типу данных столбца. Это происходит потому, что некоторые типы столбцов не могут быть представлены с помощью родных типов PHP вследствие ограничения их размера.
 
-For instance, a `BIGINT` in MySQL can store large integer numbers that cannot be represented as a 32bit integer in PHP. Because of that, PDO and the ORM by default, make the safe decision of leaving all values as strings.
+Например, значение типа `BIGINT` в MySQL может хранить большие целые числа, которые нельзя представить в виде 32-битного целого в PHP. Из-за этого, PDO и ORM по умолчанию, выбирают безопасное решение и оставляют все значения в виде строк.
 
-However, some developers may find this unexpected and uncomfortable. From Phalcon 2.0.4, you can set up the ORM to automatically cast those types considered safe to their corresponding PHP native types:
+Тем не менее, некоторые разработчики могут найти это неожиданным и неудобным. С версии Phalcon 2.0.4, вы можете настроить ОРМ для автоматического приведения типов к соответствующим примитивам PHP, при условии, что это безопасно:
 
 ```php
 \Phalcon\Mvc\Model::setup(['castOnHydrate' => true]);
 ```
 
-This way you can use strict operators or make assumptions about the type of variables:
+Таким образом, вы можете использовать операторы строгого сравнения или делать предположения о типе переменных:
 
 ```php
 $robot = Robots::findFirst();
