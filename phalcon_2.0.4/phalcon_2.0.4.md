@@ -123,11 +123,11 @@ $robots = $this->modelsManager->executeQuery(
 | array-str  | Array of `Column::BIND_PARAM_STR`  | `{names:array}`   |
 | array-int  | Array of `Column::BIND_PARAM_INT`  | `{flags:array}`   |
 
-#### Cast bound parameters values
+### Валидация привязанных параметров
 
-By default, bound parameters aren't casted in the PHP userland to the specified bind types, this option allows you to make Phalcon cast values before bind them with PDO.
+По умолчанию привязанные к плейсхолдерам параметры не поддерживали указание типа, теперь же есть возможность проверять типы параметров прежде, чем начинать работу с PDO.
 
-A classic situation when this problem raises is passing a string in a `LIMIT`/`OFFSET` placeholder:
+Классической ситуацией, когда возникает проблема, является передача строки в плейсхолдер `LIMIT`/`OFFSET`:
 
 ```php
 $number = '100';
@@ -137,11 +137,11 @@ $robots = $modelsManager->executeQuery(
 );
 ```
 
-This causes the following exception:
+Такой код выбросит следующее исключение:
 
 `` Fatal error: Uncaught exception 'PDOException' with message 'SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''100'' at line 1' in /Users/scott/demo.php:78 ``
 
-This happens because 100 is a string variable. It is easily fixable by casting the value to integer first:
+Это происходит потому, что 100 - строковая переменная. Поправить легко, нужно всего лишь привести тип к int:
 
 ```php
 $number = '100';
@@ -151,22 +151,22 @@ $robots = $modelsManager->executeQuery(
 );
 ```
 
-However this solution requires that the developer pays special attention about how bound parameters are passed and their types. To make this task easier and avoid unexpected exceptions you can instruct Phalcon to do this casting for you:
+Однако такое решение требует от разработчика особого внимания к работе с типами. Чтобы облегчить задачу и избежать неожиданных исключений можно заставить Phalcon делать эту работу за вас:
 
 ```php
 \Phalcon\Db::setup(['forceCasting' => true]);
 ```
 
-The following actions are performed according to the bind type specified:
+Следующие действия выполняются согласно привязке указанного типа:
 
-| Bind Type                | Action                                 |
-|--------------------------|----------------------------------------|
-| Column::BINDPARAMSTR     | Cast the value as a native PHP string  |
-| Column::BINDPARAMINT     | Cast the value as a native PHP integer |
-| Column::BINDPARAMBOOL    | Cast the value as a native PHP boolean |
-| Column::BINDPARAMDECIMAL | Cast the value as a native PHP double  |
 
-#### Cast on Hydrate
+| Тип                          | Действие                                         |
+|------------------------------|--------------------------------------------------|
+| `Column::BIND_PARAM_STR`     | Передает значение как нативный тип PHP string    |
+| `Column::BIND_PARAM_INT`     | Передает значение как нативный тип PHP integer   |
+| `Column::BIND_PARAM_BOOL`    | Передает значение как нативный тип PHP boolean   |
+| `Column::BIND_PARAM_DECIMAL` | Передает значение как нативный тип PHP double    |
+
 
 Values returned from the database system are always represented as string values by PDO, no matter if the value belongs to a numerical or boolean type column. This happens because some column types cannot be represented with its corresponding PHP native types due to their size limitations.
 
