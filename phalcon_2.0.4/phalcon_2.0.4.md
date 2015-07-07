@@ -255,9 +255,9 @@ class Companies extends Phalcon\Mvc\Model
 }
 ```
 
-### Update/Upgrade
+## Обновление/Установка
 
-This version can be installed from the master branch, if you don't have Zephir installed follow these instructions:
+Данная версия может быть установлена из master ветки. Если у вас не установлен Zephir, выполните следующие команды:
 
 ```bash
 git clone http://github.com/phalcon/cphalcon
@@ -266,7 +266,7 @@ cd build
 sudo ./install
 ```
 
-If you have Zephir installed:
+Если у вас уже установлен Zephir:
 
 ```bash
 git clone http://github.com/phalcon/cphalcon
@@ -275,11 +275,11 @@ zephir fullclean
 zephir build
 ```
 
-Note that running the installation script will replace any version of Phalcon installed before.
+_Обратите внимание, что при запуске установочный скрипт заменит уже установленную версию Phalcon._
 
-Windows DLLs are available in the [download page](http://phalconphp.com/en/download/windows).
+DLL для Windows доступны на [странице загрузке](http://phalconphp.com/en/download/windows).
 
-See the [upgrading guide](https://blog.phalconphp.com/post/guide-upgrading-to-phalcon-2) for more information about upgrading to Phalcon 2.0.x from 1.3.x.
+Смотрите [руководство по обновлению](https://blog.phalconphp.com/post/guide-upgrading-to-phalcon-2), если хотите обновиться до Phalcon 2.0.x с 1.3.x.
 
-*   [Documentation](https://docs.phalconphp.com)
-*   [API](https://api.phalconphp.com/) (Thanks to [gsouf](https://github.com/gsouf))
+*   [Документация](https://docs.phalconphp.com)
+*   [API](https://api.phalconphp.com/) (Спасибо [gsouf](https://github.com/gsouf))
