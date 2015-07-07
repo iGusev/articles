@@ -47,16 +47,18 @@ https://blog.phalconphp.com/post/phalcon-2-0-4-released
 *   Добавлен возвращаемый параметр `defaultValue` в `Phalcon\Mvc\Model\Validator::getOption()`
 *   Теперь разработчики могут определять связи с помощью условных операторов
 
-### Highlights
+## Основные моменты
 
-#### Typed Placeholders in the ORM
+### Типизированные плейсхолдеры в ORM
 
-Before this version, only standard placeholders (strings and numerical) were supported in PHQL [PHQL](https://docs.phalconphp.com/en/latest/reference/phql.html). Placeholders allowed you to bind parameters to avoid SQL injections:
+До этой версии, только стандартные плейсхолдеры (строки и численные) поддерживались в [PHQL](https://docs.phalconphp.com/en/latest/reference/phql.html). Они позволяли связать параметры для избежания SQL-инъекций:
+
 ```php
 $phql = "SELECT * FROM Store\Robots WHERE id > :id:";
 $robots = $this->modelsManager->executeQuery($phql, ['id' => 100]);
 ```
-However, some database systems require additional actions when using placeholders like specify the bind type:
+
+Впрочем, некоторые СУБД требуют дополнительных действий при использовании плейсхолдеров, таких как указание типа:
 
 ```php
 use Phalcon\Db\Column;
@@ -71,7 +73,7 @@ $robots = $this->modelsManager->executeQuery(
 );
 ```
 
-To make this task easy, Phalcon 2.0.4 introduces typed placeholders, these work exactly as the other supported ones but additionally you can specify the type:
+Для облегчения этой задачи Phalcon 2.0.4 вводит типизированные плейсхолдеры, работающие точно также как и раньше, но с возможностью указать тип:
 
 ```php
 $phql = "SELECT * FROM Store\Robots LIMIT {number:int}";
@@ -87,7 +89,7 @@ $robots = $this->modelsManager->executeQuery(
 );
 ```
 
-You can also omit the type if you don't need to specify it:
+Вы можете также опустить указание типа если вам не нужно:
 
 ```php
 $phql = "SELECT * FROM Store\Robots WHERE name <> {name}";
@@ -97,7 +99,7 @@ $robots = $this->modelsManager->executeQuery(
 );
 ```
 
-Typed placeholders are also more powerful, since we can now bind a static array without having to pass each element independently as a placeholder:
+Типизированные плейсхолдеры также более функциональны, так как теперь мы можем привязать статический массив без необходимости передавать каждый элемент отдельноб в качестве плейсхолдера:
 
 ```php
 $phql = "SELECT * FROM Store\Robots WHERE id IN ({ids:array})";
@@ -107,19 +109,19 @@ $robots = $this->modelsManager->executeQuery(
 );
 ```
 
-The following types are available:
+Доступны следующие типы:
 
-| Bind Type | Bind Type Constant            | Example        |
-|-----------|-------------------------------|----------------|
-| str       | Column::BINDPARAMSTR          | {name:str}     |
-| int       | Column::BINDPARAMINT          | {number:int}   |
-| double    | Column::BINDPARAMDECIMAL      | {price:double} |
-| bool      | Column::BINDPARAMBOOL         | {enabled:bool} |
-| blob      | Column::BINDPARAMBLOB         | {image:blob}   |
-| null      | Column::BINDPARAMNULL         | {exists:null}  |
-| array     | Array of Column::BINDPARAMSTR | {codes:array}  |
-| array-str | Array of Column::BINDPARAMSTR | {names:array}  |
-| array-int | Array of Column::BINDPARAMINT | {flags:array}  |
+| Тип        | Константа типа                     | Пример            |
+|------------|------------------------------------|-------------------|
+| str        | `Column::BIND_PARAM_STR`           | `{name:str}`      |
+| int        | `Column::BIND_PARAM_INT`           | `{number:int}`    |
+| double     | `Column::BIND_PARAM_DECIMAL`       | `{price:double}`  |
+| bool       | `Column::BIND_PARAM_BOOL`          | `{enabled:bool}`  |
+| blob       | `Column::BIND_PARAM_BLOB`          | `{image:blob}`    |
+| null       | `Column::BIND_PARAM_NULL`          | `{exists:null}`   |
+| array      | Array of `Column::BIND_PARAM_STR`  | `{codes:array}`   |
+| array-str  | Array of `Column::BIND_PARAM_STR`  | `{names:array}`   |
+| array-int  | Array of `Column::BIND_PARAM_INT`  | `{flags:array}`   |
 
 #### Cast bound parameters values
 
