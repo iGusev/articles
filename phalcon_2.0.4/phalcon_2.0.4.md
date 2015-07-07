@@ -5,43 +5,47 @@ https://blog.phalconphp.com/post/phalcon-2-0-4-released
 
 Число улучшений и исправлений значительно увеличилось по сравнению с другими релизами 2.0.x:
 
-### Changes
+## Изменения
 
-*   Fixed bug in `Phalcon\Mvc\Model::update()` that mistakenly throws an exception when the record does exist
-*   Now links in `Phalcon\Debug` point to [https://api.phalconphp.com](https://api.phalconphp.com) instead of [http://docs.phalconphp.com](http://docs.phalconphp.com)
+*   Испавлен баг в  `Phalcon\Mvc\Model::update()` ошибочно выдающий исключение, когда запись действительно существует
+*   Теперь ссылки в `Phalcon\Debug` указывают на [https://api.phalconphp.com](https://api.phalconphp.com) вместо [http://docs.phalconphp.com](http://docs.phalconphp.com)
+
 *   Implemented a more versatile way to assign variables in Volt allowing to assign properties and array indexes
-*   Improved generation of macros in Volt using anonymous functions instead of plain PHP functions, which allows binding the adapter object and injecting services within them
-*   Fixed generation and validation of default parameters in Volt's macros
-*   Added `Phalcon\Assets\Manager::getCollections()` to return all collections registered [#2488](https://github.com/phalcon/cphalcon/pull/2488)
-*   Now `Phalcon\Mvc\Url::getStatic()` generates URLs from routes
-*   Introduced `Phalcon\Mvc\EntityInterface` to allow parameters receive both `Phalcon\Mvc\Model` and `Phalcon\Mvc\Collection` instances. This interface allows `Mvc\Model\Validators` to be used in `Mvc\Collection`
-*   Added `Phalcon\Session\Adapter::setName()` to change the session name
-*   Added `BIGINT` column type support in `Phalcon\Db`
-*   Added new types `Phalcon\Db\Column::BLOB` and `Phalcon\Db\Column::DOUBLE` [#10506](https://github.com/phalcon/cphalcon/pull/10506)
-*   Automatic binding of Large Object data (LOB) in the ORM
-*   Support for `BIT` types in MySQL with binding as booleans
-*   Added `Phalcon\Flash\Direct::output()` allowing to place flash messages in a specific place of the view [#629](https://github.com/phalcon/cphalcon/pull/629)
-*   Added 'autoescape' option that allows to globally enable autoescape in any Volt template
-*   Added `readAttribute`/`writeAttribute` to `Phalcon\Mvc\Collection\Document`
-*   Added toArray to `Phalcon\Mvc\Collection\Document`
-*   Global setting `db.force_casting` now forces casting bound parameters to specified bind types
-*   Introduced new placeholders in PHQL enclosed in brackets that allow to set the type: `{name:str}` or `{names:array}`
-*   Now you can bind arrays in bound parameters in PHQL
-*   Global setting `orm.cast_on_hydrate` allows casting hydrated attributes to the original types in the mapped tables instead of using strings
-*   Values in `LIMIT`/`OFFSET` clause are now passed using bound parameters in PHQL
-*   Allowing late state binding in both Simple/Complex results to allow override `Mvc\Model::cloneResultMap`
-*   Added method `distinct()` in `Phalcon\Mvc\Model\Criteria` [#10536](https://github.com/phalcon/cphalcon/issues/10536)
-*   Added global setting `orm.ignore_unknown_columns` to ignore unexpected columns when hydrating instances in the ORM. This fixes extra auxiliary columns used in `Db\Adapter\Pdo\Oracle`
-*   Added support for afterFetch in `Mvc\Collection`
-*   Added `beforeMatch` parameter in `@Route` annotation of `Mvc\Router\Annotations`
-*   Added `groupBy`/`getGroupBy`/`having`/`getHaving` to `Mvc\Model\Criteria`
-*   `Phalcon\Mvc\Model::count()` now return values as integer
-*   Removed `__construct` from `Phalcon\Mvc\View\EngineInterface`
-*   Added `Phalcon\Debug\Dump::toJson()` to return an JSON string of information about a single variable
-*   Instances in `Phalcon\Di` are built using internal optimizers instead of `\ReflectionClass` (PHP 5.6)
-*   Added `Phalcon\Mvc\Model\Validator\IP` from incubator
-*   Added parameter return `defaultValue` in `Phalcon\Mvc\Model\Validator::getOption()`
-*   Developers can now define relationships based on conditionals
+*   Реализован универсальный способ назначения переменных в Volt, позволяющий назначать переменные и массив индексов
+
+
+*   Улучшены макросы в Volt через использование анонимных функций, позволяющих связывать адаптер объекта и DI-сервисы вместе
+*   Исправлена генерация и валидация стандартных параметров в макросах Volt
+*   Добавлен метод `Phalcon\Assets\Manager::getCollections()` возвращающий все зарегистрированные коллекции [#2488](https://github.com/phalcon/cphalcon/pull/2488)
+*   Теперь `Phalcon\Mvc\Url::getStatic()` генерирует URLы из роутинга
+*   Добавлен `Phalcon\Mvc\EntityInterface` для общей абстракции над `Phalcon\Mvc\Model` и `Phalcon\Mvc\Collection`. Этот интерфейс поддерживает `Mvc\Model\Validators` для использования в `Mvc\Collection`
+*   Добавлен метод `Phalcon\Session\Adapter::setName()` для изменения имени сессии
+*   Добавлена поддержка колонки `BIGINT` в `Phalcon\Db`
+*   Добавлены новые типы `Phalcon\Db\Column::BLOB` и `Phalcon\Db\Column::DOUBLE` [#10506](https://github.com/phalcon/cphalcon/pull/10506)
+*   Автоматическая привязка Large Object data (LOB) в ORM
+*   Поддержка для MySQL типа `BIT` c привязкой в качестве `boolean`
+*   Добавлен метод `Phalcon\Flash\Direct::output()` позволяющий разместить flash-сообщения в определенном месте шаблона [#629](https://github.com/phalcon/cphalcon/pull/629)
+*   Добавлена опция 'autoescape', которая позволяет включить на глобальном уровне autoescape в любом Volt-шаблоне
+*   Добавлены `readAttribute`/`writeAttribute` в `Phalcon\Mvc\Collection\Document`
+*   Добавлен `toArray` в `Phalcon\Mvc\Collection\Document`
+*   Глобальный параметр `db.force_casting` теперь позволяет форсировать приведение указанных типов
+*   Введен новый синтаксис в PHQL, позволяющий установить тип: `{name:str}` или `{names:array}`
+*   Теперь вы можете работать с массивами в качестве параметров в PHQL
+*   Глобальный параметр `orm.cast_on_hydrate` позволяет отдавать атрибуты с оригинальными типами из сопоставленной таблицы вместо использования строк
+*   Значения в `LIMIT`/`OFFSET` теперь возможно добавлять через привязанные параметры в PHQL
+*   Поддержка позднего статического связывания в Simple/Complex результатах для переопределения `Mvc\Model::cloneResultMap`
+*   Добавлен метод `distinct()` в `Phalcon\Mvc\Model\Criteria` [#10536](https://github.com/phalcon/cphalcon/issues/10536)
+*   Добавлен глобальный параметр `orm.ignore_unknown_columns` для игнорирования неучтенных колонок в ORM. Это убирает лишние вспомогательные столбцы, используемые в `Db\Adapter\Pdo\Oracle`
+*   Добавлена поддержка для `afterFetch` в `Mvc\Collection`
+*   Добавлен параметр `beforeMatch` в `@Route` аннотацию из `Mvc\Router\Annotations`
+*   Добавлены `groupBy`/`getGroupBy`/`having`/`getHaving` в `Mvc\Model\Criteria`
+*   `Phalcon\Mvc\Model::count()` теперь возвращает значение с типом int
+*   Удален `__construct` из `Phalcon\Mvc\View\EngineInterface`
+*   Добавлен метод `Phalcon\Debug\Dump::toJson()` для возврата значения в виде JSON с информацией о переменной
+*   Экземпляры в `Phalcon\Di` строятся с использованием внутренних оптимизаторов вместо `\ReflectionClass` (PHP 5.6)
+*   Добавлен `Phalcon\Mvc\Model\Validator\IP` из `phalcon/incubator`
+*   Добавлен возвращаемый параметр `defaultValue` в `Phalcon\Mvc\Model\Validator::getOption()`
+*   Теперь разработчики могут определять связи с помощью условных операторов
 
 ### Highlights
 
