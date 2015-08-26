@@ -1,15 +1,15 @@
 > Phalcon 2.1.0 beta 1 released
 https://blog.phalconphp.com/post/phalcon-2-1-beta-released
 
-We're excited to announce the first beta release of **Phalcon 2.1**!
+Мы рады представить Вам первый бета-релиз **Phalcon 2.1**!
 
-The 2.1.x series are going to be supported for a much longer period than previous versions, thus it is marked as our first Long Term Support [LTS](https://en.wikipedia.org/wiki/Long-term_support) release!
+Релизы 2.1.x будут поддерживаться в течении более длительного периода, 2.1 будет нашей первой версией с долгострочной поддержкой ([LTS](https://en.wikipedia.org/wiki/Long-term_support))
 
-In the Phalcon 2.0.x series, we introduced a lot of new features as well as bug fixes. Our focus however has always been to keep backwards compatibility with Phalcon 1.3.x series, while at the same time encourage developers to upgrade to 2.0.x. This allowed ample time for developers to adjust their applications to work with the 2.0.x series.
+В 2.0.x мы ввели несколько новых фич и поправили множество багов. Однако, наше внимание всегда было обращено на сохранение обратной совместимости с Phalcon 1.3.x, в то же время мы стимулировали разработчиков обновляться до 2.0.x. Это дало достаточно времени разработчикам на внесение изменений в свои приложения для работы с 2.0.x.
 
-Phalcon 2.1 introduces new features some of them incompatible with previous released versions, so make sure you test your application before upgrading a production system.
+Phalcon 2.1 предоставляет новые возможности, некоторые из которых несовместимы с предыдущими версиями, поэтому убедитесь, что вы проверили свои приложения перед обновлением production-систем.
 
-We are confident that the changes in this release warrant the upgrade :)
+Мы уверены, что изменения в этом релизе оправдают обновление :)
 
 ## Deprecation for PHP 5.3
 
