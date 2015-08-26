@@ -11,11 +11,11 @@ Phalcon 2.1 предоставляет новые возможности, нек
 
 Мы уверены, что изменения в этом релизе оправдают обновление :)
 
-## Deprecation for PHP 5.3
+## Окончание поддержки PHP 5.3
 
-Phalcon 2.0.x is the latest series of releases supporting PHP 5.3 (>= 5.3.21). Due to this constraint, we were unable to include some performance enhancements to the framework.
+Phalcon 2.0.x - последняя серия релизов с поддержкой PHP 5.3 (>= 5.3.21). Из-за этого ограничения мы не можем включать некоторые улучшения производительности в фреймворк.
 
-From 2.1.x onwards we are deprecating support for PHP 5.3. We highly encourage developers to upgrade their installations to 5.6, since PHP 7 is just around the corner. We are working on PHP 7 support for Phalcon, but in the meantime the recommended PHP version with Phalcon is 5.6.
+С версии 2.1.x мы настоятельно реккомендуем разработчикам обновляться до 5.6, а там уже и PHP7 не за горами. Мы нацелены на работу с PHP 7, но в тоже время рекоммендуемой версией PHP для работы с Phalcon является 5.6
 
 ### `Phalcon\Mvc\Model\Validation` is now deprecated
 
