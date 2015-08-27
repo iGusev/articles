@@ -17,11 +17,11 @@ Phalcon 2.0.x - последняя серия релизов с поддержк
 
 С версии 2.1.x мы настоятельно реккомендуем разработчикам обновляться до 5.6, а там уже и PHP7 не за горами. Мы нацелены на работу с PHP 7, но в тоже время рекоммендуемой версией PHP для работы с Phalcon является 5.6
 
-### `Phalcon\Mvc\Model\Validation` is now deprecated
+### `Phalcon\Mvc\Model\Validation` объявлен устаревшим (deprecated)
 
-[Phalcon\Mvc\Model\Validation](https://docs.phalconphp.com/en/latest/reference/models.html#validating-data-integrity) is now deprecated in favor of [Phalcon\\Validation](https://docs.phalconphp.com/en/latest/reference/validation.html). The functionality of both components is merged into one, allowing us to reduce the codebase while offering the same functionality as before.
+[Phalcon\Mvc\Model\Validation](https://docs.phalconphp.com/en/latest/reference/models.html#validating-data-integrity) уступил место в пользу [Phalcon\\Validation](https://docs.phalconphp.com/en/latest/reference/validation.html). Функциональность обоих компонентов сливается в одно целое, тем самым упрощая поддержку кодовой базы.
 
-Previously validations were implemented as follows:
+Ранее валидация осуществлялась следующим образом:
 
 ```php
 namespace Invo\Models;
@@ -58,7 +58,7 @@ class Users extends Model
 }
 ```
 
-Introducing [Phalcon\\Validation](https://docs.phalconphp.com/en/latest/reference/validation.html), you will need to change the above to:
+С введением [Phalcon\\Validation](https://docs.phalconphp.com/en/latest/reference/validation.html), вам необходимо будет изменить вышеуказанный код:
 
 ```php
 namespace Invo\Models;
@@ -93,7 +93,7 @@ class Users extends Model
 }
 ```
 
-You will agree that this change makes the code much smaller and easier to read.
+Согласитесь, это изменение делает код намного читабельнее.
 
 ### Changed the constructor of `Phalcon\Mvc\Model`
 The constructor of model classes has been changed, to allow you to pass an array of initialization data:
