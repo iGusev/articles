@@ -95,8 +95,9 @@ class Users extends Model
 
 Согласитесь, это изменение делает код намного читабельнее.
 
-### Changed the constructor of `Phalcon\Mvc\Model`
-The constructor of model classes has been changed, to allow you to pass an array of initialization data:
+### Изменения в конструкторе `Phalcon\Mvc\Model`
+
+Конструктор модели классов был изменен, чтобы позволить вам передавать массив данных для инициализации:
 
 ```php
 $customer = new Customer(
@@ -107,8 +108,7 @@ $customer = new Customer(
 );
 ```
 
-Using this method is the same as calling `assign()`, any setter available will be used and will fallback to property assignment.
-
+Использование этого метода является аналогом `assign()`, будет использоваться доступный сеттер (реализованный в конкретной модели или встроенный) для присваивания свойства.
 
 ### `Phalcon\Mvc\View` supports many views directories
 
