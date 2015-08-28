@@ -274,11 +274,11 @@ class ResponseResolverInterceptor
 }
 ```
 
-###Disabling the view from an action
+### Отключение представления из метода `action`
 
-Sometimes the view must be disabled by calling `$this->view->disable()` within an action in order to avoid the `Phalcon\Mvc\View` component to process the relevant view(s).
+Иногда существует необходимость выключить представление путем вызова `$this->view->disable()` в рамках конкретного `action`-метода контроллера во избежание дальнейшей обработки результата компонентом `Phalcon\Mvc\View`.
 
-Now this much easier; simply return `false`:
+Теперь это гораздо проще; просто верните `false`:
 
 ```php
 use Phalcon\Mvc\Controller;
