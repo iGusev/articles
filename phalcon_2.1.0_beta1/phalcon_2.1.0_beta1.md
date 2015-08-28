@@ -221,11 +221,11 @@ $di->set(
 );
 ```
 
-### Service Resolve overriding
+### Разрешено переопределение сервисов
 
-If an object is returned after firing the event `beforeServiceResolve` in `Phalcon\Di`, the returned instance overrides the default service localization process.
+Если объект возвращается после события `beforeServiceResolve` в `Phalcon\Di`, возвращенный экземпляр переопределяет значение сервиса по умолчанию.
 
-The following example shows how to override the creation of the service `response` from a custom plugin:
+В следующем примере показано как переопределить создание сервиса `response` из своего плагина:
 
 ```php
 use Phalcon\Di;
@@ -250,7 +250,7 @@ $di->setInternalEventsManager($eventsManager);
 
 ```
 
-The plugin can now intercept the creation of services:
+Теперь плагин может перехватывать создание сервисов:
 
 ```php
 namespace MyApp\Plugins;
