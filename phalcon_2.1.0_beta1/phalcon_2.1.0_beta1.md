@@ -137,9 +137,9 @@ $di->set(
 );
 ```
 
-### `Phalcon\Mvc\View` now supports absolute paths
-----------------------------------------------
-An absolute path can now be used on `Mvc\View::setLayoutsDir` and `Mvc\View::setPartialsDir`. This allows the use of folders outside the main views folder:
+### `Phalcon\Mvc\View` теперь поддерживает абсолютные пути
+
+Абсолютный путь теперь может быть использован в `Mvc\View::setLayoutsDir` и `Mvc\View::setPartialsDir`. Это позволяет использовать папки за пределами основной директории представления.
 
 ```php
 use Phalcon\Mvc\View;
