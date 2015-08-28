@@ -297,10 +297,10 @@ class Api extends Controller
 }
 ```
 
-### Returning a string makes it the body of the response
+### Возврат строки делает ее телом ответа
 
-Return a string from an action takes it as the body of the response:
-(same as `return $this->response->setContent('Hello world')`)
+Возврат строки из действия контроллера воспринимается в качестве тела ответа:
+(также как `return $this->response->setContent('Hello world')`)
 
 ```php
 use Phalcon\Mvc\Controller;
@@ -314,7 +314,7 @@ class Session extends Controller
 }
 ```
 
-This feature is specially handy if `Phalcon\Mvc\View\Simple` is used instead of `Phalcon\Mvc\View`:
+Особенно удобно, если `Phalcon\Mvc\View\Simple` используется вместо `Phalcon\Mvc\View`:
 
 ```php
 use Phalcon\Mvc\Controller;
@@ -333,7 +333,7 @@ class Session extends Controller
 }
 ```
 
-This feature is also available in `Mvc\Micro` handlers:
+Эта функция также доступна в обработчиках `Mvc\Micro`:
 
 ```php
 use Phalcon\Mvc\Micro;
