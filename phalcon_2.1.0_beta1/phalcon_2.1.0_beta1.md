@@ -355,8 +355,9 @@ $app->get(
 );
 ```
 
-### Override dispatcher+view behavior in routes
-Routes now can have an associated callback that can override the default dispatcher + view behavior:
+### Переопределение поведения диспетчера+представления в маршрутах
+
+Маршрутам теперь можно назначать коллбеки, которые могут переопределять поведение по умолчанию у диспетчера и представления:
 
 ```php
 // Make a redirection if the /help route is matched
@@ -370,7 +371,7 @@ $router->add('/', [])->match(function () {
 });
 ```
 
-See the full [CHANGELOG](https://github.com/phalcon/cphalcon/blob/2.1.x/CHANGELOG.md#210-2015-xx-xx) for Phalcon 2.1.
+Читайте полный список изменений Phalcon 2.1 в [CHANGELOG](https://github.com/phalcon/cphalcon/blob/2.1.x/CHANGELOG.md#210-2015-xx-xx).
 
 ## Help with Testing
 
