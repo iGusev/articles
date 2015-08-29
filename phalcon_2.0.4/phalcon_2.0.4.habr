@@ -42,14 +42,12 @@
 </ul><habracut/>
 <h4>Основные моменты</h4>
 <h5>Типизированные плейсхолдеры в ORM</h5>
-
 До этой версии, только стандартные плейсхолдеры (строки и численные) поддерживались в <a href="https://docs.phalconphp.com/en/latest/reference/phql.html">PHQL</a>. Они позволяли связать параметры для избежания SQL-инъекций:
 
 <source lang="php">
 $phql = "SELECT * FROM Store\Robots WHERE id > :id:";
 $robots = $this->modelsManager->executeQuery($phql, ['id' => 100]);
 </source>
-
 Впрочем, некоторые СУБД требуют дополнительных действий при использовании плейсхолдеров, таких как указание типа:
 
 <source lang="php">
@@ -64,7 +62,6 @@ $robots = $this->modelsManager->executeQuery(
     Column::BIND_PARAM_INT
 );
 </source>
-
 Для облегчения этой задачи Phalcon 2.0.4 вводит типизированные плейсхолдеры, работающие точно также как и раньше, но с возможностью указать тип:
 
 <source lang="php">
@@ -80,7 +77,6 @@ $robots = $this->modelsManager->executeQuery(
     ['name' => $name]
 );
 </source>
-
 Вы можете также опустить указание типа если вам не нужно:
 
 <source lang="php">
@@ -90,7 +86,6 @@ $robots = $this->modelsManager->executeQuery(
     ['name' => $name]
 );
 </source>
-
 Типизированные плейсхолдеры также более функциональны, так как теперь мы можем привязать статический массив без необходимости передавать каждый элемент отдельноб в качестве плейсхолдера:
 
 <source lang="php">
@@ -100,7 +95,6 @@ $robots = $this->modelsManager->executeQuery(
     ['ids' => [1, 2, 3, 4]]
 );
 </source>
-
 Доступны следующие типы:
 <table>
 <thead>
@@ -158,13 +152,10 @@ $robots = $this->modelsManager->executeQuery(
 </tr>
 </tbody>
 </table>
-
 <h5>Валидация привязанных параметров</h5>
-
 По умолчанию привязанные к плейсхолдерам параметры не поддерживали указание типа, теперь же есть возможность проверять типы параметров прежде, чем начинать работу с PDO.
 
 Классической ситуацией, когда возникает проблема, является передача строки в плейсхолдер <code>LIMIT</code>/<code>OFFSET</code>:
-
 
 <source lang="php">
 $number = '100';
@@ -173,13 +164,11 @@ $robots = $modelsManager->executeQuery(
     ['number' => $number]
 );
 </source>
-
 Такой код выбросит следующее исключение:
 
-</source>
+<source>
 Fatal error: Uncaught exception 'PDOException' with message 'SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''100'' at line 1' in /Users/scott/demo.php:78
 </source>
-
 Это происходит потому, что 100 - строковая переменная. Поправить легко, нужно всего лишь привести тип к int:
 
 <source lang="php">
@@ -189,13 +178,11 @@ $robots = $modelsManager->executeQuery(
     ['number' => (int) $number]
 );
 </source>
-
 Однако такое решение требует от разработчика особого внимания к работе с типами. Чтобы облегчить задачу и избежать неожиданных исключений можно заставить Phalcon делать эту работу за вас:
 
 <source lang="php">
 \Phalcon\Db::setup(['forceCasting' => true]);
 </source>
-
 Следующие действия выполняются согласно привязке указанного типа:
 
 <table>
@@ -224,7 +211,6 @@ $robots = $modelsManager->executeQuery(
 </tr>
 </tbody>
 </table>
-
 <h5>Приведение типа в получаемых из PDO значениях</h5>
 Значения, возвращаемые из базы данных системы всегда передаются как строковые значения посредством PDO, независимо от того, принадлежит ли значение числовому или логическому типу данных столбца. Это происходит потому, что некоторые типы столбцов не могут быть представлены с помощью родных типов PHP вследствие ограничения их размера.
 
@@ -235,7 +221,6 @@ $robots = $modelsManager->executeQuery(
 <source lang="php">
 \Phalcon\Mvc\Model::setup(['castOnHydrate' => true]);
 </source>
-
 Таким образом, вы можете использовать операторы строгого сравнения или делать предположения о типе переменных:
 
 <source lang="php">
@@ -244,9 +229,7 @@ if ($robot->id === 11) {
     echo $robot->name;
 }
 </source>
-
 <h5>Связи с условными операторами</h5>
-
 С 2.0.4 вы можете создать отношения, основанные на условных операторах. Phalcon будет заботиться об остальном :)
 
 <source lang="php">
@@ -311,7 +294,6 @@ class Companies extends Phalcon\Mvc\Model
     }
 }
 </source>
-
 <h4>Обновление/Установка</h4>
 Данная версия может быть установлена из master ветки. Если у вас не установлен Zephir, выполните следующие команды:
 
@@ -321,7 +303,6 @@ git checkout master
 cd ext
 sudo ./install
 </source>
-
 Если у вас уже установлен Zephir:
 
 <source lang="bash">
