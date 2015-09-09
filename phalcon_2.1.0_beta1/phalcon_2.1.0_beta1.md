@@ -11,7 +11,7 @@ Phalcon 2.1 предоставляет новые возможности, нек
 
 Мы уверены, что изменения в этом релизе оправдают обновление :)
 
-## Окончание поддержки PHP 5.3
+### Окончание поддержки PHP 5.3
 
 Phalcon 2.0.x - последняя серия релизов с поддержкой PHP 5.3 (>= 5.3.21). Из-за этого ограничения мы не можем включать некоторые улучшения производительности в фреймворк.
 
@@ -19,7 +19,7 @@ Phalcon 2.0.x - последняя серия релизов с поддержк
 
 ### `Phalcon\Mvc\Model\Validation` объявлен устаревшим (deprecated)
 
-[Phalcon\Mvc\Model\Validation](https://docs.phalconphp.com/en/latest/reference/models.html#validating-data-integrity) уступил место в пользу [Phalcon\\Validation](https://docs.phalconphp.com/en/latest/reference/validation.html). Функциональность обоих компонентов сливается в одно целое, тем самым упрощая поддержку кодовой базы.
+[Phalcon\Mvc\Model\Validation](https://docs.phalconphp.com/en/latest/reference/models.html#validating-data-integrity) уступил место в пользу [Phalcon\Validation](https://docs.phalconphp.com/en/latest/reference/validation.html). Функциональность обоих компонентов сливается в одно целое, тем самым упрощая поддержку кодовой базы.
 
 Ранее валидация осуществлялась следующим образом:
 
@@ -58,7 +58,7 @@ class Users extends Model
 }
 ```
 
-С введением [Phalcon\\Validation](https://docs.phalconphp.com/en/latest/reference/validation.html), вам необходимо будет изменить вышеуказанный код:
+С введением [Phalcon\Validation](https://docs.phalconphp.com/en/latest/reference/validation.html), вам необходимо будет изменить вышеуказанный код:
 
 ```php
 namespace Invo\Models;
@@ -110,9 +110,10 @@ $customer = new Customer(
 
 Использование этого метода является аналогом `assign()`, будет использоваться доступный сеттер (реализованный в конкретной модели или встроенный) для присваивания свойства.
 
-### `Phalcon\Mvc\View` supports many views directories
+### `Phalcon\Mvc\View` поддерживает несколько директорий представлений
 
-This has been one of the features that our community requested many times in the past. We are happy to announce that you can use any kind of folder hierarchy with your application for your view files. This is specially useful for reusing views and layouts between modules:
+Это была одна из фич, о которой наше сообщество просило множество раз. Мы рады сообщить, что теперь вы можете использовать любой вид иерархии при указании директорий с представлениями. Особенно это полезно для повторного использования представлений в нескольких модулях:
+
 
 ```php
 use Phalcon\Mvc\View;
@@ -168,11 +169,11 @@ $di->set(
 );
 ```
 
-### `Phalcon\Di` is now bound to services closures
+### `Phalcon\Di` теперь привязак к замыканиям сервисов
 
-In the past, we had to pass the dependency injector inside a service closure, if we had to perform some actions inside the closure. Examples of that were accessing the configuration object or the events manager. Now we can use `$this` to access the `Phalcon\Di` along with the registered services.
+В прошлом мы должны были передавать контейнер зависимостей внутрь замыкания сервиса, если нам необходимо было выполнять некоторые действия внутри. Например, для доступа к конфигу или к event-менеджеру. Теперь мы можем использовать `$this`, чтобы получить доступ к `Phalcon\Di`, а также к уже зарегистрированным сервисам.
 
-Code before:
+Код раньше:
 
 ```php
 use Phalcon\Mvc\Dispatcher;
@@ -197,7 +198,7 @@ $di->set(
 );
 ```
 
-Now you can access services without passing `$di`:
+Теперь вы можете получить доступ к сервисам без передачи `$di`:
 
 ```php
 use Phalcon\Mvc\Dispatcher;
@@ -373,9 +374,9 @@ $router->add('/', [])->match(function () {
 
 Читайте полный список изменений Phalcon 2.1 в [CHANGELOG](https://github.com/phalcon/cphalcon/blob/2.1.x/CHANGELOG.md#210-2015-xx-xx).
 
-## Help with Testing
+## Помощь с тестированием
 
-This version can be installed from the 2.1.x branch. If you don't have Zephir installed follow these instructions:
+Данная версия может быть установлена из ветки `2.1.х`. Если у вас нет Zephir, выполните следующие команды:
 
 ```sh
 git clone https://github.com/phalcon/cphalcon
@@ -384,7 +385,7 @@ cd cphalcon/ext
 sudo ./install
 ```
 
-If you have Zephir installed:
+Если же у вас установлен Zephir:
 
 ```sh
 git clone https://github.com/phalcon/cphalcon
@@ -393,6 +394,6 @@ git checkout 2.1.x
 zephir build
 ```
 
-We hope that you will enjoy these improvements and additions. We invite you to share your thoughts and questions about this version on [Phosphorum](https://forum.phalconphp.com/).
+Мы надеемся, что вам понравятся эти улучшения и дополнения. Приглашаем Вас поделиться своими мыслями и вопросами об этой версии на [Phosphorum](https://forum.phalconphp.com/).
 
-<3 Phalcon Team
+<3 Команда Phalcon
