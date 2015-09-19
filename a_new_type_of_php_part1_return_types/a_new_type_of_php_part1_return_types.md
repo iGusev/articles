@@ -1,17 +1,17 @@
 >A new type of PHP, part 1: Return types
 http://devzone.zend.com/6620/a-new-type-of-php-part-1-return-types/
 
-Every significant release of PHP adds a number of new features, with one or two that really define the release.  For PHP 5.3, it was namespaces and anonymous functions.  For PHP 5.4, it was traits.  For PHP 5.5, generators.  For PHP 5.6, variadics.
+Каждый мажорный релиз PHP добавляет ряд новых возможностей, некоторые из которых действительно имеет значение. Для PHP 5.3 - это были пространства имен и анонимные функции. Для PHP 5.4 - качество. Для PHP5.5 - генераторы. Для 5.6 - cписки аргументов переменной длины.
 
-While PHP 7 has a large array of new improvements to make developers lives easier and involve less hair loss, I believe that long term the improvements to how PHP handles variable typing will be the defining feature of this release.  It’s not a single change but actually a combination of a few closely-related changes that will change the way we write PHP, and for the better.
+PHP 7 имеет большое количество новшеств и улучшений, делающих жизнь разработчика легче. Но я считаю, что самым важным и долгосрочным изменением является работа с типами. Совокупность этих новых фич изменит взгляд на PHP разработку в лучшую сторону.
 
-Why does strong typing support matter?  Because types serve as a “junior version” of your code.  They provide a program – either the compiler or the runtime – and other developers with valuable information about what the developer is trying to do without having to run the program itself.  That enables three benefits:
+Почему поддержка строгой типизации так важна? Она предоставляет программе - компилятору или рантайму и другим разработчикам ценную информацию о том, что вы пытались сделать без необходимости исполнять код. Это дает три типа преимуществ:
 
-1.  It becomes much easier to communicate the intent of a piece of code to other developers, who can understand the code more readily. It’s like documentation but better!
-2.  Because explicit typing forces more narrowly-defined behavior, it encourages more decoupled and single-purpose code; that’s valuable in its own right.
-3.  Because a program can read and understand explicit types just as well as a human can, a program can analyze your code and find bugs for you… before you even try running it!
+1. Становится намного легче сообщать другим разработчикам цель части кода. Это практически как документация, только лучше!
+2. Строгая типизация дает коду узкую направленность поведения, что способствует повышению изоляции.
+3. Программа читает и понимает строгую типизацию точно также как человек, появляется возможность анализировать код и находить ошибки за вас... прежде чем вы его исполните!
 
-In the vast majority of cases, explicitly typed code will be easier to understand, better structured, and have fewer bugs than untyped or loosely typed code.  And for the small percentage of cases where strong typing is really more trouble than it’s worth, don’t worry; PHP’s type checking is still all opt-in, as it always has been.  But really, you should opt-in almost all the time.
+В подавляющем большинстве случаев, явно типизированный код будет легче понять, он лучше структурирован, и имеет меньше ошибок, чем слаботипизированный. Только в небольшом проценте случаев строгая типизация доставляет больше проблем, чем пользы, но не беспокойтесь, в PHP проверка типов все еще является опциональный, также как и раньше. Но на самом деле, ее стоит использовать всегда.
 
 ### Return types
 
