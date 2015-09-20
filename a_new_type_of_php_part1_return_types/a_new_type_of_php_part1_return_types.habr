@@ -1,0 +1,189 @@
+<img align="left" src="https://habrastorage.org/files/0c0/7fe/7f5/0c07fe7f5b294fecb66c428fca14b406.jpg">Каждый мажорный релиз PHP добавляет ряд новых возможностей, некоторые из которых действительно имеет значение. Для PHP 5.3 - это были пространства имен и анонимные функции. Для PHP 5.4 - трейты. Для PHP 5.5 - генераторы. Для 5.6 - списки аргументов переменной длины.
+
+PHP 7 имеет большое количество новшеств и улучшений, делающих жизнь разработчика легче. Но я считаю, что самым важным и долгосрочным изменением является работа с типами. Совокупность новых фич изменит взгляд на PHP разработку в лучшую сторону.
+
+Почему поддержка строгой типизации так важна? Она предоставляет программе - компилятору или рантайму и другим разработчикам ценную информацию о том, что вы пытались сделать без необходимости исполнять код. Это дает три типа преимуществ:<cut>
+
+<ol>
+    <li>Становится намного легче сообщать другим разработчикам цель кода. Это практически как документация, только лучше!</li>
+    <li>Строгая типизация дает коду узкую направленность поведения, что способствует повышению изоляции.</li>
+    <li>Программа читает и понимает строгую типизацию точно также как человек, появляется возможность анализировать код и находить ошибки за вас... прежде чем вы его исполните!</li>
+</ol>
+В подавляющем большинстве случаев, явно типизированный код будет легче понять, он лучше структурирован и имеет меньше ошибок, чем слабо типизированный. Только в небольшом проценте случаев строгая типизация доставляет больше проблем, чем пользы, но не беспокойтесь, в PHP проверка типов все еще является опциональной, также как и раньше. Но на самом деле, ее стоит использовать всегда.
+
+<h3>Возвращаемые типы</h3>
+Первым дополнением к уже существующей системе типизации будет поддержка возвращаемых типов. Теперь можно указывать в функциях и методах тип возвращаемого значения в явном виде. Рассмотрим следующий пример:
+
+<source lang="php">
+class Address {
+
+  protected $street;
+  protected $city;
+  protected $state;
+  protected $zip;
+
+  public function __construct($street, $city, $state, $zip) {
+    $this->street = $street;
+    $this->city = $city;
+    $this->state = $state;
+    $this->zip = $zip;
+  }
+
+  public function getStreet() { return $this->street; }
+  public function getCity() { return $this->city; }
+  public function getState() { return $this->state; }
+  public function getZip() { return $this->zip; }
+
+}
+</source>
+<source lang="php">
+class Employee {
+  protected $address;
+
+  public function __construct(Address $address) {
+    $this->address = $address;
+  }
+
+  public function getAddress() : Address {
+    return $this->address;
+  }
+}
+</source>
+<source lang="php">
+$a = new Address('123 Main St.', 'Chicago', 'IL', '60614');
+$e = new Employee($a);
+
+print $e->getAddress()->getStreet() . PHP_EOL;
+// Prints 123 Main St.
+</source>
+В этом довольно приземленном примере у нас есть объект <code>Employee</code>, который имеет только одно свойство, содержащее переданный нами почтовый адрес. Обратите внимание на метод <code>getAddress()</code>. После параметров функции у нас есть двоеточие и тип. Он является единственным типом, который может принимать возвращаемое значение.
+
+Постфиксный синтаксис для возвращаемых типов может показаться странным для разработчиков, привыкших к C/C++ или Java. Однако, на практике подход с префиксным объявлением не подходит для PHP, т.к. перед именем функции может идти множество ключевых слов. Во избежание проблем с парсером PHP выбрал путь схожий с Go, Rust и Scala.
+
+При возврате любого другого типа методом <code>getAddress()</code> PHP будет выбрасывать исключение <a href="http://php.net/manual/en/class.typeerror.php"><code>TypeError</code></a>. Даже <code>null</code> не будет удовлетворять требованиям типа. Это позволяет нам с абсолютной уверенностью обращаться в <code>print</code> к методом объекта <code>Address</code>. Мы точно будем знать, что действительно вернется объект именно этого типа, не <code>null</code>, не false, не строка или какой-то другой объект. Именно этим обеспечивается безопасность работы и отсутствие необходимости в дополнительных проверках, что в свою очередь делает наш собственный код чище. Даже если что-то пойдет не так, PHP обязательно предупредит нас.
+
+Но что делать, если у нас менее тривиальный случай и необходимо обрабатывать ситуации, когда нет объекта <code>Address</code>? Введем <code>EmployeeRepository</code>, логика которого позволяет не иметь записей. Сначала мы добавит классу <code>Employee</code> поле ID:
+
+<source lang="php">
+class Employee {
+
+    protected $id;
+    protected $address;
+
+    public function __construct($id, Address $address) {
+
+        $this->id = $id;
+        $this->address = $address;
+
+    }
+
+    public function getAddress() : Address {
+        return $this->address;
+    }
+
+}
+</source>
+А теперь создадим наш репозиторий. (В качестве заглушки добавим фиктивные данные прямо в конструктор, но на практике, конечно же, необходимо иметь источник данных для нашего репозитория).
+
+<source lang="php">
+class EmployeeRepository {
+
+    private $data = [];
+    public function __construct() {
+
+        $this->data[123] = new Employee(123, new Address('123 Main St.', 'Chicago', 'IL', '60614'));
+        $this->data[456] = new Employee(456, new Address('45 Hull St', 'Boston', 'MA', '02113'));
+
+    }
+
+    public function findById($id) : Employee {
+        return $this->data[$id];
+    }
+
+}
+</source>
+<source lang="php">
+$r = new EmployeeRepository();
+
+print $r->findById(123)->getAddress()->getStreet() . PHP_EOL;
+</source>
+Большинство читателей быстро заметит, что `findById()` имеет баг, т.к. в случае, если мы попросим несуществующий идентификатор сотрудника PHP будет возвращать `null` и наш вызов `getAddress()` умрет с ошибкой "method called on non-object". Но на самом деле ошибка не там. Она заключается в том, что `findById()` должен возвращать сотрудника. Мы указываем возвращаемый тип `Employee`, чтобы было ясно чья это ошибка.
+
+Что же делать, если действительно нет такого сотрудника? Есть два варианта: первый - исключение; если мы не можем вернуть то, что мы обещаем - это повод для особой обработки за пределами нормального течения кода. Другой - указание интерфейса, имплементация которого и будет возвращена (в том числе и "пустая"). Таким образом, оставшаяся часть кода будет работать и мы сможем контролировать происходящее в "пустых" случаях.
+
+Выбор подхода зависит от варианта использования и также определяется рамками недопустимости последствий в случае невозвращения правильного типа. В случае репозитория, я бы поспорил с выбором в пользу исключений, поскольку шансы попасть именно в такую ситуацию минимальны, а работа через исключения является довольно дорогостоящей по производительности. Если бы мы имели дело со скалярной переменной, то обработка "пустого значения" было бы приемлемым выбором. Модифицируем наш код соответственно (для краткости показаны только измененные части):
+
+<source lang="php">
+interface AddressInterface {
+
+    public function getStreet();
+    public function getCity();
+    public function getState();
+    public function getZip();
+
+}
+</source>
+<source lang="php">
+class EmptyAddress implements AddressInterface {
+
+    public function getStreet() { return ''; }
+    public function getCity() { return ''; }
+    public function getState() { return ''; }
+    public function getZip() { return ''; }
+
+}
+</source>
+<source lang="php">
+class Address implements AddressInterface {
+
+    // ...
+
+}
+</source>
+<source lang="php">
+class Employee {
+
+    // ...
+
+    public function getAddress() : AddressInterface {
+
+        return $this->address;
+
+    }
+
+}
+</source>
+<source lang="php">
+class EmployeeRepository {
+
+    // ...
+
+    public function findById($id) : Employee {
+
+        if (!isset($this->data[$id])) {
+            throw new InvalidArgumentException('No such Employee: ' . $id);
+        }
+        return $this->data[$id];
+    }
+
+}
+</source>
+<source lang="php">
+try {
+    print $r->findById(123)->getAddress()->getStreet() . PHP_EOL;
+    print $r->findById(789)->getAddress()->getStreet() . PHP_EOL;
+} catch (InvalidArgumentException $e) {
+    print $e->getMessage() . PHP_EOL;
+}
+
+/* 
+ * Prints:
+ * 123 Main St.
+ * No such Employee: 789
+ */
+</source>
+Теперь <code>getStreet()</code> будет отдавать хорошее пустое значение.
+
+Одно важное примечание о возвращаемых типах: при наследовании тип не может быть изменен, даже нельзя сделать его более конкретным (подклассом, например). Причина в особенностях ленивой загрузки PHP.
+
+Возвращаемые типы являются большой, но далеко не единственной новой особенностью, расширяющей систему типов PHP. Во второй части мы рассмотрим другое, пожалуй даже более важное изменение: декларирование скалярных типов.
