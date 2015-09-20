@@ -40,7 +40,8 @@ class Address {
   public function getZip() { return $this->zip; }
 
 }
-
+```
+```php
 class Employee {
   protected $address;
 
@@ -52,7 +53,8 @@ class Employee {
     return $this->address;
   }
 }
-
+```
+```php
 $a = new Address('123 Main St.', 'Chicago', 'IL', '60614');
 $e = new Employee($a);
 
@@ -64,10 +66,9 @@ print $e->getAddress()->getStreet() . PHP_EOL;
 
 Постфиксный синтаксис для возвращаемых типов может показаться странным для разработчиков, привыкших к C/C++ или Java. Однако, на практике подход с префиксным объявлением не подходит для PHP, т.к. перед именем функции может идти множество ключевых слов. Во избежание проблем с парсером PHP выбрала путь Go, Rust и Scala.
 
-При возврате любого другого типа методом `getAddress()` PHP будет выбрасывать исключение [`TypeError`](http://php.net/manual/en/class.typeerror.php). Даже `null` не будет удовлетворят требованиям типа. Это позволяет нам с абсолютной уверенностью обращаться в `print` к методом объекта `Address`. Мы точно будем знать, что действительно вернется объект именно этого типа, не `null`, не false, не строка или какой-то другой объект. Именно этим обеспечивается безопасность работы и отсутствие необходимости в дополнительных проверках, что в свою очередь делает наш собственный код чище. Даже если что-то пойдет не так, PHP обязательно предупредит нас.
+При возврате любого другого типа методом `getAddress()` PHP будет выбрасывать исключение [`TypeError`](http://php.net/manual/en/class.typeerror.php). Даже `null` не будет удовлетворять требованиям типа. Это позволяет нам с абсолютной уверенностью обращаться в `print` к методом объекта `Address`. Мы точно будем знать, что действительно вернется объект именно этого типа, не `null`, не false, не строка или какой-то другой объект. Именно этим обеспечивается безопасность работы и отсутствие необходимости в дополнительных проверках, что в свою очередь делает наш собственный код чище. Даже если что-то пойдет не так, PHP обязательно предупредит нас.
 
 Но что делать, если у нас менее тривиальный случай и необходимо обрабатывать ситуации, когда нет объекта `Address`? Введем `EmployeeRepository`, логика которого позволяет не иметь записей. Сначала мы добавит классу `Employee` поле ID:
-
 
 ```php
 class Employee {
@@ -107,7 +108,8 @@ class EmployeeRepository {
     }
 
 }
-
+```
+```php
 $r = new EmployeeRepository();
 
 print $r->findById(123)->getAddress()->getStreet() . PHP_EOL;
@@ -128,7 +130,8 @@ interface AddressInterface {
     public function getZip();
 
 }
-
+```
+```php
 class EmptyAddress implements AddressInterface {
 
     public function getStreet() { return ''; }
@@ -137,13 +140,15 @@ class EmptyAddress implements AddressInterface {
     public function getZip() { return ''; }
 
 }
-
+```
+```php
 class Address implements AddressInterface {
 
     // ...
 
 }
-
+```
+```php
 class Employee {
 
     // ...
@@ -155,7 +160,8 @@ class Employee {
     }
 
 }
-
+```
+```php
 class EmployeeRepository {
 
     // ...
@@ -169,7 +175,8 @@ class EmployeeRepository {
     }
 
 }
-
+```
+```php
 try {
     print $r->findById(123)->getAddress()->getStreet() . PHP_EOL;
     print $r->findById(789)->getAddress()->getStreet() . PHP_EOL;
