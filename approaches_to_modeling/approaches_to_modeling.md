@@ -17,9 +17,9 @@ class User
 
 Контроллеры и представления обычно полностью захардкожены с учетом конкретных типов входящих данных - это самый простой подход, но не самый изящный.
 
-## 2. Bare Models plus type-objects
+## Голые модели плюс объекты-типы
 
-Every model has a type-object with synchronous property-names providing meta information about the properties, e.g.:
+Каждая модель имеет свой объект, отвечающий за конкретный тип, обычно они совпадают с именованием свойств модели и содержат мета-информацию:
 
 ```php
 class User
@@ -42,10 +42,9 @@ class UserType
 }
 ```
 
-This requires more up-front model work, but the pay-off is the ability to reuse information provided by the type-object, e.g. for cross-cutting concerns dependent
-on the same information - for example, the `$unique` property could be used to drive both validation and schema generation, etc.
+Это требует более четкой работы модели, но дает возможность повторного использования кода объектов-типов, например `$qunique` может быть использована для валидации CSRF-токенов, формирования схем, уникального ID и т.д.
 
-It requires no framework, however, so it is still simple.
+Подход по-прежнему простой, т.к. не требует никаких фреймворков и библиотек.
 
 
 ## 3. Annotated Models
