@@ -1,7 +1,7 @@
 >Approaches to modeling
 https://gist.github.com/mindplay-dk/aaa4f4b747d09729c84a
 
-In this short write-up, I will briefly summarize the types of modeling I have seen and attempted over the years, highlighting some of the advantages and drawbacks of each, ending with a conclusion explaining which one I prefer and why.
+В этой короткой статье я постараюсь кратко суммировать виды моделей, реализации которых я наблюдал на протяжении многих лет, отмечу некоторые преимущества и недостатки каждого подхода и подведу итог - что предпочитаю именно я и почему.
 
 ## 1. Bare Models
 
