@@ -46,10 +46,9 @@ class UserType
 
 Подход по-прежнему простой, т.к. не требует никаких фреймворков и библиотек.
 
+## Аннотированные модели
 
-## 3. Annotated Models
-
-Meta-data is embedded inside the source-code in the form of annotations, e.g.:
+Мета-данные внедрены внутрь исходного кода в виде аннотаций:
 
 ```php
 class User
@@ -62,8 +61,7 @@ class User
 }
 ```
 
-This approach appears on the surface to be simpler than the type-objects approach. However, parsing annotations requires a complex framework that performs parsing,
-validation, caching, etc. and is actually far from simple.
+Такой подход лежит на поверхности, он проще, чем подход моделирования через объекты-типы. Однако, парсинг аннотаций требует сложной работы с логикой, которая выполняет синтаксический анализ, валидацию, кэширование и др. На самом деле это далеко не так просто.
 
 ## 4. Meta-modeling with model code-generation
 
