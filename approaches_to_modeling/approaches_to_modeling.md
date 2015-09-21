@@ -3,9 +3,9 @@ https://gist.github.com/mindplay-dk/aaa4f4b747d09729c84a
 
 В этой короткой статье я постараюсь кратко суммировать виды моделей, реализации которых я наблюдал на протяжении многих лет, отмечу некоторые преимущества и недостатки каждого подхода и подведу итог - что предпочитаю именно я и почему.
 
-## 1. Bare Models
+## Голые модели
 
-Bare models without any run-time annotations, e.g.:
+Голые модели без каких-либо аннотаций, например:
 
 ```php
 class User
@@ -15,7 +15,7 @@ class User
 }
 ```
 
-Controllers and views need to be fully hard-coded and tailored to specific input-types, etc. - this is the simplest approach, but not the most elegant.
+Контроллеры и представления обычно полностью захардкожены с учетом конкретных типов входящих данных - это самый простой подход, но не самый изящный.
 
 ## 2. Bare Models plus type-objects
 
