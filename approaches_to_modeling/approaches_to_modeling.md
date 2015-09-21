@@ -80,11 +80,11 @@ $code_generator->run($class);
 
 Само собой разумеется, это далеко не просто - вам необходим большой и сложный код для движка генератора, более тщательное проектирование и оптимизации.
 
-## 5. Meta-modeling from a specification
+## Мета-моделирование по спецификации
 
-This is the approach used by e.g. the [M# Language](http://www.msharp.co.uk/), in which a declarative specification is written in a custom language, consumed by a parser and used to drive a code-generator.
+Этот подход используется, например, в языке [M#](http://www.msharp.co.uk/), в котором декларативная спецификация записыватется на специальном языке, скармливается парсеру и используется для кодогенерации.
 
-The premise of this is brevity, but obviously this comes at the cost of very high complexity, since a custom language requires custom IDE support, as well as all of the complexity and drawbacks of other code-generation approaches.
+Предпосылкой является краткость, но, очевидно, это происходит за счет очень высокой степени сложности реализации, начиная от языка описания моделей, которому требуется особая поддержка IDE, а также приплюсовывается вся сложность и недостатки других подходов с кодогенерацией.
 
 ## 6. Code-generation from type-objects
 
