@@ -63,9 +63,9 @@ class User
 
 Такой подход лежит на поверхности, он проще, чем подход моделирования через объекты-типы. Однако, парсинг аннотаций требует сложной работы с логикой, которая выполняет синтаксический анализ, валидацию, кэширование и др. На самом деле это далеко не так просто.
 
-## 4. Meta-modeling with model code-generation
+## Мета-моделирование с кодогенерацией моделей
 
-This involves building a run-time meta-model driving a code-generation framework, and could look something like this:
+Предполагается создание моделей во время исполнения через фреймворк кодогенерации, это может выглядеть примерно так:
 
 ```php
 $class = new MetaClass('User');
@@ -74,11 +74,11 @@ $class->addProperty(new EmailProperty('email'));
 $code_generator->run($class);
 ```
 
-The code generator would emit a model, a meta-model, and possibly other things like factory-classes etc.
+Кодогенератор будет содержать модель, мета-модель и, возможно, другие вещи, такие как фабрика классов и т.д.
 
-Assuming passive (design-time) code-generation, as opposed to active (run-time) code-generation, this does provide static coupling at design-time, but perhaps not to the full extend - for example, refactorings (such as changing a property name) would involve a code-generation step, so even though you have static coupling, you can't really have automated refactorings.
+В то же время пассивная (во время разработки) генерация кода, в отличие от активной (во время выполнения) действительно обеспечивает статическое связывание во время разработки, но, возможно, не в полном объеме - например, при рефакторинге (изменение именования свойств) предполагает шаг генерации кода, что в свою очередь усложняет разработку, ведь вы не сможете иметь действительно автоматический рефакторинг, как это предполагает активный подход.
 
-It goes without saying, this approach is by no means simple - it involves building a large complicated code-generation engine, a lot of careful design, optimizations, etc.
+Само собой разумеется, это далеко не просто - вам необходим большой и сложный код для движка генератора, более тщательное проектирование и оптимизации.
 
 ## 5. Meta-modeling from a specification
 
