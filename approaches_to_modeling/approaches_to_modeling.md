@@ -94,14 +94,14 @@ $code_generator->run($class);
 В некотором смысле, этот подход является одновременно самым лучшим и самым худшим из всех - вы описываете и составляете модель, реализуя свои объекты-типы с использованием всех возможностей базового языка, также вы избегаете необходимости что-либо повторять, но одновременно с этим приходят и проблемы - рефакторинг уже сформированных моделей и некоторые другие сложности, которые плодят системы кодогенерации.
 
 # Conclusion
+# Заключение
 
-My favorite is number 2: Bare Models plus type-objects, because:
+Мой фаворит - модели плюс объекты-типы, потому что:
 
-1. Avoids code-generation.
-2. Static coupling and automated refactoring everywhere.
-3. The non-static property-name as a string is encapsulated once in the type-object and never needs to be repeated in an unsafe manner.
+1. Избегаем генерации кода.
+2. Статическое связывание и автоматический рефакторинг везде.
+3. Нестатические имена свойств в виде строк инкапсулируются в объект-тип, не повторяются и становятся безопасными.
 
-The bare models plus type objects approach keeps the overall complexity low, keeps transparency high, avoids introduction of design-time steps
-and completely obviates the need for any framework at the model-level - your models, and type-objects, are just code.
+Подход сохраняет общую сложность на низком уровне, сохраняет высокую прозрачность, убирает необходимость тратить время на дизайн модели и полностью устраняет необходимость в фреймворке на любом уровне, только модели, объекты-типы и просто код.
 
-Granted, developers will need to learn and understand why every model is implemented as two classes, but this is a small price to pay - and it inspires learning and independent thinking.
+Конечно, не все разработчики могут быть согласны со мной, возможно кто-то даже назовет еще пару способов, но основной посыл статьи - открыть путь к новому и вдохновить вас на получение дополнительных знаний.
