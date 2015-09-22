@@ -40,7 +40,7 @@ class Address implements AddressInterface {
     $this->state = $state;
     $this->zip = $zip;
   }
- 
+
   public function getStreet() : string { return $this->street; }
   public function getCity() : string { return $this->city; }
   public function getState() : string { return $this->state; }
@@ -96,17 +96,17 @@ catch (InvalidArgumentException $e) {
 }
 ```
 
-We’ve now marked several methods as taking or returning a string or integer, as appropriate.  Just by doing that we already have some benefits.
+Изменения коснулись некоторых методов, отдающих строку или число. Даже сделав такой простой шаг, мы уже получили некоторые преимущества.
 
-1.  We now know that the various fields of `Address` are simple strings. Previously, we could only assume that they were strings and not a Street object (composed of a street number, street name, and apartment number properties) or an ID of a city record in a database.  (Both of those are completely reasonable things to do in the right circumstances, but we chose not to here.)
-2.  We now know that the Employee IDs are integers. In many companies an employee ID is an alphanumeric string, or perhaps a number with leading 0s.  We had no way of knowing before which one we’re modeling. Now we know.
-3.  There is a security benefit, too. Inside `findById()`, we are now guaranteed that `$id` is an int. Period. Even if that value originally came from user input, it is now an int. That means it cannot contain, for instance, an SQL injection.  While relying on types for validating user input is not the only nor even best way to protect against attacks, it’s one more layer of defense in depth.
+1. Теперь известно, что различные поля класса `Address` являются просто строками. Раньше можно было только предполагать, что они были строками, а не объектами `Street`  (состоящими из номера улицы, ее названия и номера квартиры) или ID города из базы данных. Конечно, обе эти вещи совершенно разумны в определенных обстоятельствах, но в данной статье они не рассматриваются.
+2. Известно, что идентификаторы сотрудников - целые числа. Во многих компаниях ID сотрудника является алфавитно-цифровой строкой или, возможно, номером с лидирующим нулем. Раньше не было способа узнать, теперь же иные трактовки исключены.
+3. Плюсом является и безопасность. Мы гарантированно знаем, что внутри `findById()` `$id` - это значение типа `int`. Даже если оно изначально пришло из пользовательского ввода, оно станет целочисленным. Это означает, что оно не может содержать, например, SQL-инъекции. Опора на проверку типов при работе с пользовательским вводом не единственная, и даже не лучшая защита от нападения, но еще один слой защиты.
 
-The first two benefits seem like they’re redundant with documentation.  If you have good docblocks in your code, you’d already know that Address is composed of strings and employee ID is an int, right?  That’s true; however, not everyone is religious about properly documenting their code, or especially in updating that documentation.  With “active” information in the language itself you’re guaranteed that it won’t get out of sync, because it would be an error if it does.
+Кажется, что первые два преимущества избыточны при наличии документации. Если у вас есть хорошие doc-блоки в коде, вы уже знаете, что `Address` состоит из строк и ID сотрудника является целочисленным, верно? Это правда; однако, не все придерживаются фанатичности в вопросе документирования своегокода, или же просто забывают обновить ее. С "активной" информацией из самого языка вы гарантированно будете знать, что рассинхрона нет, ведь PHP выбросит исключение, если это не так.
 
-Explicitly specifying the types in a language-parser-accessible way also opens the doors to more powerful tooling.  Programs — either PHP itself or a 3rd party analysis tool — can examine the source code to find possible optimizations or bugs based on the type.
+Явное указание типов также открывает двери к более мощным инструментам. Программы - либо сам PHP, либо инструменты для анализа от третьих лиц - могут изучать исходный код, находя возможные ошибки или возможности оптимизации на основании полученной информации.
 
-For example, we can verify that the following code is and always will be wrong, even without running it:
+Например, мы можем проверить, что следующий код является некорректным и всегда будет падать, даже без его запуска:
 
 ```php
 function loadUser(int $id) : User {
