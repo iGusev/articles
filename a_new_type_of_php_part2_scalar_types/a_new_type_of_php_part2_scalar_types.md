@@ -1,15 +1,15 @@
 >A new type of PHP, part 2: Scalar types
 http://devzone.zend.com/6622/a-new-type-of-php-part-2-scalar-types/
 
-In our [last installment](http://devzone.zend.com/6620/a-new-type-of-php-part-1-return-types/), we talked about the benefits of more robust variable typing in PHP 7, and specifically the new support for typed return values.  That is already a big boon to the maintainability of our code, but PHP 7 goes a step further.
+В нашей [предыдущей статье](http://habrahabr.ru/post/267257/) мы говорили о преимуществах системы типов PHP 7, и в частности, о новой поддержке типизированных возвращаемых значений. Что само по себе является не только большим подспорьем в поддержке кода, но делает для PHP большой шаг вперед.
 
-So far, we’ve only talked about typing against classes and interfaces.  We’ve been able to type against those (and arrays) for years.  PHP 7, however, adds the ability to type against scalar values too, such as int, string, and float.
+До сих пор мы говорили о типах только в отношении классов и интерфейсов. В течение многих лет мы только их (и массивы) и могли использовать. Однако же, PHP 7 добавляет возможность использовать и скалярные величины тоже, такие как `int`, `string` и `float`.
 
-But wait. In PHP, most primitives are interchangeable.  We can pass “123” to a function that wants an int and trust PHP to do the “right thing”, and vice versa.  So what value do scalar types serve?
+Но постойте. В PHP большинство примитивов являются взаимозаменяемыми. Мы можем передать `"123"` в функцию, которая хочет `int`, и довериться PHP, который все сделает "правильно". Так для чего же тогда нужны скалярные типы?
 
-Much the same as return types, scalar types offer greater clarity within the language as well as the ability to catch more bugs earlier.  That, in turn, can help encourage more robust code in the first place, which benefits everybody.
+Также как и возвращаемые типы, скаляры повышают ясность кода, дают возможность поймать больше ошибок на раннем этапе. Что, в свою очередь, повышает надежность кода.
 
-PHP 7 adds four new types that can be specified for parameters or return values: `int`, `float`, `string`, and `bool`.  They join the existing array and callable types, in addition to typing against any class or interface, all of which are unchanged.  Let’s beef up our example from yesterday with appropriate scalar types:
+PHP 7 добавляет четыре новых типа, которые могут быть заданы параметрами или возвращаемым значениям: `int`, `float`, `string` и `bool`. Они присоединятся к уже существующим `array`, `callable`, классам и интерфейсам. Давайте дополним наш предыдущий пример с учетом новой возможности:
 
 ```php
 interface AddressInterface {
