@@ -125,25 +125,25 @@ $u = loadUser(123);
 $posts = findPostsForUser($u);
 ```
 
-Since `loadUser` always returns an object of type user, and `findPostsForUser` always wants an integer, there is no possible way this code is right. We can tell just by looking at the function signatures that it’s wrong, without looking at the code inside.  That means a program can figure that out, too, and warn us before we even try running it. And because a program can keep track of a lot more moving parts than we can it could scan the entire code base and find bugs caused by incompatible types in different parts of the program… all without ever executing it!
+`loadUser()` всегда возвращает объект типа `User`, а `findPostsForUser()` всегда возвращает integer, нет никакой возможности сделать этот код верным. Об этом можно сказать лишь взглянув на функции и способ их использования. А это, в свою очередь, означает, что и IDE тоже знает заранее и может предупредить нас об ошибке до запуска. И поскольку IDE может отслеживать намного больше частей, чем мы, то она может и предупреждать о большем количестве ошибок, чем можно заметить самостоятельно... при этом не исполняя код!
 
-This process is called “static analysis”, and is an incredibly powerful way to evaluate programs to locate and fix errors.  It is hampered a bit, though, by PHP’s normal weak typing.  Passing an integer to a function that expects a string, or a string to a function that expects an integer, still works as far as types are concerned because PHP will silently convert between them for us, just as it always has.  That makes static analysis, by us or by a program, less useful.
+Этот процесс называется "статический анализ", и он является невероятно мощным способом оценки программ с целью поиска и исправления ошибок. Этому немного мешает стандартная слабая типизация PHP. Передача целого числа в функцию, которая ожидает строку, или строку в функцию, ожидающую целое, все это продолжает работать и PHP молча конвертирует примитивы между собой, также как и всегда. Что делает статический анализ, нами или с помощью утилит, менее полезным. 
 
-Enter strict mode, the cornerstone of PHP 7’s new typing system.
+Введение режима строгой типизации является краеугольным камнем новой системы типов PHP 7.
 
-By default, with scalar types (either on parameters or return values), PHP will do its best to cast a value to what is expected.  That is, passing an int to a string parameter will work fine, and result in a variable of type string. Passing a boolean value to an int parameter will convert to a 0 or 1 integer, because that’s what the natural thing to do is.  Returning an object that implements `__toString()` when a function says it returns a string will result in, you guessed it, a primitive string.
+По умолчанию, при работе со скалярными типами (параметрами или возвращаемыми значениями), PHP будет делать все возможное, чтобы привести значение к ожидаемому. То есть, передача `int` в функцию, ожидающую `string` будет прекрасно работать, а передавая `bool` при ожидаемом `int` вы получите целое число 0 или 1, потому что это естественное, ожидаемое от языка поведение. У объекта, переданного в фунцию, ожидающую `string`, будет вызваться `__toString()`, тоже самое произойдет и с возвращаемыми значениями.
 
-The one exception is passing a string to an int or float.  Traditionally, when a PHP function expects an int or float and a string is passed, PHP will silently truncate the string at the first non-numeric character resulting in possible data loss.  With scalar types, passing a string to an int or float parameter will work normally if it’s a numeric string, but will trigger an E_NOTICE if values are truncated.  It will still continue, but such data loss is now treated as a minor error condition.
+Единственным исключением является передача строки в ожидаемый `int` или `float`. Традиционно, когда функция расчитывает получить значения `int`/`float`, а передается `string`, PHP просто полча будет обрезать строку до первого нечислового символа, в результате чего возможно потеря данных. В случае со скалярными типами, параметр будет работать нормально, если строка действительно является числовой, но если же значение будет усекаться, то это приведет к вызову `E_NOTICE`. Все будет работать, но на текущий момент такая ситуация рассматривается как незначительная ошибка в условии.
 
-That auto-conversion makes sense in a world where virtually all input is a string (from a database or HTTP request), but does limit the usefulness of type checking.  Instead, PHP 7 offers a strict_types mode.  Its usage is a little subtle and non-obvious, but once understood is incredibly powerful.
+Авто-преобразование имеет смысл, в тех случаях, когда практически все входные данные передаются как строки (из базы данных или http-запросы), но в то же время оно ограничивает полезность проверки типов. Как раз для этого в PHP 7 прелагается `strict_types` режим. Его использование является несколько тонким и неочевидным, но при должном понимании разработчик получает невероятно мощный инструмент.
 
-To enable strict mode, add a declare statement to the top of a file like so:
+Чтобы включить режим строгой типизации, добавьте объявление в начало файла, вот так:
 
 ```php
 declare(strict_types=1);
 ```
 
-That statement must be the first line in the file, before any executable code. It affects only that file, and only _calls and returns_ in that file.  To understand what that means, let’s break our code from above into a few separate files and tweak it a bit:
+Это объявление должно быть первой строкой в файле, до выполнения какого-либо кода. Оно затрагивает только логику, расположенную в файле и только _вызовы и возвращамые значения_ в этом файле. Чтобы понять как работает `strict_types`, давайте разобьем наш код на несколько отдельных файлов и немного его изменим:
 
 ```php
 // EmployeeRespository.php
