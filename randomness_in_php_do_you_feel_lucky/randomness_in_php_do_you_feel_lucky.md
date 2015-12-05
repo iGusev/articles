@@ -17,13 +17,13 @@ CSPRNG в основном используется для следующих ц
 
 Главным аспектом сохранения высокого уровня безопасности является высокое качество случайности.
 
-## CSPRNG in PHP 7
+## CSPRNG в PHP7
 
-PHP 7 introduces two new functions that can be used for CSPRNG: [`random_bytes`](http://php.net/manual/en/function.random-bytes.php) and [`random_int`](http://php.net/manual/en/function.random-int.php).
+PHP7 вводит две новых функции, которые могут быть использованы для CSPRNG: [`random_bytes`](http://php.net/manual/en/function.random-bytes.php) и [`random_int`](http://php.net/manual/en/function.random-int.php).
 
-The `random_bytes` function returns a `string` and accepts as input an `int` representing the length in bytes to be returned.
+Функция `random_bytes` возвращает строку и принимает в качестве входных параметров `int`, задающий длину (в байтах) возвращаемого значения.
 
-Example:
+Пример:
 
 ```php
 $bytes = random_bytes('10');
@@ -31,8 +31,7 @@ var_dump(bin2hex($bytes));
 //possible ouput: string(20) "7dfab0af960d359388e6"  
 ```
 
-The `random_int` function returns an integer number within the given range.  
-Example:
+`random_int` возвращает целое число в заданном диапазоне:
 
 ```php
 var_dump(random_int(1, 100));
