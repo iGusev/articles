@@ -5,17 +5,17 @@ http://www.sitepoint.com/randomness-php-feel-lucky/
 
 В этой статье мы проанализируем проблемы, относящиеся к генерации случайных чисел, используемых в криптографии. PHP5 не обеспечивает простой механизм генерации криптостойких случайных чисел, в то время как PHP7 решает эту проблему путем введения [CSPRNG](https://ru.wikipedia.org/wiki/Криптографически_стойкий_генератор_псевдослучайных_чисел)-функций.
 
-## What Is a CSPRNG?
+## Что такое CSPRNG?
 
-Quoting [Wikipedia](https://en.wikipedia.org/wiki/Cryptographically_secure_pseudorandom_number_generator), a Cryptographically Secure Pseudorandom Number Generator (CSPRNG) is a pseudo-random number generator (PRNG) with properties that make it suitable for use in cryptography.
+Цитируя [википедию](https://ru.wikipedia.org/wiki/Криптографически_стойкий_генератор_псевдослучайных_чисел), криптографически стойкий генератор псевдослучайных чисел (англ. Cryptographically secure pseudorandom number generator, CSPRNG) - это генератор псевдослучайных чисел с определёнными свойствами, позволяющими использовать его в криптографии.
 
-A CSPRNG could be mainly useful for:
+CSPRNG в основном используется для следующих целей:
 
-*	Key generation (e.g. generation of complicated keys)
-*   Creating random passwords for new user accounts
-*   Encryption systems
+*	Генерация ключей (в том числе, генерация public/private ключей)
+*	Создание случайных паролей для аккаунтов пользователей
+*	Системы шифрования
 
-A central aspect to keeping a high security level is the high quality of randomness.
+Главным аспектом сохранения высокого уровня безопасности является высокое качество случайности.
 
 ## CSPRNG in PHP 7
 
