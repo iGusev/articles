@@ -1,9 +1,9 @@
 >Randomness in PHP – Do You Feel Lucky?
 http://www.sitepoint.com/randomness-php-feel-lucky/
 
-![Cryptography Randomness in PHP](http://dab1nmslvvntp.cloudfront.net/wp-content/uploads/2015/10/1444736085dice.jpg "Cryptography Randomness in PHP")
+![Криптографическая рандомизация в PHP](https://habrastorage.org/files/dd7/176/96c/dd717696cc1a4dc69497bb7d06734f94.jpg "Криптографическая рандомизация в PHP")
 
-This article analyzes problems related to random number generation used for cryptography purposes. PHP 5 does not provide an easy mechanism for generating cryptographically strong random numbers, while PHP 7 solves this by introducing a couple of [CSPRNG](https://en.wikipedia.org/wiki/Cryptographically_secure_pseudorandom_number_generator) functions.
+В этой статье мы проанализируем проблемы, относящиеся к генерации случайных чисел, используемых в криптографии. PHP5 не обеспечивает простой механизм генерации криптостойких случайных чисел, в то время как PHP7 решает эту проблему путем введения [CSPRNG](https://ru.wikipedia.org/wiki/Криптографически_стойкий_генератор_псевдослучайных_чисел)-функций.
 
 ## What Is a CSPRNG?
 
