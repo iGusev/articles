@@ -38,15 +38,14 @@ var_dump(random_int(1, 100));
 //possible output: 27
 ```
 
-## Behind the Scenes
+## За кадром
 
-The sources of randomness of the above functions are different depending on the environment:
+Источники случайности вышеперечисленных функций отличаются в зависимости от среды:
 
-*   On Windows, [`<span class="token function">CryptGenRandom</span><span class="token punctuation">(</span><span class="token punctuation">)</span>`](https://msdn.microsoft.com/en-us/library/windows/desktop/aa379942%28v=vs.85%29.aspx) will always be used.
-*   On other platforms, [`<span class="token function">arc4random_buf</span><span class="token punctuation">(</span><span class="token punctuation">)</span>`](http://www.openbsd.org/cgi-bin/man.cgi/OpenBSD-current/man3/arc4random.3) will be used if it is available (true on BSD derivatives or systems with libbsd).
-*   Failing the above, a Linux [getrandom(2)](http://man7.org/linux/man-pages/man2/getrandom.2.html) syscall will be used.
-*   If all else fails /dev/urandom will be used as the final fallback.
-*   If none of the above sources are available, then an `Error` will be thrown.
+*	На других платформах - при условии доступности будет задействована [`arc4random_buf()`](http://www.openbsd.org/cgi-bin/man.cgi/OpenBSD-current/man3/arc4random.3) (верно в случае BSD-производных систем или систем с `libbsd`).
+*   В случае недоступности вышеобозначенного, в Linux будет использоваться системный [`getrandom(2)`](http://man7.org/linux/man-pages/man2/getrandom.2.html).
+*	Если все это терпит неудачу, в качестве финальной попытки PHP попробует задействовать `/dev/urandom`.
+*	При невозможности использовать эти источники будет выброшена ошибка.
 
 ## A Simple Test
 
