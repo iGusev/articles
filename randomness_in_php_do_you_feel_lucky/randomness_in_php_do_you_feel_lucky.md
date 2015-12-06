@@ -139,23 +139,18 @@ echo $password;
 //possible output: 7rgG8GHu
 ```
 
-## Conclusion
+## Краткий итог
 
-You should always apply a cryptographically secure pseudo-random number generator, and the `random_compat` lib provides a good implementation for this.
+Вы всегда должны применять криптографически стойкие генераторы псевдослучайных чисел, и `random_compat` является хорошим решением для этого.
 
-If you want to use a reliable random data source, as you saw in the article, the suggestion is to start as soon as possible with `random_int` and `random_bytes`.
+Если же вам необходим надежный источник случайных данных, то посмотрите в сторону `random_int` и `random_bytes`.
 
-Questions or comments? Leave them below!
+### Ссылки по теме
 
-### Further Reading
-
-| Description                            | Link                                                                   |
-|----------------------------------------|------------------------------------------------------------------------|
-| Die Hard Test                          | https://en.wikipedia.org/wiki/Diehard_tests                            |
-| Chi-square test with dice example      | http://bit.ly/1Mrptf5                                                  |
-| Kolmogorov-Smirnov Test                | https://en.wikipedia.org/wiki/Kolmogorov-Smirnov_test                  |
-| Spectral Test                          | http://random.mat.sbg.ac.at/tests/theory/spectral/                     |
-| RaBiGeTe test suite                    | http://cristianopi.altervista.org/RaBiGeTe_MT                          |
-| Random Number Generation In PHP (2011) | http://blog.ircmaxell.com/2011/07/random-number-generation-in-php.html |
-| Testing RNG part 1 and 2               | http://ubm.io/1Ot46vL http://ubm.io/1VNzh3N                            |
-
+*	[Die Hard Test](https://en.wikipedia.org/wiki/Diehard_tests)
+*	[Chi-square test with dice example](http://bit.ly/1Mrptf5)
+*	[Kolmogorov-Smirnov Test](https://en.wikipedia.org/wiki/Kolmogorov-Smirnov_test)
+*	[Spectral Test](http://random.mat.sbg.ac.at/tests/theory/spectral/)
+*	[RaBiGeTe test suite](http://cristianopi.altervista.org/RaBiGeTe_MT)
+*	[Random Number Generation In PHP (2011)](http://cristianopi.altervista.org/RaBiGeTe_MT)
+*	[Testing RNG part 1](http://ubm.io/1Ot46vL) [and 2](http://ubm.io/1VNzh3N)
