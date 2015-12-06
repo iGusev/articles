@@ -47,52 +47,52 @@ var_dump(random_int(1, 100));
 *	Если все это терпит неудачу, в качестве финальной попытки PHP попробует задействовать `/dev/urandom`.
 *	При невозможности использовать эти источники будет выброшена ошибка.
 
-## A Simple Test
+## Простой тест
 
-A good random number generation system assures the right “quality” of generations. To check this quality, a battery of statistical tests is often performed. Without delving into complex statistical topics, comparing a known behavior with the result of a number generator can help in a quality evaluation.
+Хорошая система генерации случайных числе определяется "качеством" генераций. Чтобы его проверить часто используется набор статистических тестов, позволяющих, не вникая в сложную тему статистики, сравнить известное эталонное поведение с результатом генератора и помочь в оценке его качества.
 
-One easy test is the dice game. Assuming the odds of rolling a six with one die are one in six, if I roll three dice at the same time 100 times, the expected values for 0, 1, 2, and 3 sixes are roughly:
+Один из самых простых тестов - игра в кости. Предполагаемая вероятность выпадения шестерки при одной кости - один к шести, в то же время, если я брошу три кости 100 раз, то ожидаемые выпадения 1, 2 и 3х шестерок примерно такие:
 
-*   0 sixes = 57.9 times
-*   1 sixes = 34.7 times
-*   2 sixes = 6.9 times
-*   3 sixes = 0.5 times
+*   0 шестерок = 57.9 раз
+*   1 шестерка = 34.7 раз
+*   2 шестерки = 6.9 раз
+*   3 шестерки = 0.5 раз
 
-Here is the code to reproduce the dice roll 1.000.000 times:
+Вот код для воспроизведения броска костей 1 000 000 раз:
+
 ```php
 $times = 1000000;
 $result = [];
-for ($i=0; $i<$times; $i++){
+for ($i=0; $i < $times; $i++) {
     $dieRoll = array(6 => 0); //initializes just the six counting to zero
     $dieRoll[roll()] += 1; //first die
     $dieRoll[roll()] += 1; //second die
     $dieRoll[roll()] += 1; //third die
     $result[$dieRoll[6]] += 1; //counts the sixes
 }
-function roll(){
+function roll() {
     return random_int(1,6);
 }
 var_dump($result);
 ```
 
-Testing the code above with PHP7 `random_int` and the simple `rand` function might produce:
+Прогонка кода в PHP7 c использованием `random_int` и простого `rand` выдаст следующие результаты:
 
-| Sixes | expected | random_int | rand   |
-|-------|----------|------------|--------|
-| 0     | 579000   | 579430     | 578179 |
-| 1     | 347000   | 346927     | 347620 |
-| 2     | 69000    | 68985      | 69586  |
-| 3     | 5000     | 4658       | 4615   |
+| Шестерки | ожидается | random_int | rand   |
+|----------|-----------|------------|--------|
+| 0        | 579000    | 579430     | 578179 |
+| 1        | 347000    | 346927     | 347620 |
+| 2        | 69000     | 68985      | 69586  |
+| 3        | 5000      | 4658       | 4615   |
 
-To see a better comparison between `rand` and `random_int` we can plot the results in a graph applying a formula to increase the differences between values: `php result - expected result / sqrt(expected)`.
+Для лучшего сравнения `rand` и `random_int` построим график результатов, применяя формулу: `результат PHP` - `ожидаемый результат` / `sqrt(ожидаемый результат)`.
 
-The resulting graph will be:
+График будет выглядеть так:
 
-![test random graph](http://dab1nmslvvntp.cloudfront.net/wp-content/uploads/2015/10/1444736090random-graph.png "random test result")  
-(values close to zero are better)
+![график test random](https://habrastorage.org/files/942/335/eef/942335eef1ae4f09935722986e17d66a.png "график test random")  
+(чем ближе к нулю, тем лучше)
 
-Even if the three sixes combination doesn’t perform well, and the test is too easy for a real application we can clearly see that `random_int` performs better than `rand`.  
-Furthermore, the security of an application is increased by the absence of predictable, repeatable behaviors in the random number generator adopted.
+Даже несмотря на плохой результат с тремя шестерками, мы видим явное превосходство `random_int` над `rand`.
 
 ## What about PHP 5?
 
