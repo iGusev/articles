@@ -94,13 +94,13 @@ var_dump($result);
 
 Даже несмотря на плохой результат с тремя шестерками, мы видим явное превосходство `random_int` над `rand`.
 
-## What about PHP 5?
+## А что насчет PHP5?
 
-By default, PHP 5 does not provide any strong pseudo-random number generators. In reality, there are some options like [`<span class="token function">openssl_random_pseudo_bytes</span><span class="token punctuation">(</span><span class="token punctuation">)</span>`](http://php.net/manual/en/function.openssl-random-pseudo-bytes.php), [`<span class="token function">mcrypt_create_iv</span><span class="token punctuation">(</span><span class="token punctuation">)</span>`](http://php.net/manual/en/function.mcrypt-create-iv.php) or directly use the [`<span class="token operator">/</span>dev<span class="token operator">/</span>random`](https://en.wikipedia.org/wiki//dev/random) or [`<span class="token operator">/</span>dev<span class="token operator">/</span>urandom`](https://en.wikipedia.org/wiki//dev/random) devices with `<span class="token function">fread</span><span class="token punctuation">(</span><span class="token punctuation">)</span>`. There are also packages like [RandomLib](https://github.com/ircmaxell/RandomLib) or [libsodium](https://pecl.php.net/package/libsodium).
+По умолчанию, PHP5 не предусматривает каких-либо сильных псевдо-генераторов случайных чисел. Но на самом деле есть несколько вариантов, таких как [`openssl_random_pseudo_bytes()`](http://php.net/manual/en/function.openssl-random-pseudo-bytes.php), [`mcrypt_create_iv()`](http://php.net/manual/en/function.mcrypt-create-iv.php) или непосредственное использование [`/dev/random`](https://en.wikipedia.org/wiki//dev/random) или [`/dev/urandom`](https://en.wikipedia.org/wiki//dev/random) с `fread()`. Есть также такие библиотеки, как [RandomLib](https://github.com/ircmaxell/RandomLib) или [libsodium](https://pecl.php.net/package/libsodium).
 
-If you want to start using a good random number generator and at the same time be PHP 7-ready you can use the Paragon Initiative Enterprises [`random_compat`](https://github.com/paragonie/random_compat) library. The `random_compat` library allows the use of `<span class="token function">random_bytes</span><span class="token punctuation">(</span><span class="token punctuation">)</span>` and `<span class="token function">random_int</span><span class="token punctuation">(</span><span class="token punctuation">)</span>` in your PHP 5.x project.
+Если вы хотите начать использовать хороший генератор случайных чисел и в то же время готовиться к переходу на PHP7, вы можете использовать библитеку [`random_compat`](https://github.com/paragonie/random_compat) от Paragon Initiative Enterprises. Она позволяет использовать `random_bytes()` и `random_int()` PHP 5.х проектах.
 
-The library can be installed via [Composer](https://getcomposer.org/):
+Библиотеку можно установить через [Composer](https://getcomposer.org/):
 
 ```php
 composer require paragonie/random_compat
@@ -114,16 +114,18 @@ var_dump($int);
 // int(81)
 ```
 
-The `random_compat` library uses a different preference order compared to the PHP 7 one:
+По сравнению с PHP7, `random_compat` использует несколько другие приоритеты:
 
-1.  `fread()` `/dev/urandom` if available
-2.  `mcrypt_create_iv($bytes, MCRYPT_CREATE_IV)`
-3.  `COM('CAPICOM.Utilities.1')->GetRandom()`
-4.  `openssl_random_pseudo_bytes()`
+1.	`fread()` `/dev/urandom` если доступно
+2.	`mcrypt_create_iv($bytes, MCRYPT_CREATE_IV)`
+3.	`COM('CAPICOM.Utilities.1')->GetRandom()`
+4.	`openssl_random_pseudo_bytes()`
 
 For more information about why this order has been used, I suggest reading the [documentation](https://github.com/paragonie/random_compat/blob/master/ERRATA.md).
 
-A simple use of the library to generate a password can be:
+Дополнительную информацию о том почему используется именно этот порядок вы можете прочитать в [документации](https://github.com/paragonie/random_compat/blob/master/ERRATA.md).
+
+Пример генерации пароля с использованием библиотеки:
 
 ```php
 $passwordChar = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
