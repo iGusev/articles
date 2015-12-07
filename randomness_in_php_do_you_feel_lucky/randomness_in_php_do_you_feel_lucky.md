@@ -42,6 +42,7 @@ var_dump(random_int(1, 100));
 
 Источники случайности вышеперечисленных функций отличаются в зависимости от среды:
 
+*	В Windows всегда будет использоваться `CryptGenRandom();`
 *	На других платформах - при условии доступности будет задействована [`arc4random_buf()`](http://www.openbsd.org/cgi-bin/man.cgi/OpenBSD-current/man3/arc4random.3) (верно в случае BSD-производных систем или систем с `libbsd`).
 *   В случае недоступности вышеобозначенного, в Linux будет использоваться системный [`getrandom(2)`](http://man7.org/linux/man-pages/man2/getrandom.2.html).
 *	Если все это терпит неудачу, в качестве финальной попытки PHP попробует задействовать `/dev/urandom`.
@@ -78,12 +79,12 @@ var_dump($result);
 
 Прогонка кода в PHP7 c использованием `random_int` и простого `rand` выдаст следующие результаты:
 
-| Шестерки | ожидается | random_int | rand   |
-|----------|-----------|------------|--------|
-| 0        | 579000    | 579430     | 578179 |
-| 1        | 347000    | 346927     | 347620 |
-| 2        | 69000     | 68985      | 69586  |
-| 3        | 5000      | 4658       | 4615   |
+| Шестерки | Ожидаемый результат | random_int | rand   |
+|----------|---------------------|------------|--------|
+| 0        | 579000              | 579430     | 578179 |
+| 1        | 347000              | 346927     | 347620 |
+| 2        | 69000               | 68985      | 69586  |
+| 3        | 5000                | 4658       | 4615   |
 
 Для лучшего сравнения `rand` и `random_int` построим график результатов, применяя формулу: `результат PHP` - `ожидаемый результат` / `sqrt(ожидаемый результат)`.
 
@@ -92,13 +93,13 @@ var_dump($result);
 ![график test random](https://habrastorage.org/files/942/335/eef/942335eef1ae4f09935722986e17d66a.png "график test random")  
 (чем ближе к нулю, тем лучше)
 
-Даже несмотря на плохой результат с тремя шестерками, мы видим явное превосходство `random_int` над `rand`.
+Даже несмотря на плохой результат с тремя шестерками и всю простоту теста, мы видим явное превосходство `random_int` над `rand`.
 
 ## А что насчет PHP5?
 
 По умолчанию, PHP5 не предусматривает каких-либо сильных псевдо-генераторов случайных чисел. Но на самом деле есть несколько вариантов, таких как [`openssl_random_pseudo_bytes()`](http://php.net/manual/en/function.openssl-random-pseudo-bytes.php), [`mcrypt_create_iv()`](http://php.net/manual/en/function.mcrypt-create-iv.php) или непосредственное использование [`/dev/random`](https://en.wikipedia.org/wiki//dev/random) или [`/dev/urandom`](https://en.wikipedia.org/wiki//dev/random) с `fread()`. Есть также такие библиотеки, как [RandomLib](https://github.com/ircmaxell/RandomLib) или [libsodium](https://pecl.php.net/package/libsodium).
 
-Если вы хотите начать использовать хороший генератор случайных чисел и в то же время готовиться к переходу на PHP7, вы можете использовать библитеку [`random_compat`](https://github.com/paragonie/random_compat) от Paragon Initiative Enterprises. Она позволяет использовать `random_bytes()` и `random_int()` PHP 5.х проектах.
+Если вы хотите начать использовать хороший генератор случайных чисел и в то же время пока еще не готовы к переходу на PHP7, вы можете использовать библитеку [`random_compat`](https://github.com/paragonie/random_compat) от Paragon Initiative Enterprises. Она позволяет использовать `random_bytes()` и `random_int()` в PHP 5.х проектах.
 
 Библиотеку можно установить через [Composer](https://getcomposer.org/):
 
@@ -120,8 +121,6 @@ var_dump($int);
 2.	`mcrypt_create_iv($bytes, MCRYPT_CREATE_IV)`
 3.	`COM('CAPICOM.Utilities.1')->GetRandom()`
 4.	`openssl_random_pseudo_bytes()`
-
-For more information about why this order has been used, I suggest reading the [documentation](https://github.com/paragonie/random_compat/blob/master/ERRATA.md).
 
 Дополнительную информацию о том почему используется именно этот порядок вы можете прочитать в [документации](https://github.com/paragonie/random_compat/blob/master/ERRATA.md).
 
