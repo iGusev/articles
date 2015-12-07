@@ -1,0 +1,165 @@
+<img width="100%" src="https://habrastorage.org/files/dd7/176/96c/dd717696cc1a4dc69497bb7d06734f94.jpg" alt="Криптографическая рандомизация в PHP" title="Криптографическая рандомизация в PHP">
+
+В этой статье мы проанализируем проблемы, относящиеся к генерации случайных чисел, используемых в криптографии. PHP5 не обеспечивает простой механизм генерации криптостойких случайных чисел, в то время как PHP7 решает эту проблему путем введения <a href="https://ru.wikipedia.org/wiki/%D0%9A%D1%80%D0%B8%D0%BF%D1%82%D0%BE%D0%B3%D1%80%D0%B0%D1%84%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8_%D1%81%D1%82%D0%BE%D0%B9%D0%BA%D0%B8%D0%B9_%D0%B3%D0%B5%D0%BD%D0%B5%D1%80%D0%B0%D1%82%D0%BE%D1%80_%D0%BF%D1%81%D0%B5%D0%B2%D0%B4%D0%BE%D1%81%D0%BB%D1%83%D1%87%D0%B0%D0%B9%D0%BD%D1%8B%D1%85_%D1%87%D0%B8%D1%81%D0%B5%D0%BB">CSPRNG</a>-функций.
+
+<h2>Что такое CSPRNG?</h2>
+Цитируя <a href="https://ru.wikipedia.org/wiki/%D0%9A%D1%80%D0%B8%D0%BF%D1%82%D0%BE%D0%B3%D1%80%D0%B0%D1%84%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8_%D1%81%D1%82%D0%BE%D0%B9%D0%BA%D0%B8%D0%B9_%D0%B3%D0%B5%D0%BD%D0%B5%D1%80%D0%B0%D1%82%D0%BE%D1%80_%D0%BF%D1%81%D0%B5%D0%B2%D0%B4%D0%BE%D1%81%D0%BB%D1%83%D1%87%D0%B0%D0%B9%D0%BD%D1%8B%D1%85_%D1%87%D0%B8%D1%81%D0%B5%D0%BB">википедию</a>, криптографически стойкий генератор псевдослучайных чисел (англ. Cryptographically secure pseudorandom number generator, CSPRNG) - это генератор псевдослучайных чисел с определёнными свойствами, позволяющими использовать его в криптографии.
+
+CSPRNG в основном используется для следующих целей:
+<ul>
+<li>Генерация ключей (в том числе, генерация public/private ключей)</li>
+<li>Создание случайных паролей для аккаунтов пользователей</li>
+<li>Системы шифрования</li>
+</ul>
+Главным аспектом сохранения высокого уровня безопасности является высокое качество случайности.
+
+<h2>CSPRNG в PHP7</h2>
+PHP7 вводит две новых функции, которые могут быть использованы для CSPRNG: <a href="http://php.net/manual/en/function.random-bytes.php"><code>random_bytes</code></a> и <a href="http://php.net/manual/en/function.random-int.php"><code>random_int</code></a>.<cut/>
+
+Функция <code>random_bytes</code> возвращает строку и принимает в качестве входных параметров <code>int</code>, задающий длину (в байтах) возвращаемого значения:
+
+<source lang="php">
+$bytes = random_bytes('10');
+var_dump(bin2hex($bytes));
+//possible ouput: string(20) "7dfab0af960d359388e6"  
+</source>
+<code>random_int</code> возвращает целое число в заданном диапазоне:
+
+<source lang="php">
+var_dump(random_int(1, 100));
+//possible output: 27
+</source>
+<h2>За кадром</h2>
+Источники случайности вышеперечисленных функций отличаются в зависимости от среды:
+<ul>
+<li>В Windows всегда будет использоваться <code>CryptGenRandom();</code></li>
+<li>На других платформах - при условии доступности будет задействована <a href="http://www.openbsd.org/cgi-bin/man.cgi/OpenBSD-current/man3/arc4random.3"><code>arc4random_buf()</code></a> (верно в случае BSD-производных систем или систем с <code>libbsd</code>).</li>
+<li>В случае недоступности вышеобозначенного, в Linux будет использоваться системный <a href="http://man7.org/linux/man-pages/man2/getrandom.2.html"><code>getrandom(2)</code></a>.</li>
+<li>Если все это терпит неудачу, в качестве финальной попытки PHP попробует задействовать <code>/dev/urandom</code>.</li>
+<li>При невозможности использовать эти источники будет выброшена ошибка.</li>
+</ul>
+<h2>Простой тест</h2>
+Хорошая система генерации случайных чисел определяется "качеством" генераций. Чтобы его проверить часто используется набор статистических тестов, позволяющих, не вникая в сложную тему статистики, сравнить известное эталонное поведение с результатом генератора и помочь в оценке его качества.
+
+Один из самых простых тестов - игра в кости. Предполагаемая вероятность выпадения шестерки при одной кости - один к шести, в то же время, если я брошу три кости 100 раз, то ожидаемые выпадения 1, 2 и 3х шестерок примерно такие:
+<ul>
+<li>0 шестерок = 57.9 раз</li>
+<li>1 шестерка = 34.7 раз</li>
+<li>2 шестерки = 6.9 раз</li>
+<li>3 шестерки = 0.5 раз</li>
+</ul>
+Вот код для воспроизведения броска костей 1 000 000 раз:
+
+<source lang="php">
+$times = 1000000;
+$result = [];
+for ($i=0; $i < $times; $i++) {
+    $dieRoll = array(6 => 0); //initializes just the six counting to zero
+    $dieRoll[roll()] += 1; //first die
+    $dieRoll[roll()] += 1; //second die
+    $dieRoll[roll()] += 1; //third die
+    $result[$dieRoll[6]] += 1; //counts the sixes
+}
+function roll() {
+    return random_int(1,6);
+}
+var_dump($result);
+</source>
+Прогонка кода в PHP7 c использованием <code>random_int</code> и простого <code>rand</code> выдаст следующие результаты:
+<table>
+<tbody>
+<tr>
+<th>Шестерки</th>
+<th>Ожидаемый результат</th>
+<th>random_int</th>
+<th>rand</th>
+</tr>
+<tr>
+<td>0</td>
+<td>579000</td>
+<td>579430</td>
+<td>578179</td>
+</tr>
+<tr>
+<td>1</td>
+<td>347000</td>
+<td>346927</td>
+<td>347620</td>
+</tr>
+<tr>
+<td>2</td>
+<td>69000</td>
+<td>68985</td>
+<td>69586</td>
+</tr>
+<tr>
+<td>3</td>
+<td>5000</td>
+<td>4658</td>
+<td>4615</td>
+</tr>
+</tbody>
+</table>
+Для лучшего сравнения <code>rand</code> и <code>random_int</code> построим график результатов, применяя формулу: <code>результат PHP</code> - <code>ожидаемый результат</code> / <code>sqrt(ожидаемый результат)</code>.
+
+График будет выглядеть так (чем ближе к нулю, тем лучше):
+<img align="center" src="https://habrastorage.org/files/942/335/eef/942335eef1ae4f09935722986e17d66a.png" alt="график test random" title="график test random">
+Даже несмотря на плохой результат с тремя шестерками и всю простоту теста, мы видим явное превосходство <code>random_int</code> над <code>rand</code>.
+
+<h2>А что насчет PHP5?</h2>
+По умолчанию, PHP5 не предусматривает каких-либо сильных псевдо-генераторов случайных чисел. Но на самом деле есть несколько вариантов, таких как <a href="http://php.net/manual/en/function.openssl-random-pseudo-bytes.php"><code>openssl_random_pseudo_bytes()</code></a>, <a href="http://php.net/manual/en/function.mcrypt-create-iv.php"><code>mcrypt_create_iv()</code></a> или непосредственное использование <a href="https://en.wikipedia.org/wiki//dev/random"><code>/dev/random</code></a> или <a href="https://en.wikipedia.org/wiki//dev/random"><code>/dev/urandom</code></a> с <code>fread()</code>. Есть также такие библиотеки, как <a href="https://github.com/ircmaxell/RandomLib">RandomLib</a> или <a href="https://pecl.php.net/package/libsodium">libsodium</a>.
+
+Если вы хотите начать использовать хороший генератор случайных чисел и в то же время пока еще не готовы к переходу на PHP7, вы можете использовать библитеку <a href="https://github.com/paragonie/random_compat"><code>random_compat</code></a> от Paragon Initiative Enterprises. Она позволяет использовать <code>random_bytes()</code> и <code>random_int()</code> в PHP 5.х проектах.
+
+Библиотеку можно установить через <a href="https://getcomposer.org/">Composer</a>:
+
+<source lang="bash">
+composer require paragonie/random_compat
+</source>
+<source lang="php">
+require 'vendor/autoload.php';
+$string = random_bytes(32);
+var_dump(bin2hex($string));
+// string(64) "8757a27ce421b3b9363b7825104f8bc8cf27c4c3036573e5f0d4a91ad2aaec6f"
+$int = random_int(0,255);
+var_dump($int);
+// int(81)
+</source>
+По сравнению с PHP7, <code>random_compat</code> использует несколько другие приоритеты:
+<ol>
+<li><code>fread()</code> <code>/dev/urandom</code> если доступно</li>
+<li><code>mcrypt_create_iv($bytes, MCRYPT_CREATE_IV)</code></li>
+<li><code>COM('CAPICOM.Utilities.1')-&gt;GetRandom()</code></li>
+<li><code>openssl_random_pseudo_bytes()</code></li>
+</ol>
+
+Дополнительную информацию о том почему используется именно этот порядок вы можете прочитать в <a href="https://github.com/paragonie/random_compat/blob/master/ERRATA.md">документации</a>.
+
+Пример генерации пароля с использованием библиотеки:
+
+<source lang="php">
+$passwordChar = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+$passwordLength = 8;
+$max = strlen($passwordChar) - 1;
+$password = '';
+for ($i = 0; $i < $passwordLength; ++$i) {
+    $password .= $passwordChar[random_int(0, $max)];
+}
+echo $password;
+//possible output: 7rgG8GHu
+</source>
+<h2>Краткий итог</h2>
+Вы всегда должны применять криптографически стойкие генераторы псевдослучайных чисел, и <code>random_compat</code> является хорошим решением для этого.
+
+Если же вам необходим надежный источник случайных данных, то посмотрите в сторону <code>random_int</code> и <code>random_bytes</code>.
+
+<h3>Ссылки по теме</h3>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Diehard_tests">Die Hard Test</a></li>
+<li><a href="http://bit.ly/1Mrptf5">Chi-square test with dice example</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Kolmogorov-Smirnov_test">Kolmogorov-Smirnov Test</a></li>
+<li><a href="http://random.mat.sbg.ac.at/tests/theory/spectral/">Spectral Test</a></li>
+<li><a href="http://cristianopi.altervista.org/RaBiGeTe_MT">RaBiGeTe test suite</a></li>
+<li><a href="http://cristianopi.altervista.org/RaBiGeTe_MT">Random Number Generation In PHP (2011)</a></li>
+<li><a href="http://ubm.io/1Ot46vL">Testing RNG part 1</a> <a href="http://ubm.io/1VNzh3N">and 2</a></li>
+</ul>
