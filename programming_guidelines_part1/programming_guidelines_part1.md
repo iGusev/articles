@@ -5,9 +5,9 @@
 
 PHP is pretty much a freestyle programming language. It's dynamic and quite forgiving towards the programmer. As a PHP developer you therefore need a lot of discipline to get your code right. Over the years I've read many programming books and discussed code style with many fellow developers. I can't remember which rules come from which book or person, but this article (and the following ones) reflect what I see as some of the most helpful rules for delivering better code: code that is future-proof, because it can be read and understood quite well. Fellow developers can reason about it with certainty, quickly spot problems, and easily use it in other parts of a code base.
 
-## Reducing function body complexity
+## Снижение сложности тела функции
 
-Inside your method or function bodies, reduce complexity as much as possible. A lower complexity leads to a lower mental burden for anyone who reads the code. Therefore, it will also reduce the number of misunderstandings about how the code works, how it can be modified, or how it should be fixed.
+Уменьшайте сложность тела метода или функции как можно больше. Меньшая сложность приводит к снижению психической нагрузки для тех, кто читает ваш код. Постарайтесь также уменьшить количество возможных разночтений и недоразумений, пишите код так, чтобы однозначно можно было понять как он работает и как его изменять.
 
 ### Reduce the number of branches in a function body
 
