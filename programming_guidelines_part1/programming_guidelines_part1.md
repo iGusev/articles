@@ -130,11 +130,11 @@ If a function body is quite large, it will be hard to understand what is going o
 
 Если тело функции достаточно большое, трудно будет понять что происходит внутри. Отслеживание переменных, их типов, жизненного цикла, (вспомогательных) функций, которые в настоящее время вызываются и т.д. Уходит много усилий чтобы разобраться со всем этим. Когда функция маленькая, проще понять как она работает: принимает некоторый входной сигнал, преобразовывает его и возвращает результат. 
 
-#### Use helper functions
+#### Использование вспомогательных функций
 
-When you have applied the rules above and you have reduced the number of branches in your code, you can simplify your functions even more by splitting them into smaller logical units. Group the lines of code that together accomplish a sub-task, separate them by some whitespace. Then figure out how to move them to separate "helper" methods (also known as the "Extract method" refactoring step).
+С помощью вышеописанных правил вы сократили количество ветвлений вашего кода, но его еще нельзя назвать хорошим. Разделите ваш код на более мелкие логические единицы. Сгруппируйте строки, отделив их несколькими пустыми линиями, так, чтобы они решали общую задачу. Затем повторяющийся код выделите в отдельные "вспомогательные" методы (Это правило также известно как один из шагов рефакторинга - "Extract method").
 
-Helper methods are usually `private` methods, only used by objects of this particular class. Often they don't need access to instance variables. In that case they should be `static` methods. In my experience private (static) helper methods often evolve into separate classes with public (static or instance) methods - at least if you test-drive the code of such a _collaborator_ class.
+Вспомогательные методы, как правило, являются "приватными" и используются только объектами данного класса. Зачастую им не нужен доступ к переменным экземпляра объекта. В таком случае их следует делать "статическими". По моему опыту приватные (статические) вспомогательные методы часто эволюционируют в отдельные классы с публичными интерфейсами.
 
 #### Reduce the number of temporary variables
 
