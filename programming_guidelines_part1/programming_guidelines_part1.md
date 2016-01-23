@@ -85,9 +85,9 @@ return $a->someInformation();
 
 Конечно, мы должны поддерживать случай с `null`. Но об этом мы поговорим в следующей статье.
 
-#### Return early
+#### Ранний `return`
 
-Often a branch in a function body isn't really a branch, but a pre- or sometimes a post-condition, like this:
+Часто ветка в теле функции  на самом деле является пре- или иногда пост-условием, таким как:
 
 ```php
 // pre-condition
@@ -99,9 +99,9 @@ if (!$a instanceof A) {
 return $a->someInformation();
 ```
 
-The `if` statement isn't a functional branch for the execution of this function body. It's merely a check for a pre-condition. In some cases we can delegate checking pre-conditions to PHP itself (i.e. by using proper type hinting). However, PHP won't be able to check all imaginable pre-conditions, so we still need to have some of them in our code. To reduce complexity we should try to return as early as possible if we know that it's not going to work out, if we don't know how to handle the given input, or if we know the answer already.
+В этом `if` нет функциональной логики, в большинстве случаев исполнение в нее не заходит. Это всего лишь проверка на условие. Иногда мы можем делегировать эту проверку самому PHP (т.е. использовать надлежащий type-hinting). Однако же, PHP не сможет проверить все возможные предпосылки, поэтому мы по-прежнему должны иметь некоторые проверки в нашем коде. Для уменьшения сложности мы должны постараться сделать `return` как можно раньше, в момент наличия минимально-необходимых данных для принятия подобного решения.
 
-The visual effect of returning early will be that the "happy path" of your code is not indented anymore:
+Данным приемом мы добъемся визуального эффекта, отделяющего ваш код для "правильного пути" от проверок состояния:
 
 ```php
 // check precondition
@@ -120,7 +120,7 @@ if (...) {
 return ...;
 ```
 
-Following this template for function bodies will make it much easier to read and understand code.
+Следуя этому шаблону вы сильно повысите читатемость и понимаемость кода.
 
 ### Create small logical units
 
