@@ -13,9 +13,9 @@ Inside your method or function bodies, reduce complexity as much as possible. A 
 
 Get rid of as many `if`, `elseif`, `else` and `switch` statements as possible. Each of them creates one or more execution branches. This will make it harder to understand or validate the code, as well as test it (since each of those branches should be covered by a test). There's often a good solution right around the corner though.
 
-#### Delegate decisions ("Tell, don't ask")
+#### Делегация полномочий ("Сообщай, не спрашивай")
 
-In some cases the decision made by an `if` statement should be moved to another object that is better informed anyway. For example:
+В некоторых случаях уместнее переместить `if` внутрь объекта для облегчения восприятия. Например:
 
 ```php
 if ($a->somethingIsTrue()) {
@@ -23,13 +23,13 @@ if ($a->somethingIsTrue()) {
 }
 ```
 
-может быть изменен в:
+может быть изменен так:
 
 ```php
 $a->doSomething();
 ```
 
-where the decision making process has been absorbed by the `doSomething()` method of object `$a` itself. We will never have to "think" for it anymore and we can always safely call `doSomething()`. This approach follows the [Tell, don't ask](http://martinfowler.com/bliki/TellDontAsk.html) principle nicely. I recommend you to look into it and apply it whenever you're asking an object for some information and making a decision for it based on that information.
+Процесс принятия решения был поглощен методом `doSomething()` объекта `$a`. Мы никогда не должны "думать" за него, необходимо иметь возможность вызывать `doSomething()` в любой ситуации и иметь гарантии того, что все будет работать. Данный подход основан на принципе ["Tell, don't ask"](http://martinfowler.com/bliki/TellDontAsk.html). Я рекомендую вам разобраться с ним и применять всякий раз, когда вы спрашиваете у объекта некоторую информацию и принимаете решения на ее основе.
 
 #### Используйте маппинг
 
