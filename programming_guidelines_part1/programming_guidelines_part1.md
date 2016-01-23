@@ -1,9 +1,9 @@
 >Programming guidelines - Part 1: Reducing complexity
 >https://www.ibuildings.nl/blog/2016/01/programming-guidelines-php-developers-part-1-reducing-complexity
 
-## Introduction to the series
+## Введение в серию
 
-PHP is pretty much a freestyle programming language. It's dynamic and quite forgiving towards the programmer. As a PHP developer you therefore need a lot of discipline to get your code right. Over the years I've read many programming books and discussed code style with many fellow developers. I can't remember which rules come from which book or person, but this article (and the following ones) reflect what I see as some of the most helpful rules for delivering better code: code that is future-proof, because it can be read and understood quite well. Fellow developers can reason about it with certainty, quickly spot problems, and easily use it in other parts of a code base.
+PHP - это довольно свободный язык программирования. Он динамичный и довольно снисходительный по отношению к программисту. Следовательно, Вам, как php-разработчику, потребуется много дисциплины, чтобы создавать код правильно. За эти годы я прочитал множество книг по программированию и обсудил стиль кодирования со многими другими разработчиками. Я не вспомню какие правила приходят из каких книг или от каких людей, но эта статья (и последующие) отражает мое видение того, какие правила являются действительно полезными в создании хорошего кода, того кода, который является перспективным, потому что он может быть прочитан и понят достаточно хорошо. Коллеги-разработчики смогут с уверенностью утверждать что он делает, быстро выявлять проблемы и легко использовать его в других проектах.
 
 ## Снижение сложности тела функции
 
