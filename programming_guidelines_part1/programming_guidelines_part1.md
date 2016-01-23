@@ -63,9 +63,9 @@ return $decoders[$type]->decode($body);
 
 Использование маппинга также делает ваш код [открытым для расширения и закрытым для модификаций](http://www.objectmentor.com/resources/articles/ocp.pdf).
 
-#### Enforce types
+#### Использование типов
 
-Many `if` statements can be removed if we take _types_ more seriously. For example:
+Много `if` можно будет убрать, если мы будем использовать типизацию более серьезно. Например:
 
 ```php
 if ($a instanceof A) {
@@ -77,13 +77,13 @@ if ($a instanceof A) {
 }
 ```
 
-can be simplified a lot by enforcing `$a` to be an instance of `A`:
+можно существенно упростить путем форсированного слежения за тем, что `$а` является экземпляром `A`.
 
 ```php
 return $a->someInformation();
 ```
 
-Of course, we would have to support the "null" case in another way. We will discuss this in the next article.
+Конечно, мы должны поддерживать случай с `null`. Но об этом мы поговорим в следующей статье.
 
 #### Return early
 
