@@ -1,0 +1,377 @@
+>Programming guidelines - Part 1: Reducing complexity
+>https://www.ibuildings.nl/blog/2016/01/programming-guidelines-php-developers-part-1-reducing-complexity
+
+## Introduction to the series
+
+PHP is pretty much a freestyle programming language. It's dynamic and quite forgiving towards the programmer. As a PHP developer you therefore need a lot of discipline to get your code right. Over the years I've read many programming books and discussed code style with many fellow developers. I can't remember which rules come from which book or person, but this article (and the following ones) reflect what I see as some of the most helpful rules for delivering better code: code that is future-proof, because it can be read and understood quite well. Fellow developers can reason about it with certainty, quickly spot problems, and easily use it in other parts of a code base.
+
+## Reducing function body complexity
+
+Inside your method or function bodies, reduce complexity as much as possible. A lower complexity leads to a lower mental burden for anyone who reads the code. Therefore, it will also reduce the number of misunderstandings about how the code works, how it can be modified, or how it should be fixed.
+
+### Reduce the number of branches in a function body
+
+Get rid of as many `if`, `elseif`, `else` and `switch` statements as possible. Each of them creates one or more execution branches. This will make it harder to understand or validate the code, as well as test it (since each of those branches should be covered by a test). There's often a good solution right around the corner though.
+
+#### Delegate decisions ("Tell, don't ask")
+
+In some cases the decision made by an `if` statement should be moved to another object that is better informed anyway. For example:
+
+```php
+if ($a->somethingIsTrue()) {
+    $a->doSomething();
+}
+```
+
+может быть изменен в:
+
+```php
+$a->doSomething();
+```
+
+where the decision making process has been absorbed by the `doSomething()` method of object `$a` itself. We will never have to "think" for it anymore and we can always safely call `doSomething()`. This approach follows the [Tell, don't ask](http://martinfowler.com/bliki/TellDontAsk.html) principle nicely. I recommend you to look into it and apply it whenever you're asking an object for some information and making a decision for it based on that information.
+
+#### Используйте маппинг
+
+Иногда количество `if`, `elseif` или `else` можно уменьшить путем введения маппинга. Пример:
+
+```php
+if ($type === 'json') {
+    return $jsonDecoder->decode($body);
+} elseif ($type === 'xml') {
+    return $xmlDecoder->decode($body);
+} else {
+    throw new \LogicException(
+        'Type "' . $type . '" is not supported'
+    );
+}
+```
+
+can be reduced to this:
+
+```php
+$decoders = ...; // a map of type (string) to corresponding Decoder objects
+ 
+if (!isset($decoders[$type])) {
+    throw new \LogicException(
+        'Type "' . $type . '" is not supported'
+    );
+}
+ 
+return $decoders[$type]->decode($body);
+```
+
+Using a map like this makes your code [Open for extension, closed for modification](http://www.objectmentor.com/resources/articles/ocp.pdf) too.
+
+#### Enforce types
+
+Many `if` statements can be removed if we take _types_ more seriously. For example:
+
+```php
+if ($a instanceof A) {
+    // happy path
+    return $a->someInformation();
+} elseif ($a === null) {
+    // alternative path
+    return 'default information';
+}
+```
+
+can be simplified a lot by enforcing `$a` to be an instance of `A`:
+
+```php
+return $a->someInformation();
+```
+
+Of course, we would have to support the "null" case in another way. We will discuss this in the next article.
+
+#### Return early
+
+Often a branch in a function body isn't really a branch, but a pre- or sometimes a post-condition, like this:
+
+```php
+// pre-condition
+if (!$a instanceof A) {
+    throw new \InvalidArgumentException(...);
+}
+ 
+// happy path
+return $a->someInformation();
+```
+
+The `if` statement isn't a functional branch for the execution of this function body. It's merely a check for a pre-condition. In some cases we can delegate checking pre-conditions to PHP itself (i.e. by using proper type hinting). However, PHP won't be able to check all imaginable pre-conditions, so we still need to have some of them in our code. To reduce complexity we should try to return as early as possible if we know that it's not going to work out, if we don't know how to handle the given input, or if we know the answer already.
+
+The visual effect of returning early will be that the "happy path" of your code is not indented anymore:
+
+```php
+// check precondition
+if (...) {
+    throw new ...();
+}
+ 
+// return early
+if (...) {
+    return ...;
+}
+ 
+// happy path
+...
+ 
+return ...;
+```
+
+Following this template for function bodies will make it much easier to read and understand code.
+
+### Create small logical units
+
+If a function body is quite large, it will be hard to understand what is going on inside it. Keeping track of variables, their types, their lifecycle, the (helper) functions that are being called, etc. takes a lot of our mental energy. When trying to understand how a function works, it helps a lot when it is small (i.e. it accepts some input, transforms that input in some way, then returns it).
+
+#### Use helper functions
+
+When you have applied the rules above and you have reduced the number of branches in your code, you can simplify your functions even more by splitting them into smaller logical units. Group the lines of code that together accomplish a sub-task, separate them by some whitespace. Then figure out how to move them to separate "helper" methods (also known as the "Extract method" refactoring step).
+
+Helper methods are usually `private` methods, only used by objects of this particular class. Often they don't need access to instance variables. In that case they should be `static` methods. In my experience private (static) helper methods often evolve into separate classes with public (static or instance) methods - at least if you test-drive the code of such a _collaborator_ class.
+
+#### Reduce the number of temporary variables
+
+A long function body usually needs several variables to remember intermediate results. These temporary variables are hard to mentally keep track of: you'll have to remember whether they have been initialized with a value already, whether or not they are still needed, and what their current value is.
+
+Introducing helper functions as described in the previous section is one way to get rid of temporary values:
+
+```php
+public function capitalizeAndReverse(array $names) {
+    $capitalized = array_map('ucfirst', $names);
+ 
+    $capitalizedAndReversed = array_map('strrev', $capitalized);
+ 
+    return $capitalizedAndReversed;
+}
+```
+
+Using helper methods we don't need any temporary variables anymore:
+
+```php
+public function capitalizeAndReverse(array $names) {
+    return self::reverse(
+        self::capitalize($names)
+    );
+}
+ 
+private static function reverse(array $names) {
+    return array_map('strrev', $names);
+}
+ 
+private static function capitalize(array $names) {
+    return array_map('ucfirst', $names);
+}
+```
+
+As you can see we are basically composing functions into new functions, thereby making it easier to understand what's going on and much easier to make changes. In a way, this code is a bit more "open/closed" now, since we will never have to modify the code of the helper functions anymore.
+
+Since many algorithms require you to loop over a collection of things, thereby creating a new collection or reducing the collection to a single value, it makes sense to make the collection itself a "first-class citizen" and move related behavior to it:
+
+```php
+class Names
+{
+    private $names;
+ 
+    public function __construct(array $names)
+    {
+        $this->names = $names;
+    }
+ 
+    public function reverse()
+    {
+        return new self(
+            array_map('strrev', $names)
+        );
+    }
+ 
+    public function capitalize()
+    {
+        return new self(
+            array_map('ucfirst', $names)
+        );
+    }
+}
+ 
+$result = (new Names([...]))->capitalize()->reverse();
+```
+
+This makes it even easier to "compose" the functions.
+
+While reducing the number of temporary variables usually leads to a better design, as in the example above, you don't have to eliminate all temporary variables. Sometimes they serve their purpose well in documenting what the outcome of an expression represents.
+
+### Use single types
+
+Keeping track of variables and their current values is pretty hard. It gets even harder when it's not entirely clear what the type of a variable is. And it gets more painful if that type is not consistent.
+
+#### Arrays with just a single type of value
+
+Whenever you use an array as a traversable collection, make sure you use it with one type of value. This will reduce the complexity in the loop that's going to read out the values:
+
+```php
+foreach ($collection as $value) {
+    // no need to do any checks if we know the type of $value
+}
+```
+
+Supporting the reader of your code as well as your editor, you should always type-hint the collection:
+
+```php
+/**
+ * @param DateTime[] $collection
+ */
+public function doSomething(array $collection) {
+    foreach ($collection as $value) {
+        // $value is an instance of DateTime
+    }
+}
+```
+
+Since you can't be absolutely certain that `$value` is something else than a `DateTime` instance, you should add a pre-condition for it in the function body. The [beberlei/assert](https://github.com/beberlei/assert) library will make that very easy:
+
+```php
+use Assert\Assertion
+ 
+public function doSomething(array $collection) {
+    Assertion::allIsInstanceOf($collection, \DateTime::class);
+ 
+    ...
+}
+```
+
+If the collection contains a value that is not an instance of `DateTime`, this will throw an `InvalidArgumentException`. Besides enforcing correct input values, using assertions also reduces the complexity of your code, since you won't have to do the type checking in your head.
+
+#### Single type of return value
+
+Whenever a function could return different types of values, this greatly increases complexity in the client code:
+
+```php
+$result = someFunction();
+if ($result === false) {
+    ...
+} elseif (is_int($result)) {
+    ...
+}
+```
+
+PHP will not prevent you from having "mixed" return types (or parameter types for that matter). They are greatly confusing though and your application will be full of `if` statements to take into account all the possible outcomes.
+
+A more everyday example of mixed return types is this:
+
+```php
+/**
+ * @param int $id
+ * @return User|null
+ */
+public function findById($id)
+{
+    ...
+}
+```
+
+This function will return either a `User` object or `null`, which is very problematic since now we won't be able to call any method on the return value of this method without first checking if it's indeed a `User` object. In fact PHP, before version 7, just crashed with a "Fatal error" in case you'd (accidentally) do that.
+
+We will consider `null` values and how to get rid of them in the next article.
+
+### Readable expressions
+
+We have discussed many options for reducing the overall complexity of your functions. At the smallest level there are still some things we can do to make our code even less complex.
+
+#### Hide complex logic
+
+You can often move a complicated part of an expression to a "helper" method. Instead of
+
+```php
+if (($a || $b) && $c) {
+    ...
+}
+```
+
+you could have something much better, like this:
+
+```php
+if (somethingIsTheCase($a, $b, $c)) {
+    ...
+}
+```
+
+For the reader it is now clear that the outcome of the decision depends on `$a`, `$b` and `$c`, and the function name communicates what that decision is all about.
+
+#### Use boolean expressions
+
+The expression used in an `if` statement should result in a boolean value. However, PHP doesn't force _you_ to actually deliver a boolean value:
+
+```php
+$a = new \DateTime();
+...
+ 
+if ($a) {
+    ...
+}
+```
+
+`$a` will automatically be converted to a boolean. Type coercion has always been a major source of bugs, but it's also more complex to follow along while trying to understand the code, since the conversion is implicit. Instead of relying on PHP to convert `$a` to a boolean, we should do that explicitly, for example:
+
+```php
+if ($a instanceof DateTime) {
+    ...
+}
+```
+
+Once you know that you're comparing booleans, don't overdo it, like this:
+
+```php
+if ($b === false) {
+    ...
+}
+```
+
+Just use the `!` operator instead:
+
+```php
+if (!$b) {
+    ...
+}
+```
+
+#### No Yoda-style expressions
+
+Yoda-style expressions look like this:
+
+```php
+if ('hello' === $result) {
+    ...
+}
+```
+
+It is supposed to prevent you from making mistakes like this:
+
+```php
+if ($result = 'hello') {
+    ...
+}
+```
+
+In this case `'hello'` will be assigned to `$result`, which will become the value for the entire expression. `'hello'` will automatically be cast to a boolean, in this case `true`. Hence, the code in the `if` clause will always be executed.
+
+Using Yoda-style expressions should help you prevent such mistakes:
+
+```php
+if ('hello' = $result) {
+    ...
+}
+```
+
+I think nobody actually makes these mistakes, except if they're still learning the basic syntax of the PHP language. At the same time, Yoda-style expressions have a high price: readability. It's much harder to read and understand these expressions, since they don't mimic natural sentences.
+
+## Дополнительная литература
+
+Если вы хотите подробнее почитать о коде и о том, как сделать его лучше, могу порекомендовать следующие книги:
+
+*   Совершенный код, Стив Макконнелл
+*   Чистый код, Роберт Мартин
+*   Рефакторинг, Мартин Фаулер
+
+В следующей статье мы рассмотрим один конкретный кейс, усложняющий наш код больше, чем нужно: `null`.
