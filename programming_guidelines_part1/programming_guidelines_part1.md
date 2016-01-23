@@ -31,7 +31,7 @@ $a->doSomething();
 
 Процесс принятия решения был поглощен методом `doSomething()` объекта `$a`. Мы никогда не должны "думать" за него, необходимо иметь возможность вызывать `doSomething()` в любой ситуации и иметь гарантии того, что все будет работать. Данный подход основан на принципе ["Tell, don't ask"](http://martinfowler.com/bliki/TellDontAsk.html). Я рекомендую вам разобраться с ним и применять всякий раз, когда вы спрашиваете у объекта некоторую информацию и принимаете решения на ее основе.
 
-#### Используйте маппинг
+#### Использование маппинга
 
 Иногда количество `if`, `elseif` или `else` можно уменьшить путем введения маппинга. Пример:
 
@@ -47,7 +47,7 @@ if ($type === 'json') {
 }
 ```
 
-can be reduced to this:
+можно сократить до:
 
 ```php
 $decoders = ...; // a map of type (string) to corresponding Decoder objects
@@ -61,7 +61,7 @@ if (!isset($decoders[$type])) {
 return $decoders[$type]->decode($body);
 ```
 
-Using a map like this makes your code [Open for extension, closed for modification](http://www.objectmentor.com/resources/articles/ocp.pdf) too.
+Использование маппинга также делает ваш код [открытым для расширения и закрытым для модификаций](http://www.objectmentor.com/resources/articles/ocp.pdf).
 
 #### Enforce types
 
