@@ -136,7 +136,7 @@ If a function body is quite large, it will be hard to understand what is going o
 
 Вспомогательные методы, как правило, являются "приватными" и используются только объектами данного класса. Зачастую им не нужен доступ к переменным экземпляра объекта. В таком случае их следует делать "статическими". По моему опыту приватные (статические) вспомогательные методы часто эволюционируют в отдельные классы с публичными интерфейсами.
 
-#### Уменьшение количества временных переменных
+#### Промежуточные значения
 
 Длинное тело функции обычно содержит в себе несколько переменных для запоминания промежуточного результата. Они тяжело отслеживаемы и придают коду запутанности: вам придется вспомнить как они были инициализированы, со значением или без, действительно ли по-прежнему необходимы и что содержат сейчас.
 
@@ -170,9 +170,9 @@ private static function capitalize(array $names) {
 }
 ```
 
-As you can see we are basically composing functions into new functions, thereby making it easier to understand what's going on and much easier to make changes. In a way, this code is a bit more "open/closed" now, since we will never have to modify the code of the helper functions anymore.
+Как вы можете видеть, мы в основном сочетаем функции внутри функций, тем самым давая понять что происходит в коде и создаем возможность внесения изменений. В целом, этот код является немного приближен к "open/closed" концепции, поскольку нам больше никогда не придется модифицировать код вспомогательных функций.
 
-Since many algorithms require you to loop over a collection of things, thereby creating a new collection or reducing the collection to a single value, it makes sense to make the collection itself a "first-class citizen" and move related behavior to it:
+Так как многие алгоритмы требуют перебора коллекций, тем самым создавая новую коллекцию или приводя ее к одному значению, то имеет смысл делать коллекции "первого сорта" и привязывать поведение именно к ним:
 
 ```php
 class Names
@@ -202,9 +202,9 @@ class Names
 $result = (new Names([...]))->capitalize()->reverse();
 ```
 
-This makes it even easier to "compose" the functions.
+Теперь еще легче сочетать функции друг с другом.
 
-While reducing the number of temporary variables usually leads to a better design, as in the example above, you don't have to eliminate all temporary variables. Sometimes they serve their purpose well in documenting what the outcome of an expression represents.
+Снижение числа временных переменных, как правило, приводит к более лучшему дизайну, как в примере выше. Но все же вы не должны полностью отказываться от промежуточных значений. Иногда они пригождаются в целях документирования и способны подсказать результат выражения.
 
 ### Единый тип
 
