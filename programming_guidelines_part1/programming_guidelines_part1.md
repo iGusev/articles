@@ -303,9 +303,9 @@ if (somethingIsTheCase($a, $b, $c)) {
 
 For the reader it is now clear that the outcome of the decision depends on `$a`, `$b` and `$c`, and the function name communicates what that decision is all about.
 
-#### Use boolean expressions
+#### Логические выражения
 
-The expression used in an `if` statement should result in a boolean value. However, PHP doesn't force _you_ to actually deliver a boolean value:
+Выражение, используемое в операторе `if` должно приводить к логическому значению. Однако, на самом деле PHP не заставляет *вас* делать это:
 
 ```php
 $a = new \DateTime();
@@ -316,7 +316,7 @@ if ($a) {
 }
 ```
 
-`$a` will automatically be converted to a boolean. Type coercion has always been a major source of bugs, but it's also more complex to follow along while trying to understand the code, since the conversion is implicit. Instead of relying on PHP to convert `$a` to a boolean, we should do that explicitly, for example:
+`$a` будет автоматически преобразовано в `boolean`. Это и является основным источником ошибок. Из-за неявного преобразования такие ошибки сложнее найти. Вместо того чтобы полагаться на PHP преобразование, сделаем проверку более явной:
 
 ```php
 if ($a instanceof DateTime) {
@@ -324,7 +324,7 @@ if ($a instanceof DateTime) {
 }
 ```
 
-Once you know that you're comparing booleans, don't overdo it, like this:
+Но не переусердствуйте при сравнении логических переменных, таких как:
 
 ```php
 if ($b === false) {
@@ -332,7 +332,7 @@ if ($b === false) {
 }
 ```
 
-Just use the `!` operator instead:
+Вместо этого просто воспользуйтесь оператором `!`:
 
 ```php
 if (!$b) {
