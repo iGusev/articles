@@ -247,9 +247,9 @@ public function doSomething(array $collection) {
 
 If the collection contains a value that is not an instance of `DateTime`, this will throw an `InvalidArgumentException`. Besides enforcing correct input values, using assertions also reduces the complexity of your code, since you won't have to do the type checking in your head.
 
-#### Single type of return value
+#### Один тип возвращаемого значения
 
-Whenever a function could return different types of values, this greatly increases complexity in the client code:
+Всякий раз, когда функция может возвращать различные типы значений, значительно повышается сложность в клиентского кода:
 
 ```php
 $result = someFunction();
@@ -260,9 +260,9 @@ if ($result === false) {
 }
 ```
 
-PHP will not prevent you from having "mixed" return types (or parameter types for that matter). They are greatly confusing though and your application will be full of `if` statements to take into account all the possible outcomes.
+PHP не будет принуждать вас избавляться от возвращаемых типов "mixed". Но их использование приводит к большому количеству конструкций `if`/`else` для учета всех возможных исходов.
 
-A more everyday example of mixed return types is this:
+Возьмем более распространенным примером смешанных возвращаемых типов:
 
 ```php
 /**
@@ -275,9 +275,9 @@ public function findById($id)
 }
 ```
 
-This function will return either a `User` object or `null`, which is very problematic since now we won't be able to call any method on the return value of this method without first checking if it's indeed a `User` object. In fact PHP, before version 7, just crashed with a "Fatal error" in case you'd (accidentally) do that.
+Эта функция будет возвращать либо объект `User` либо `null`, что является очень проблематичным, так как сейчас мы не сможем вызвать метод в любом месте, не проверив предварительно на самом ли деле объект является экземпляром `User`. Более того, PHP до версии 7 просто падал с фатальной ошибкой в случае взаимодействия с объектом другого типа.
 
-We will consider `null` values and how to get rid of them in the next article.
+Мы рассмотрим этот случай с `null` и методы решения данной проблемы в следующей статье.
 
 ### Читаемые выражения
 
