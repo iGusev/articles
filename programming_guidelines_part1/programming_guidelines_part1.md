@@ -340,9 +340,9 @@ if (!$b) {
 }
 ```
 
-#### No Yoda-style expressions
+#### Не используйте Йода-стиль
 
-Yoda-style expressions look like this:
+Выражения в Йода-стиле выглядят так:
 
 ```php
 if ('hello' === $result) {
@@ -350,7 +350,7 @@ if ('hello' === $result) {
 }
 ```
 
-It is supposed to prevent you from making mistakes like this:
+Предполагается, что они помогут вам избежать подобных ошибок:
 
 ```php
 if ($result = 'hello') {
@@ -358,9 +358,9 @@ if ($result = 'hello') {
 }
 ```
 
-In this case `'hello'` will be assigned to `$result`, which will become the value for the entire expression. `'hello'` will automatically be cast to a boolean, in this case `true`. Hence, the code in the `if` clause will always be executed.
+В данном случае переменной `$result` будет присвоено значение `'hello'`, оно же, в свою очередь, автоматически приведется к boolean значению `true`. Следовательно, код в конструкции `if` будет всегда выполняться.
 
-Using Yoda-style expressions should help you prevent such mistakes:
+Использование Йода-стиля должно помочь вам предотвратить такие ошибки:
 
 ```php
 if ('hello' = $result) {
@@ -368,7 +368,7 @@ if ('hello' = $result) {
 }
 ```
 
-I think nobody actually makes these mistakes, except if they're still learning the basic syntax of the PHP language. At the same time, Yoda-style expressions have a high price: readability. It's much harder to read and understand these expressions, since they don't mimic natural sentences.
+Я думаю, что никто на самом деле не делает подобных ошибок, за исключением изучающих базовый синтаксис PHP. В то же время, Йода-стиль имеет высокую цену: читаемость. Его гораздо труднее читать и воспринимать выражения, поскольку они не имитируют природные предложения.
 
 ## Дополнительная литература
 
