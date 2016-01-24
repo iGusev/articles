@@ -136,11 +136,11 @@ If a function body is quite large, it will be hard to understand what is going o
 
 Вспомогательные методы, как правило, являются "приватными" и используются только объектами данного класса. Зачастую им не нужен доступ к переменным экземпляра объекта. В таком случае их следует делать "статическими". По моему опыту приватные (статические) вспомогательные методы часто эволюционируют в отдельные классы с публичными интерфейсами.
 
-#### Reduce the number of temporary variables
+#### Уменьшение количества временных переменных
 
-A long function body usually needs several variables to remember intermediate results. These temporary variables are hard to mentally keep track of: you'll have to remember whether they have been initialized with a value already, whether or not they are still needed, and what their current value is.
+Длинное тело функции обычно содержит в себе несколько переменных для запоминания промежуточного результата. Они тяжело отслеживаемы и придают коду запутанности: вам придется вспомнить как они были инициализированы, со значением или без, действительно ли по-прежнему необходимы и что содержат сейчас.
 
-Introducing helper functions as described in the previous section is one way to get rid of temporary values:
+Ввод вспомогательных функций из предыдущего раздела является одним из способов избавиться от временных значений:
 
 ```php
 public function capitalizeAndReverse(array $names) {
@@ -152,7 +152,7 @@ public function capitalizeAndReverse(array $names) {
 }
 ```
 
-Using helper methods we don't need any temporary variables anymore:
+При использовании вспомогательных методов нам не нужны больше временные переменные:
 
 ```php
 public function capitalizeAndReverse(array $names) {
