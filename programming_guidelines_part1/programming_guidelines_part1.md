@@ -206,13 +206,13 @@ This makes it even easier to "compose" the functions.
 
 While reducing the number of temporary variables usually leads to a better design, as in the example above, you don't have to eliminate all temporary variables. Sometimes they serve their purpose well in documenting what the outcome of an expression represents.
 
-### Use single types
+### Единый тип
 
-Keeping track of variables and their current values is pretty hard. It gets even harder when it's not entirely clear what the type of a variable is. And it gets more painful if that type is not consistent.
+Отслеживание переменных и их текущих значений довольно сложно. Оно становится еще труднее, когда неочевиден тип переменной, и совсем болезненно, если этот тип не соответсвует ожидаемому.
 
-#### Arrays with just a single type of value
+#### Массивы только с одним типом данных
 
-Whenever you use an array as a traversable collection, make sure you use it with one type of value. This will reduce the complexity in the loop that's going to read out the values:
+Всякий раз, когда вы используете массив в качестве коллекции, убедитесь, что он содержит только один тип значений. Это позволит снизить сложность считывающего эти значения цикла:
 
 ```php
 foreach ($collection as $value) {
@@ -220,7 +220,7 @@ foreach ($collection as $value) {
 }
 ```
 
-Supporting the reader of your code as well as your editor, you should always type-hint the collection:
+Поддерживайте читаемость вашего кода, а также работу IDE, всегда указывайте type-hint коллекции:
 
 ```php
 /**
@@ -233,7 +233,7 @@ public function doSomething(array $collection) {
 }
 ```
 
-Since you can't be absolutely certain that `$value` is something else than a `DateTime` instance, you should add a pre-condition for it in the function body. The [beberlei/assert](https://github.com/beberlei/assert) library will make that very easy:
+Поскольку вы не можете быть абсолютно уверены, что `$value` - это именно экземпляр `DateTime`, вам необходимо добавить условие для проверки этого утверждения. Библиотека [beberlei/assert](https://github.com/beberlei/assert) позволит сделать это с легкостью:
 
 ```php
 use Assert\Assertion
@@ -245,7 +245,7 @@ public function doSomething(array $collection) {
 }
 ```
 
-If the collection contains a value that is not an instance of `DateTime`, this will throw an `InvalidArgumentException`. Besides enforcing correct input values, using assertions also reduces the complexity of your code, since you won't have to do the type checking in your head.
+Если коллекция содержит значение, которое не является `DateTime`, то это приведет к выбросу `InvalidArgumentException`. Помимо соблюдения корректности входных значений, используя ее вы также уменьшаете сложность кода, так как вам не придется держать все проверки типов в голове.
 
 #### Один тип возвращаемого значения
 
