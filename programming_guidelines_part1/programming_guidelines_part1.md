@@ -279,13 +279,13 @@ This function will return either a `User` object or `null`, which is very proble
 
 We will consider `null` values and how to get rid of them in the next article.
 
-### Readable expressions
+### Читаемые выражения
 
-We have discussed many options for reducing the overall complexity of your functions. At the smallest level there are still some things we can do to make our code even less complex.
+Мы обсудили много вариантов для сокращения общей сложности функций. Есть еще несколько вещей, которые мы можем сделать для упрощения кода.
 
-#### Hide complex logic
+#### Скрытие сложной логики
 
-You can often move a complicated part of an expression to a "helper" method. Instead of
+Часто можно перенести сложное выражение условия в вспомогательный метод. Вместо:
 
 ```php
 if (($a || $b) && $c) {
@@ -293,7 +293,7 @@ if (($a || $b) && $c) {
 }
 ```
 
-you could have something much better, like this:
+Вы можете написать что-то намного лучше:
 
 ```php
 if (somethingIsTheCase($a, $b, $c)) {
@@ -301,7 +301,7 @@ if (somethingIsTheCase($a, $b, $c)) {
 }
 ```
 
-For the reader it is now clear that the outcome of the decision depends on `$a`, `$b` and `$c`, and the function name communicates what that decision is all about.
+Читателю теперь ясно, что исход решения зависит от `$a`, `$b` и `$c`, и имя функции сообщает какое решение принимается.
 
 #### Логические выражения
 
