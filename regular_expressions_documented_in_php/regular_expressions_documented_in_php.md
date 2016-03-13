@@ -1,12 +1,11 @@
 >Regular expressions documented in PHP
 http://nyamsprod.com/blog/2015/regular-expressions-documented-in-php/
 
-Tips to easily document complex regular expressions in PHP
+Документирование регулярных выражений в PHP
 
+Одним из самых сложных аспектов использования регулярных выражений является оформление их документации. Чаще всего при наличии сложного регулярного выражения, даже будучи его создателем, спустя какое-то время и без должной документации забудете как оно устроено. Во время чтения [недавней статьи о регулярных выражениях](http://www.sitepoint.com/demystifying-regex-with-practical-examples/) я был удивлен, что в ней не фигурируют какие-либо советы о том как их документировать. Давайте заполним этот пробел.
 
-One of the most challenging aspect of using regular expressions is documenting them. More than often you end up with a complex expression that even you as a creator have a hard time documenting. While reading [sitepoint recent article around regular expressions](http://www.sitepoint.com/demystifying-regex-with-practical-examples/) I was intrigued that this article did not feature any tips on how to document them.  So let’s take a very complex regular expression and see how we could improve its documentation.<span id="more-2488"></span>
-
-For the purpose of this article we will look at [RFC3986 regular expression](http://tools.ietf.org/html/rfc3986#appendix-B) used to parse any given URI into its main parts. When adapted to be used in PHP you end up with the following code
+Рассмотрим в качестве примера [регулярное выражение из RFC3986](http://tools.ietf.org/html/rfc3986#appendix-B), использующееся для анализа любого заданного URI и разбора его на части. Сперва адаптируем его для использования в PHP c помощью следующего кода:
 
 ```php
 $uri = 'http://www.ics.uci.edu/pub/ietf/uri/#Related';
@@ -28,9 +27,9 @@ var_dump($matches);
 // }
 ```
 
-The regular expression works as expected but unless you have a very good memory there’s no way you’ll keep in mind which resulting index represents the URI path component. One way to overcome this problem is to add comments before the regular expression where each part is explained. But since its a comment you have no guarantee that someone else won’t override them at any point in the future. Thus, we need a better solution.
+Выражение работает как и ожидалось, но если у вас нет очень хорошей памяти, вы никак не узнаете, что итоговый индекс представляет собой компоненты URI. Одним из способов преодоления этой проблемы является добавление комментариев перед регулярным выражением, где объясняется каждая из частей. Но после момента создания комментария у вас нет никакой гарантии, что кто-нибудь еще не переопределит их в будущем и забудет поправить документацию в коде. Нам необходимо более надежное решение.
 
-Thanks to the regular expression mechanism provided in PHP, since PHP 5.2, [you can named subpatterns in your regular expression](http://be2.php.net/manual/en/regexp.reference.subpatterns.php). Using this feature we improve the regular expression readability as well as its resulting array as shown below:
+Благодаря предусмотренным в PHP механизмам регулярных выражений, начиная с PHP5.2, вы можете [использовать именованные подмаски в ваших регулярных выражениях](http://be2.php.net/manual/en/regexp.reference.subpatterns.php). С помощью них мы улучшим читаемость нашего выражения, а также его результирующий массив:
 
 ```php
 $uri = 'http://www.ics.uci.edu/pub/ietf/uri/#Related';
@@ -56,18 +55,17 @@ var_dump($matches);
 // }
 ```
 
-Now, along with the previous numeric indexes, the returned array also includes named indexes for each selected subpattern. By assigning meaningful names to your named subpatterns you automatically document your regular expression. In our example, we use URI parts names to directly flag which pattern represents which URI part. The only drawback is that our regular expression becomes longer.
+Теперь, наряду с наличием числовых индексов, следующих в том же порядке, что и в предыдущем примере, возвращаемый массив также включает именованные индексы для каждого выбранного шаблона. Присваивая осмысленные имена вашим именованным подмаскам, вы автоматически документируете ваши регулярные выражения. В нашем примере мы используем наименования частей URI пути для непосредственного обозначения разбирающих их шаблонов.
 
-According to the [php documentation website](http://be2.php.net/manual/en/regexp.reference.internal-options.php) we can rely on the `x` PHP regular pattern modifier to help use better format the regular expression.
+Согласно [официальной документации PHP](http://be2.php.net/manual/ru/regexp.reference.internal-options.php) мы можем использовать модификатор `х` в шаблоне для улучшения форматирования регулярного выражения.
 
-> If the `x` modifier is set, whitespace data characters in the pattern are totally ignored except when escaped or inside a character class, and characters between an unescaped # outside a character class and the next newline character, inclusive, are also ignored.
+> Если используется данный модификатор, неэкранированные пробелы, символы табуляции и пустой строки будут проигнорированы в шаблоне, если они не являются частью символьного класса. Также игнорируются все символы между неэкранированным символом '#' (если он не является частью символьного класса) и символом перевода строки (включая сами символы `\n` и `#`).
 
-In other words, this modifier can be used to:
+Другими словами, этот модификатор может использоваться для:
+* Разбиение регулярного выражения на несколько строк.
+* Добавление встроенных комментариев для дальнейшего документирования регулярного выражения.
 
-*   Format the regular expression on multiple lines.
-*   Add inline comments to further document the regular expression.
-
-So by combining named subpattern and regular pattern modifier, the regular expression ends up being:
+Таким образом, с помощью именованных шаблонов и модификатора `x`, мы сможем сделать так:
 
 ```php
 $uri = 'http://www.ics.uci.edu/pub/ietf/uri/#Related';
@@ -100,3 +98,7 @@ var_dump($matches);
 ```
 
 As you can see without resorting to docblocks we have a relatively complex regular expression break down into simple parts and self documented. The matches are preserved and self documented to help developers understand the regular expression they wrote years ago.
+
+Как вы можете видеть, не прибегая к doc-блоков мы имеем относительно сложное регулярное выражение можно разбить на простые части и самостоятельная документально. Матчи сохраняются и самостоятельная документально, чтобы помочь разработчикам понять регулярные выражения они писали лет назад.
+
+Как вы можете видеть, относительно сложное регулярное выражение можно разбить на простые и самодокументируемые части не прибегая к doc-блокам. Сохранение числовых индексов также является большим плюсом при документировании уже существующих выражений, написанных годы назад.
