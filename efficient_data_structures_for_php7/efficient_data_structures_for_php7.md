@@ -1,16 +1,5 @@
-<main role="main" class="postArticle-content js-postField js-notesSource" data-scroll="native">
-
-<section name="9693" class=" section--body section--first">
-
-<div class="section-divider layoutSingleColumn">
-
-* * *
-
-</div>
-
-<div class="section-content">
-
-<div class="section-inner layoutSingleColumn">
+>Efficient data structures for PHP 7
+https://medium.com/@rtheunissen/efficient-data-structures-for-php-7-9dda7af674cd#.y3w5bzg8d
 
 ### Efficient data structures for PHP 7
 
@@ -28,53 +17,16 @@ We could, but I believe their design and implementation is so poor that it would
 
 **_“SPL data structures are horribly designed.” — _**_Anthony Ferrara_
 
-</div>
-
-</div>
-
-</section>
-
-<section name="e550" class=" section--body">
-
-<div class="section-divider layoutSingleColumn">
-
 * * *
-
-</div>
-
-<div class="section-content">
-
-<div class="section-inner layoutSingleColumn">
 
 Introducing: **php-ds**, a data structure extension for PHP 7.
-
 This post briefly covers the behaviour and performance benefits of each structure. There is also a list of answers to expected questions at the end.
-
 **Github**: [https://github.com/**php-ds**](https://github.com/php-ds)
-
 **Namespace:** Ds\
-
 **Interfaces:** _Collection, Sequence, Hashable_
-
 **Classes:** _Vector, Deque, Stack, Queue, PriorityQueue, Map, Set_
 
-</div>
-
-</div>
-
-</section>
-
-<section name="d066" class=" section--body">
-
-<div class="section-divider layoutSingleColumn">
-
 * * *
-
-</div>
-
-<div class="section-content">
-
-<div class="section-inner layoutSingleColumn">
 
 ### Collection
 
@@ -84,90 +36,32 @@ _Collection_ is the base interface which covers common functionality like _forea
 
 _Sequence_ describes the behaviour of values arranged in a single, linear dimension. Some languages refer to this as a _List_. It’s similar to an _array_ that uses incremental integer keys, with the exception of a few characteristics:
 
-*   Values will **always** be indexed as _[0, 1, 2, …, size - 1]_.
-*   Removing or inserting updates the position of all successive values.
-*   Only allowed to access values by index in the range _[0, size - 1]_.
+* Values will **always** be indexed as _[0, 1, 2, …, size - 1]_.
+* Removing or inserting updates the position of all successive values.
+* Only allowed to access values by index in the range _[0, size - 1]_.
 
 #### **Use cases**
 
-*   Wherever you would use an _array_ as a list (not concerned with keys).
-*   A more efficient alternative to _SplDoublyLinkedList_ and _SplFixedArray._
-
-</div>
-
-</div>
-
-</section>
-
-<section name="1811" class=" section--body">
-
-<div class="section-divider layoutSingleColumn">
-
-* * *
-
-</div>
-
-<div class="section-content">
-
-<div class="section-inner layoutSingleColumn">
+* Wherever you would use an _array_ as a list (not concerned with keys).
+* A more efficient alternative to _SplDoublyLinkedList_ and _SplFixedArray._
 
 ### Vector
 
 A _Vector_ is a _Sequence_ of values in a contiguous buffer that grows and shrinks automatically. It’s the most efficient sequential structure because a value’s index is a direct mapping to its index in the buffer, and the growth factor isn't bound to a specific multiple or exponent.
 
-<figure name="ba25" id="ba25" class="graf--figure graf--iframe graf-after--p">
-
-<div class="iframeContainer"><iframe data-width="1280" data-height="720" width="700" height="394" src="/media/6d1fae36316266f7a63fe763dd4ecc1c?maxWidth=700" data-media-id="6d1fae36316266f7a63fe763dd4ecc1c" frameborder="0"></iframe></div>
-
-</figure>
+<iframe src="https://player.vimeo.com/video/154438958" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 
 #### **Strengths**
 
-*   Very low memory usage
-*   Very fast iteration
-*   _get_, _set, push_ and _pop_ are _O(1)_
+* Very low memory usage
+* Very fast iteration
+* _get_, _set, push_ and _pop_ are _O(1)_
 
 #### **Weaknesses**
 
-*   _insert, remove, shift,_ and _unshift_ are _O(n)_
-
-</div>
-
-</div>
-
-</section>
-
-<section name="cc40" class=" section--body">
-
-<div class="section-divider layoutSingleColumn">
-
-* * *
-
-</div>
-
-<div class="section-content">
-
-<div class="section-inner layoutSingleColumn">
+* _insert, remove, shift,_ and _unshift_ are _O(n)_
 
 > The number one data structure used in Photoshop was Vectors.” — Sean Parent, [CppCon 2015](https://youtu.be/sWgDk-o-6ZE?t=21m52s)
-
-</div>
-
-</div>
-
-</section>
-
-<section name="9b0e" class=" section--body">
-
-<div class="section-divider layoutSingleColumn">
-
-* * *
-
-</div>
-
-<div class="section-content">
-
-<div class="section-inner layoutSingleColumn">
 
 ### Deque
 
@@ -177,83 +71,31 @@ Two pointers are used to keep track of a head and a tail. The pointers can “wr
 
 Accessing a value by index requires a translation between the index and its corresponding position in the buffer: _((head + position) % capacity)._
 
-<figure name="955b" id="955b" class="graf--figure graf--iframe graf-after--p">
-
-<div class="iframeContainer"><iframe data-width="1280" data-height="720" width="700" height="394" src="/media/e5e8b8ecaa27179ef2fcf221ebc68667?maxWidth=700" data-media-id="e5e8b8ecaa27179ef2fcf221ebc68667" frameborder="0"></iframe></div>
-
-</figure>
+<iframe src="https://player.vimeo.com/video/154438012" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 
 #### **Strengths**
 
-*   Low memory usage
-*   _get,_ _set_, _push, pop, shift,_ and _unshift_ are all _O(1)_
+* Low memory usage
+* _get,_ _set_, _push, pop, shift,_ and _unshift_ are all _O(1)_
 
 #### **Weaknesses**
 
 *   _insert, remove_ are _O(n)_
 *   Buffer capacity must be a power of 2.
 
-</div>
-
-</div>
-
-</section>
-
-<section name="48a6" class=" section--body">
-
-<div class="section-divider layoutSingleColumn">
-
-* * *
-
-</div>
-
-<div class="section-content">
-
-<div class="section-inner layoutSingleColumn">
-
 The following benchmark shows the total time taken and memory used to _push_ 2ⁿrandom integers. _PHP array_, _Ds\Vector_ and _Ds\Deque_ are all fast, but _SplDoublyLinkedList is_ consistently**more than 2x slower**.
 
 _SplDoublyLinkedList_ allocates memory for each value individually, so linear memory growth is expected. Both an _array_ and _Ds\Deque_ have a 2.0 growth factor to maintain a 2ⁿ capacity. _Ds\Vector_ has a growth factor of 1.5, which results in more allocations but lower memory usage overall.
 
-<figure name="ddb7" id="ddb7" class="graf--figure graf-after--p">
+![](https://cdn-images-1.medium.com/max/1600/1*BZVzcscdpcUg8SZmvUEjQQ.gif)
 
-<div class="aspectRatioPlaceholder is-locked" style="max-width: 700px; max-height: 394px;">![](https://cdn-images-1.medium.com/max/1600/1*BZVzcscdpcUg8SZmvUEjQQ.gif)</div>
-
-</figure>
-
-<figure name="cdfc" id="cdfc" class="graf--figure graf-after--figure graf--last">
-
-<div class="aspectRatioPlaceholder is-locked" style="max-width: 700px; max-height: 394px;">![](https://cdn-images-1.medium.com/max/1600/1*FHxbwYbZ75l_pSEvWmNCig.gif)</div>
-
-</figure>
-
-</div>
-
-</div>
-
-</section>
-
-<section name="c633" class=" section--body">
-
-<div class="section-divider layoutSingleColumn">
-
-* * *
-
-</div>
-
-<div class="section-content">
-
-<div class="section-inner layoutSingleColumn">
+![](https://cdn-images-1.medium.com/max/1600/1*FHxbwYbZ75l_pSEvWmNCig.gif)
 
 The following benchmark shows the time taken to _unshift_ **a single value** into a sequence of 2ⁿ values. The time it takes to set up the sample is not included in the benchmark.
 
 It shows that _array_unshift_ is _O(n)_. Every time the sample size doubles, so does the time it takes to _unshift._ This makes sense, because every numerical index in the range _[1, size - 1]_ has to be updated.
 
-<figure name="3187" id="3187" class="graf--figure graf-after--p">
-
-<div class="aspectRatioPlaceholder is-locked" style="max-width: 700px; max-height: 394px;">![](https://cdn-images-1.medium.com/max/1600/1*7lF6nsm9MlvpHZ-IzFCLdw.gif)</div>
-
-</figure>
+![](https://cdn-images-1.medium.com/max/1600/1*7lF6nsm9MlvpHZ-IzFCLdw.gif)
 
 But _Ds\Vector::unshift_ is also _O(n)_, so why is it so much faster? Keep in mind that an _array_ stores each value in a _bucket_, along with its key and hash. So we have to inspect every bucket and update its hash if the index is numeric. Internally, _array_unshift_ actuallyallocates a brand new array to do this, and replaces the old one when all the values have been copied over.
 
@@ -261,51 +103,11 @@ The index of a value in a _Vector_ is a direct mapping to its index in the buffe
 
 Both _Ds\Deque_ and _SplDoublyLinkedList_ are very fast, because the time it takes to _unshift_ a value is not affected by the sample size, ie. _O(1)_
 
-</div>
-
-</div>
-
-</section>
-
-<section name="6ebd" class=" section--body">
-
-<div class="section-divider layoutSingleColumn">
-
-* * *
-
-</div>
-
-<div class="section-content">
-
-<div class="section-inner layoutSingleColumn">
-
 The following benchmark shows how memory usage is affected by 2ⁿ _pop_ operations, or from a size of 2ⁿ to zero.
 
 What’s interesting here is that an _array_ always holds on to allocated memory, even if its size decreases substantially. _Ds\Vector_ and _Ds\Deque_ will halve their allocated capacity if their size drops below a quarter of their current capacity. _SplDoublyLinkedList_ will free each individual value’s memory, which is why we can see a linear decline.
 
-<figure name="dfee" id="dfee" class="graf--figure graf-after--p graf--last">
-
-<div class="aspectRatioPlaceholder is-locked" style="max-width: 700px; max-height: 394px;">![](https://cdn-images-1.medium.com/max/1600/1*i8dnM0yH9dHlhL-RuK2MAg.gif)</div>
-
-</figure>
-
-</div>
-
-</div>
-
-</section>
-
-<section name="58ef" class=" section--body">
-
-<div class="section-divider layoutSingleColumn">
-
-* * *
-
-</div>
-
-<div class="section-content">
-
-<div class="section-inner layoutSingleColumn">
+![](https://cdn-images-1.medium.com/max/1600/1*i8dnM0yH9dHlhL-RuK2MAg.gif)
 
 ### Stack
 
@@ -315,53 +117,13 @@ _Ds\Stack_ uses a _Ds\Vector_ internally.
 
 _SplStack_ extends _SplDoublyLinkedList_, so a performance comparison would be equivalent to comparing _Ds\Vector_ to _SplDoublyLinkedList_,as seen in the previous benchmarks. The following benchmark shows the time taken to perform 2ⁿ _pop_ operations, or from a size of 2ⁿ to zero.
 
-<figure name="b4fd" id="b4fd" class="graf--figure graf-after--p graf--last">
-
-<div class="aspectRatioPlaceholder is-locked" style="max-width: 700px; max-height: 394px;">![](https://cdn-images-1.medium.com/max/1600/1*yKfo29kCIPVkqFETXmVGRg.gif)</div>
-
-</figure>
-
-</div>
-
-</div>
-
-</section>
-
-<section name="73e5" class=" section--body">
-
-<div class="section-divider layoutSingleColumn">
-
-* * *
-
-</div>
-
-<div class="section-content">
-
-<div class="section-inner layoutSingleColumn">
+![](https://cdn-images-1.medium.com/max/1600/1*yKfo29kCIPVkqFETXmVGRg.gif)
 
 ### Queue
 
 A [_Queue_](https://en.wikipedia.org/wiki/Queue_%28abstract_data_type%29)is a _“first in, first out”_ or _“FIFO_”collection that only allows access to the value at the front of the queue and iterates in that order, destructively. You can think of it as a line of people queuing up for a ride at a theme park.
 
 _Ds\Queue_ uses a _Ds\Deque_ internally. _SplQueue_ extends _SplDoublyLinkedList_, so a performance comparison would be equivalent to comparing _Ds\Deque_ to _SplDoublyLinkedList_,as seen in the previous benchmarks_._
-
-</div>
-
-</div>
-
-</section>
-
-<section name="cf19" class=" section--body">
-
-<div class="section-divider layoutSingleColumn">
-
-* * *
-
-</div>
-
-<div class="section-content">
-
-<div class="section-inner layoutSingleColumn">
 
 ### PriorityQueue
 
@@ -370,24 +132,6 @@ A _PriorityQueue_ is very similar to a _Queue._ Values are pushed into the queue
 Implemented using a _max heap._
 
 **_First in, first out_ ordering is preserved for values with the same priority**, so multiple values with the same priority will behave exactly like a _Queue._ On the other hand, _SplPriorityQueue_ will remove values in arbitrary order.
-
-</div>
-
-</div>
-
-</section>
-
-<section name="c500" class=" section--body">
-
-<div class="section-divider layoutSingleColumn">
-
-* * *
-
-</div>
-
-<div class="section-content">
-
-<div class="section-inner layoutSingleColumn">
 
 The following benchmark shows the time taken and memory used to _push_ 2ⁿ random integers with a random priority into the queue. The same random numbers are used for each benchmark, and the _Queue_ benchmarkalso generates a random priority even though it doesn't use it for anything.
 
@@ -405,35 +149,9 @@ Because an array has a minimum capacity of 8, each pair actually allocates _zval
 
 _SplPriorityQueue_ uses the same internal structure as _SplMaxHeap,_ which requires that a value must be a _zval._ An obvious (but inefficient) way to create a _zval_ pair that is also a _zval_ itself is to use an _array_.
 
-<figure name="1aaa" id="1aaa" class="graf--figure graf-after--p">
+![](https://cdn-images-1.medium.com/max/1600/1*G-jWxdZtPo7iWMCuiXKNgg.gif)
 
-<div class="aspectRatioPlaceholder is-locked" style="max-width: 700px; max-height: 394px;">![](https://cdn-images-1.medium.com/max/1600/1*G-jWxdZtPo7iWMCuiXKNgg.gif)</div>
-
-</figure>
-
-<figure name="b5df" id="b5df" class="graf--figure graf-after--figure graf--last">
-
-<div class="aspectRatioPlaceholder is-locked" style="max-width: 700px; max-height: 394px;">![](https://cdn-images-1.medium.com/max/1600/1*FvRoA1Nh6N2V6nwAgC6VRg.gif)</div>
-
-</figure>
-
-</div>
-
-</div>
-
-</section>
-
-<section name="a9bd" class=" section--body">
-
-<div class="section-divider layoutSingleColumn">
-
-* * *
-
-</div>
-
-<div class="section-content">
-
-<div class="section-inner layoutSingleColumn">
+![](https://cdn-images-1.medium.com/max/1600/1*FvRoA1Nh6N2V6nwAgC6VRg.gif)
 
 ### Hashable
 
@@ -444,24 +162,6 @@ _Hashable_ introduces only two methods: **hash** and **equals**. Many other lang
 All structures that honour this interface will fall back to _spl_object_hash_ if an object key does not implement _Hashable._
 
 Data structures that honour the _Hashable_ interface_:_ **_Map_ **and **_Set_**
-
-</div>
-
-</div>
-
-</section>
-
-<section name="d7c9" class=" section--body">
-
-<div class="section-divider layoutSingleColumn">
-
-* * *
-
-</div>
-
-<div class="section-content">
-
-<div class="section-inner layoutSingleColumn">
 
 ### Map
 
@@ -482,55 +182,11 @@ Like an _array_, insertion order is preserved.
 *   Can’t be converted to an _array_ when objects are used as keys.
 *   Can’t access values by index (position).
 
-</div>
-
-</div>
-
-</section>
-
-<section name="2479" class=" section--body">
-
-<div class="section-divider layoutSingleColumn">
-
-* * *
-
-</div>
-
-<div class="section-content">
-
-<div class="section-inner layoutSingleColumn">
-
 The following benchmarks show that the performance and memory efficiency is identical between an _array_ and a _Ds\Map._ However, an _array_ will always hold on to allocated memory, where a _Ds\Map_ will truncate memory when its size drops below a quarter of its capacity.
 
-<figure name="36c7" id="36c7" class="graf--figure graf-after--p">
+![](https://cdn-images-1.medium.com/max/1600/1*sLlnRyldnLfeGqLR1pWcaA.gif)
 
-<div class="aspectRatioPlaceholder is-locked" style="max-width: 700px; max-height: 368px;">![](https://cdn-images-1.medium.com/max/1600/1*sLlnRyldnLfeGqLR1pWcaA.gif)</div>
-
-</figure>
-
-<figure name="8578" id="8578" class="graf--figure graf-after--figure graf--last">
-
-<div class="aspectRatioPlaceholder is-locked" style="max-width: 700px; max-height: 389px;">![](https://cdn-images-1.medium.com/max/1600/1*6cF3pbT_4DQfeqi12gEHZg.gif)</div>
-
-</figure>
-
-</div>
-
-</div>
-
-</section>
-
-<section name="088a" class=" section--body">
-
-<div class="section-divider layoutSingleColumn">
-
-* * *
-
-</div>
-
-<div class="section-content">
-
-<div class="section-inner layoutSingleColumn">
+![](https://cdn-images-1.medium.com/max/1600/1*6cF3pbT_4DQfeqi12gEHZg.gif)
 
 ### Set
 
@@ -538,99 +194,29 @@ A _Set_ is a collection of **unique values**. The textbook definition of a _set_
 
 _Set_ uses the same internal structure as a _Map_, which is based on the same structure as an _array_. This means that a _Set_ can be sorted in _O(n * log(n))_ timewhenever it needs to be, just like a _Map_ and an _array_.
 
-<figure name="ffb9" id="ffb9" class="graf--figure graf--iframe graf-after--p">
-
-<div class="iframeContainer"><iframe data-width="1280" data-height="720" width="700" height="394" src="/media/7d05ab9a3997407d86964c849486f97e?maxWidth=700" data-media-id="7d05ab9a3997407d86964c849486f97e" frameborder="0"></iframe></div>
-
-</figure>
+<iframe src="https://player.vimeo.com/video/154441519" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 
 #### **Strengths**
 
-*   _add, remove,_ and _contains_ are _O(1)_
-*   Honours the _Hashable_ interface.
-*   Supports **any type of value** (_SplObjectStorage_ only supports objects).
-*   Bitwise equivalents for _intersection, difference, union,_ and _exclusive or._
+* _add, remove,_ and _contains_ are _O(1)_
+* Honours the _Hashable_ interface.
+* Supports **any type of value** (_SplObjectStorage_ only supports objects).
+* Bitwise equivalents for _intersection, difference, union,_ and _exclusive or._
 
 #### **Weaknesses**
 
-*   Doesn’t support _push, pop, insert, shift,_ or _unshift._
-*   _get_ is _O(n)_ if there are deleted values before the index, _O(1)_ otherwise.
-
-</div>
-
-</div>
-
-</section>
-
-<section name="4a0e" class=" section--body">
-
-<div class="section-divider layoutSingleColumn">
-
-* * *
-
-</div>
-
-<div class="section-content">
-
-<div class="section-inner layoutSingleColumn">
+* Doesn’t support _push, pop, insert, shift,_ or _unshift._
+* _get_ is _O(n)_ if there are deleted values before the index, _O(1)_ otherwise.
 
 The following benchmark shows the time taken to add 2ⁿ new instances of _stdClass._ It shows that _Ds\Set_ is **slightly faster** than _SplObjectStorage,_ and uses about **half the memory**.
 
-<figure name="e22e" id="e22e" class="graf--figure graf-after--p">
+![](https://cdn-images-1.medium.com/max/1600/1*5ihSMBaqzpzMS-xVDL6nNA.gif)
 
-<div class="aspectRatioPlaceholder is-locked" style="max-width: 700px; max-height: 394px;">![](https://cdn-images-1.medium.com/max/1600/1*5ihSMBaqzpzMS-xVDL6nNA.gif)</div>
-
-</figure>
-
-<figure name="0c18" id="0c18" class="graf--figure graf-after--figure graf--last">
-
-<div class="aspectRatioPlaceholder is-locked" style="max-width: 700px; max-height: 394px;">![](https://cdn-images-1.medium.com/max/1600/1*L5lzvjIKpm-gsW53qbNRpA.gif)</div>
-
-</figure>
-
-</div>
-
-</div>
-
-</section>
-
-<section name="0d6e" class=" section--body">
-
-<div class="section-divider layoutSingleColumn">
-
-* * *
-
-</div>
-
-<div class="section-content">
-
-<div class="section-inner layoutSingleColumn">
+![](https://cdn-images-1.medium.com/max/1600/1*L5lzvjIKpm-gsW53qbNRpA.gif)
 
 A common way to create an _array_ of unique values is to use _array_unique,_ which creates a new _array_ containing only unique values. An important thing to keep in mind here is that **values in an array are not indexed**, so _in_array_ is a linear search, _O(n)._ Because _array_unique_ deals with values instead of keys, each membership test is a linear search, resulting in _O(n_²_)_ time complexity and _O(n)_ memory complexity.
 
-<figure name="15b6" id="15b6" class="graf--figure graf-after--p graf--last">
-
-<div class="aspectRatioPlaceholder is-locked" style="max-width: 700px; max-height: 394px;">![](https://cdn-images-1.medium.com/max/1600/1*jL3VMkV-JisdSqyuMaSMaQ.gif)</div>
-
-</figure>
-
-</div>
-
-</div>
-
-</section>
-
-<section name="4546" class=" section--body">
-
-<div class="section-divider layoutSingleColumn">
-
-* * *
-
-</div>
-
-<div class="section-content">
-
-<div class="section-inner layoutSingleColumn">
+![](https://cdn-images-1.medium.com/max/1600/1*jL3VMkV-JisdSqyuMaSMaQ.gif)
 
 ### Responses to expected questions and opinions
 
@@ -638,47 +224,11 @@ A common way to create an _array_ of unique values is to use _array_unique,_ whi
 
 Right now there are ~**2600 tests**. It’s possible that some of the tests are redundant but I’d rather indirectly test the same thing twice than not at all.
 
-</div>
-
-</div>
-
-</section>
-
-<section name="9561" class=" section--body">
-
-<div class="section-divider layoutSingleColumn">
-
-* * *
-
-</div>
-
-<div class="section-content">
-
-<div class="section-inner layoutSingleColumn">
-
 > Documentation? API reference?
 
 At the time of this writing there is no complete documentation, but there will be proper _docbook_ documentation with the first stable release.
 
 There are however some [**well-documented stub files**](https://github.com/php-ds/ds/tree/master/php/include).
-
-</div>
-
-</div>
-
-</section>
-
-<section name="bd9f" class=" section--body">
-
-<div class="section-divider layoutSingleColumn">
-
-* * *
-
-</div>
-
-<div class="section-content">
-
-<div class="section-inner layoutSingleColumn">
 
 > Can we see how the benchmarks were configured? Are there more of them?
 
@@ -686,67 +236,13 @@ You can find a complete list of configurable benchmarks in the dedicated benchma
 
 All featured benchmarks were created using a default build of **_PHP 7.0.3_ **on a **2015 Macbook Pro**. Results will vary between versions and platforms.
 
-</div>
-
-</div>
-
-</section>
-
-<section name="44be" class=" section--body">
-
-<div class="section-divider layoutSingleColumn">
-
-* * *
-
-</div>
-
-<div class="section-content">
-
-<div class="section-inner layoutSingleColumn">
-
 > Why are Stack_,_ Queue_,_ Set_, and_ Mapnot interfaces_?_
 
 I don’t believe that any of them have an alternative implementation worth including. Introducing 3 interfaces and 7 classes is a good balance between pragmatism and specialisation.
 
-</div>
-
-</div>
-
-</section>
-
-<section name="8ad9" class=" section--body">
-
-<div class="section-divider layoutSingleColumn">
-
-* * *
-
-</div>
-
-<div class="section-content">
-
-<div class="section-inner layoutSingleColumn">
-
 > When should I use a Dequerather than a Vector?
 
 If you know **for sure** that you won’t be using **_shift_** and **_unshift_**, use _Vector_. You can use _Sequence_ as a typehint to accept either.
-
-</div>
-
-</div>
-
-</section>
-
-<section name="e30e" class=" section--body">
-
-<div class="section-divider layoutSingleColumn">
-
-* * *
-
-</div>
-
-<div class="section-content">
-
-<div class="section-inner layoutSingleColumn">
 
 > Why are all the classes **final**_?_
 
@@ -764,51 +260,11 @@ That’s actually a fair point, but I still believe that composition is more app
 
 Inheritance would also introduce unnecessary internal complexity.
 
-</div>
-
-</div>
-
-</section>
-
-<section name="dfa7" class=" section--body">
-
-<div class="section-divider layoutSingleColumn">
-
-* * *
-
-</div>
-
-<div class="section-content">
-
-<div class="section-inner layoutSingleColumn">
-
 > Why is there also a **ds**class in the global namespace?
 
 It provides an alternative construction syntax:
 
-<figure name="71b7" id="71b7" class="graf--figure graf-after--p graf--last">
-
-<div class="aspectRatioPlaceholder is-locked" style="max-width: 700px; max-height: 176px;">![](https://cdn-images-1.medium.com/max/1600/1*iD41TKleXh32cgVkz18x7w.gif)</div>
-
-</figure>
-
-</div>
-
-</div>
-
-</section>
-
-<section name="7248" class=" section--body">
-
-<div class="section-divider layoutSingleColumn">
-
-* * *
-
-</div>
-
-<div class="section-content">
-
-<div class="section-inner layoutSingleColumn">
+![](https://cdn-images-1.medium.com/max/1600/1*iD41TKleXh32cgVkz18x7w.gif)
 
 > Why no linked list?
 
@@ -830,23 +286,9 @@ The nodes of a _linked list_ have bad **_spatial locality_**_._ This means that 
 
 > — Chandler Carruth ([CppCon 2014](https://youtu.be/fHNmRkzxHWs?t=34m42s))
 
-</div>
 
-</div>
 
-</section>
 
-<section name="8074" class=" section--body">
-
-<div class="section-divider layoutSingleColumn">
-
-* * *
-
-</div>
-
-<div class="section-content">
-
-<div class="section-inner layoutSingleColumn">
 
 > PHP is a web development language — performance is not important.
 
@@ -863,34 +305,9 @@ The ~2x performance increase that came with PHP 7 had us all desperately eager t
 
 Efficient code reduces the load on our servers, reduces the response time of our APIs and web pages, and reduces the runtime of our development tools. **Performance is important**, but maintainable code comes first.
 
-</div>
-
-</div>
-
-</section>
-
-<section name="2493" class=" section--body section--last">
-
-<div class="section-divider layoutSingleColumn">
-
-* * *
-
-</div>
-
-<div class="section-content">
-
-<div class="section-inner layoutSingleColumn">
 
 💬 **Discuss**: [Twitter](https://twitter.com/rudi_theunissen), [Reddit](https://www.reddit.com/r/PHP/comments/44qsco/efficient_data_structures_for_php_7/), [Room 11](http://chat.stackoverflow.com/rooms/11/php)
 
 🔎 **Explore**: [github.com/php-ds](https://github.com/php-ds)
 
 📊 **Benchmarks:** [github.com/php-ds/benchmarks](https://github.com/php-ds/benchmarks)
-
-</div>
-
-</div>
-
-</section>
-
-</main>
