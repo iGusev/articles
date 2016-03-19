@@ -1,30 +1,31 @@
 >Efficient data structures for PHP 7
 https://medium.com/@rtheunissen/efficient-data-structures-for-php-7-9dda7af674cd#.y3w5bzg8d
 
-### Efficient data structures for PHP 7
+### Эффективной структуры данных для PHP 7
 
-PHP has one data structure to rule them all. The _array_ is a complex, flexible, master-of-none, hybrid data structure, combining the behaviour of a _list_ and a _linked map._ But we use it for everything, because PHP is **pragmatic**: “_dealing with things sensibly and realistically in a way that is based on practical rather than theoretical considerations_”. An _array_ gets the job done, even though you wouldn’t study it in a Computer Science course. Unfortunately, with flexibility comes complexity.
+PHP имеет всего одну структуру данных для управления всем. `array` - это сложная, гибкая, гибридная структура данных, сочетающая поведение `list` и `linked map`. Но мы используем его для всего, потому что PHP использует **прагматичный подход**: предельно правильный, здравый и реалистичный способ, исходящий из практических, а не теоретических рассуждений. `array` позволяет делать работу, хотя о нем и так много рассказывают на лекциях по информатике. Но, к сожалению, с гибкостью приходит и сложность.
 
-The recent release of PHP 7 caused a lot of excitement in the PHP community. We couldn't wait to start using the [new features](http://php.net/manual/en/migration70.new-features.php) and get a taste of the [~2x performance boost](https://www.reddit.com/r/PHP/comments/3q2brz/how_is_php_7_twice_as_fast/). One of the reasons why it runs that much faster is because [the _array_ was redesigned](https://nikic.github.io/2014/12/22/PHPs-new-hashtable-implementation.html). But it’s still the same structure, “_optimised for everything; optimised for nothing”_ with room for improvement.
+Последний релиз PHP вызвал большое оживление в сообществе. Мы не могли дождаться того, чтобы начать использовать [новые возможности](http://php.net/manual/en/migration70.new-features.php) и почувствовать вкус [~2х прироста производительности](https://www.reddit.com/r/PHP/comments/3q2brz/how_is_php_7_twice_as_fast/). Одна из причин, почему это случилось - [структура `array` была переработана](https://nikic.github.io/2014/12/22/PHPs-new-hashtable-implementation.html). Но она все также придерживается принципа "оптимизировано для всего; оптимизировано для ничего", еще не все идеально, есть возможности для совершенствования.
 
-> “What about the [SPL data structures](http://php.net/manual/en/spl.datastructures.php)?”
+> "А что насчет [структур данных SPL](http://php.net/manual/en/spl.datastructures.php)?"
 
-Unfortunately… they’re terrible. They did offer _some_ benefits prior to PHP 7, but have been neglected to the point of having no practical value.
+К сожалению... они ужасны. Они предлагали _некоторые_ преимущества дл PHP7, но сейчас мы дошли до точки, когда использование SPL не имеет практического смысла.
 
-> “Why can’t we just fix and improve them?”
+> "Почему мы не можем просто поправить и улучшить их?"
 
-We could, but I believe their design and implementation is so poor that it would be better to replace them with something brand new.
+Да, мы могли бы, но я считаю, что их дизайн и реализация настолько бедны, что лучше бы заменить их чем-то более современным.
 
-**_“SPL data structures are horribly designed.” — _**_Anthony Ferrara_
+>**_"SPL data structures are horribly designed."_**
+>
+>— _Anthony Ferrara_
 
 * * *
 
-Introducing: **php-ds**, a data structure extension for PHP 7.
-This post briefly covers the behaviour and performance benefits of each structure. There is also a list of answers to expected questions at the end.
+Введение: `php-ds`, расширение для PHP 7, добавляющее структуры данных. Этот пост кратко охватывает поведение, производительность и преимущества каждой из них. Также в конце вы найдете список ответов на ожидаемые вопросы.
 **Github**: [https://github.com/**php-ds**](https://github.com/php-ds)
-**Namespace:** Ds\
-**Interfaces:** _Collection, Sequence, Hashable_
-**Classes:** _Vector, Deque, Stack, Queue, PriorityQueue, Map, Set_
+**Пространство имен:** `Ds\`
+**Интерфейсы:** `Collection`, `Sequence`, `Hashable`
+**Классы:** `Vector`, `Deque`, `Stack`, `Queue`, `PriorityQueue`, `Map`, `Set`
 
 * * *
 
