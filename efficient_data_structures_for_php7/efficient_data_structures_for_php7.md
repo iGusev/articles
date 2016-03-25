@@ -35,9 +35,9 @@ PHP имеет всего одну структуру данных для упр
 
 * * *
 
-### Collection
+## Коллекция (Collection)
 
-_Collection_ is the base interface which covers common functionality like _foreach, echo, count_, _print_r, var_dump, serialize_, _json_encode,_ and _clone._
+`Collection` - это базовый интерфейс, охватывающий общую функциональность, такую как `foreach`, `echo`, `count`, `print_r`, `var_dump`, `serialize`, `json_encode`, и `clone`.
 
 ### Sequence
 
