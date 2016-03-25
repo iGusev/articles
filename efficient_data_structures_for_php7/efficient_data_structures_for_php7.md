@@ -39,18 +39,18 @@ PHP имеет всего одну структуру данных для упр
 
 `Collection` - это базовый интерфейс, охватывающий общую функциональность, такую как `foreach`, `echo`, `count`, `print_r`, `var_dump`, `serialize`, `json_encode`, и `clone`.
 
-### Sequence
+## Последовательность (Sequence)
 
-_Sequence_ describes the behaviour of values arranged in a single, linear dimension. Some languages refer to this as a _List_. It’s similar to an _array_ that uses incremental integer keys, with the exception of a few characteristics:
+`Sequence` описывает поведение значений, организованных в единый, линейный размер. В некоторых языках он назвается `List` _(список)_. Он подобен `array`, который использует инкрементальные ключи, за исключением некоторых особенностей:
 
-* Values will **always** be indexed as _[0, 1, 2, …, size - 1]_.
-* Removing or inserting updates the position of all successive values.
-* Only allowed to access values by index in the range _[0, size - 1]_.
+* Значения **всегда** должны быть индексированы как `[0, 1, 2, …, size - 1]`.
+* Извлечение или добавление приводит к обновление индекса всех последовательных значений.
+* Поддерживает доступ к занчениям только из индекса `[0, size - 1]`
 
-#### **Use cases**
+### **Варианты использования**
 
-* Wherever you would use an _array_ as a list (not concerned with keys).
-* A more efficient alternative to _SplDoublyLinkedList_ and _SplFixedArray._
+* Везде, где вы бы хотели использовать `array` как список (без ключей).
+* Более эффективная альтернатива `SplDoublyLinkedList` и `SplFixedArray`.
 
 ### Vector
 
