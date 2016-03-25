@@ -64,11 +64,13 @@ PHP имеет всего одну структуру данных для упр
 * Очень быстрые итерации
 * `get`, `set`, `push` и `pop` имеют сложность `O(1)`
 
-#### **Weaknesses**
+### **Недостатки**
 
-* _insert, remove, shift,_ and _unshift_ are _O(n)_
+* `insert`, `remove`, `shift` and `unshift` имеют сложность `O(n)`
 
-> The number one data structure used in Photoshop was Vectors.” — Sean Parent, [CppCon 2015](https://youtu.be/sWgDk-o-6ZE?t=21m52s)
+> Структурой номер один в Photoshop были Вектора.
+>
+>— **Sean Parent**, [CppCon 2015](https://youtu.be/sWgDk-o-6ZE?t=21m52s)
 
 ### Deque
 
