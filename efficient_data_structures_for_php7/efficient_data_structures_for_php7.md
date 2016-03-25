@@ -72,49 +72,49 @@ PHP имеет всего одну структуру данных для упр
 >
 >— **Sean Parent**, [CppCon 2015](https://youtu.be/sWgDk-o-6ZE?t=21m52s)
 
-### Deque
+### Двусвязная очередь (Deque)
 
-A _Deque_ (pronounced _“deck”_)is a _Sequence_ of values in a contiguous buffer that grows and shrinks automatically. The name is a common abbreviation of “_double-ended queue”_ and is used internally by _Ds\Queue._
+`Deque` (произносится как "deck") - это последовательность значений, объединенных в непрерывный буфер, увеличивающийся и уменьшающийся автоматически. Название является общепринятым сокращением от _"double-ended queue"_. Используется внутри `Ds\Queue`.
 
-Two pointers are used to keep track of a head and a tail. The pointers can “wrap around” the end of the buffer, which avoids the need to move other values around to make room. This makes _shift_ and _unshift_ very fast — something a _Vector_ can’t compete with.
+Два указателя используется для отслеживания головы и хвоста. Наличие указателей позволяет изменять конец и начало буфера без необходимости перемещать другие элементы для освобождения места. Это делает `shift` и `unshift` настолько быстрым, что даже `Vector` не может конкурировать с этим.
 
-Accessing a value by index requires a translation between the index and its corresponding position in the buffer: _((head + position) % capacity)._
+Доступ к значению по индексу требует вычисления соответствующей позиции в буфере: `((head + position) % capacity)`.
 
 <iframe src="https://player.vimeo.com/video/154438012" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 
-#### **Strengths**
+#### **Сильные стороны**
 
-* Low memory usage
-* _get,_ _set_, _push, pop, shift,_ and _unshift_ are all _O(1)_
+* Очень маленькое потребление памяти
+* `get`, `set`, `push`, `pop`, `shift` и `unshift имеют сложность `O(1)`
 
-#### **Weaknesses**
+#### **Недостатки**
 
-*   _insert, remove_ are _O(n)_
-*   Buffer capacity must be a power of 2.
+* `insert`, `remove` имеют сложность `O(n)`
+* Емкость буфера должна иметь степень двойки (`2ⁿ`)
 
-The following benchmark shows the total time taken and memory used to _push_ 2ⁿrandom integers. _PHP array_, _Ds\Vector_ and _Ds\Deque_ are all fast, but _SplDoublyLinkedList is_ consistently**more than 2x slower**.
+Следующий бенчмарк показывает общее затраченное время и память, используемую для операции `push` 2ⁿ случайных чисел. `array`, `Ds\Vector` и `Ds\Deque` отрабатывают быстро, но `SplDoublyLinkedList` стабильно показывает результат **более чем в 2 раза хуже**.
 
-_SplDoublyLinkedList_ allocates memory for each value individually, so linear memory growth is expected. Both an _array_ and _Ds\Deque_ have a 2.0 growth factor to maintain a 2ⁿ capacity. _Ds\Vector_ has a growth factor of 1.5, which results in more allocations but lower memory usage overall.
+`SplDoublyLinkedList` выделяет память для каждого значения по отдельности, поэтому и происходит ожидаемый рост по памяти. `array` и `Ds\Deque` при своей реализации выделяют память порционно для поддержания достаточного объема для 2ⁿ элементов. `Ds\Vector` имеет фактор роста 1.5, что влечет за собой увеличение количества выделений памяти, но меньший расход в целом.
 
 ![](https://cdn-images-1.medium.com/max/1600/1*BZVzcscdpcUg8SZmvUEjQQ.gif)
 
 ![](https://cdn-images-1.medium.com/max/1600/1*FHxbwYbZ75l_pSEvWmNCig.gif)
 
-The following benchmark shows the time taken to _unshift_ **a single value** into a sequence of 2ⁿ values. The time it takes to set up the sample is not included in the benchmark.
+Следующий бенчмарк показывает время, затраченное на `unshift` **единственного элемента** в последовательности значений размером 2ⁿ. Время, требующееся на установку значений не учитывается.
 
-It shows that _array_unshift_ is _O(n)_. Every time the sample size doubles, so does the time it takes to _unshift._ This makes sense, because every numerical index in the range _[1, size - 1]_ has to be updated.
+На графике видно, что `array_unshift` имеет сложность `O(n)`: всякий раз, когда объем выборки удваивается, растет и время, необходимое для `unshift`. Это объясняется тем, что каждый числовой показатель в диапазоне `[1, size - 1]` должен быть обновлен.
 
 ![](https://cdn-images-1.medium.com/max/1600/1*7lF6nsm9MlvpHZ-IzFCLdw.gif)
 
-But _Ds\Vector::unshift_ is also _O(n)_, so why is it so much faster? Keep in mind that an _array_ stores each value in a _bucket_, along with its key and hash. So we have to inspect every bucket and update its hash if the index is numeric. Internally, _array_unshift_ actuallyallocates a brand new array to do this, and replaces the old one when all the values have been copied over.
+Но и `Ds\Vector::unshift` также `O(n)`, так почему же он намного быстрее? Имейте ввиду, что `array` храник каждое значение в `bucket` вместе с его ключем и хэшем. Поэтому приходится проверять каждый элемент и обновлять хэш, если индекс является числовым. На самом деле `array_unshift` выделяет новый массив для этого и заменяет старый, когда все значения скопированы.
 
-The index of a value in a _Vector_ is a direct mapping to its index in the buffer, so all we need to do is move every value in the range _[1, size - 1]_ to the right by one position. Internally, this is done using a single _memmove_ operation_._
+В векторе же индекс значения - это прямое отображение его индекса в буфере, поэтому все, что нам нужно сделать - сдвинуть каждое значение в диапазоне [1, size - 1] вправо на одну позицию. Делается это при помощи всего одной операции `memmove`.
 
-Both _Ds\Deque_ and _SplDoublyLinkedList_ are very fast, because the time it takes to _unshift_ a value is not affected by the sample size, ie. _O(1)_
+`Ds\Deque` и `_SplDoublyLinkedList_` в свою очередь очень быстры, потому что на время для `unshift` значения не влияет размер выборки, т.е. его сложность будет `O(1)`.
 
-The following benchmark shows how memory usage is affected by 2ⁿ _pop_ operations, or from a size of 2ⁿ to zero.
+Следующий тест показывает сколько памяти используется при 2ⁿ `pop` операций. Другими словами при изменении размера от 2ⁿ до нуля
 
-What’s interesting here is that an _array_ always holds on to allocated memory, even if its size decreases substantially. _Ds\Vector_ and _Ds\Deque_ will halve their allocated capacity if their size drops below a quarter of their current capacity. _SplDoublyLinkedList_ will free each individual value’s memory, which is why we can see a linear decline.
+Интересно тут то, что `array` всегда держит выделенную память, даже если его размер существенно уменьшается. `Ds\Vector` and `Ds\Deque` позволяют в два раза уменьшить выделяемые ресурсы, если их размер падает ниже четверти своего текущего потенциала. `SplDoublyLinkedList` освобождает память после каждого удаления из выборки, поэтому мы можем наблюдать линейное снижение.
 
 ![](https://cdn-images-1.medium.com/max/1600/1*i8dnM0yH9dHlhL-RuK2MAg.gif)
 
