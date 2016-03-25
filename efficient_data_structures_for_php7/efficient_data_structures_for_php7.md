@@ -52,17 +52,17 @@ PHP имеет всего одну структуру данных для упр
 * Везде, где вы бы хотели использовать `array` как список (без ключей).
 * Более эффективная альтернатива `SplDoublyLinkedList` и `SplFixedArray`.
 
-### Vector
+## Вектор (Vector)
 
-A _Vector_ is a _Sequence_ of values in a contiguous buffer that grows and shrinks automatically. It’s the most efficient sequential structure because a value’s index is a direct mapping to its index in the buffer, and the growth factor isn't bound to a specific multiple or exponent.
+`Vector` преставляет собой `Sequence`, объединяющую значения в непрерывный буфер, увеличивающийся и уменьшающийся автоматически. Это наиболее эффективная последовательная структура, поскольку индекс элемента является прямым отражением его индекса в буфере, и увеличение вектора никак не повлияет на производительность.
 
 <iframe src="https://player.vimeo.com/video/154438958" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 
-#### **Strengths**
+### **Сильные стороны**
 
-* Very low memory usage
-* Very fast iteration
-* _get_, _set, push_ and _pop_ are _O(1)_
+* Очень маленькое потребление памяти
+* Очень быстрые итерации
+* `get`, `set`, `push` и `pop` имеют сложность `O(1)`
 
 #### **Weaknesses**
 
