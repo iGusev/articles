@@ -172,26 +172,26 @@ All structures that honour this interface will fall back to _spl_object_hash_ if
 
 Data structures that honour the _Hashable_ interface_:_ **_Map_ **and **_Set_**
 
-### Map
+### Ассоциативный массив _(Map)_
 
-A _Map_ is a sequential collection of key-value pairs, almost identical to an _array_ used in a similar context. **Keys can be any type**, but must be unique. Values are replaced if added to the map using the same key.
+`Map` является последовательной коллекцией пар ключ-значение, практически идентичной `array` в аналогичном контексте. **Ключи могут быть любого типа**, единственное условие - уникальность. При повторном добавлении ключа значения заменяются.
 
-Like an _array_, insertion order is preserved.
+Как и в `array`, порядок вставки сохраняется.
 
-#### **Strengths**
+#### **Сильные стороны**
 
-*   Performance and memory efficiency is almost **identical to an _array_**.
-*   Automatically frees allocated memory when its size drops low enough.
-*   Keys and values can be any type, including objects.
-*   Honours the _Hashable_ interface.
-*   _put, get, remove,_ and _containsKey_ are _O(1)_
+* Производительность и эффективность использования памяти **практически идентичны** `array`
+* Автоматическое освобождение памяти при уменьшении размера
+* Ключи и значения могут быть любого типа, включая объекты
+* Имплементирует интерфейс `Hashable`
+* `put`, `get`, `remove` и `containsKey` имеют сложность `O(1)`
 
-#### **Weaknesses**
+#### **Недостатки**
 
-*   Can’t be converted to an _array_ when objects are used as keys.
-*   Can’t access values by index (position).
+* Не может быть преобразован в `array` при наличии ключей-объектов
+* Нет возможности получить доступ к значениям по индексу (позиции)
 
-The following benchmarks show that the performance and memory efficiency is identical between an _array_ and a _Ds\Map._ However, an _array_ will always hold on to allocated memory, where a _Ds\Map_ will truncate memory when its size drops below a quarter of its capacity.
+Следующий бенчмарк показывает, что производительности и эффективности по памяти между `array` и `Ds\Map` идентичны. Однако, `array` всегда будет держать выделенную память, когда `Ds\Map`, в свою очередь, освободит память при падении размера ниже четверти своего потенциала.
 
 ![](https://cdn-images-1.medium.com/max/1600/1*sLlnRyldnLfeGqLR1pWcaA.gif)
 
