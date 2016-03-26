@@ -128,11 +128,11 @@ PHP имеет всего одну структуру данных для упр
 
 ![](https://cdn-images-1.medium.com/max/1600/1*yKfo29kCIPVkqFETXmVGRg.gif)
 
-### Queue
+### Очередь _(Queue)_
 
-A [_Queue_](https://en.wikipedia.org/wiki/Queue_%28abstract_data_type%29)is a _“first in, first out”_ or _“FIFO_”collection that only allows access to the value at the front of the queue and iterates in that order, destructively. You can think of it as a line of people queuing up for a ride at a theme park.
+[Очередь](https://ru.wikipedia.org/wiki/Очередь_(программирование)) - тип данных с парадигмой доступа к элементам _"первый пришел — первый вышел" ("FIFO", "First In — First Out")_. Такая коллекция позволяет получить доступ к элементам в порядке их добавления. Ее название говорит само за себя, представьте себе структуру как линию людей, стоящих в очереди на кассу в магазине.
 
-_Ds\Queue_ uses a _Ds\Deque_ internally. _SplQueue_ extends _SplDoublyLinkedList_, so a performance comparison would be equivalent to comparing _Ds\Deque_ to _SplDoublyLinkedList_,as seen in the previous benchmarks_._
+`Ds\Queue` использует внутри себя `Ds\Deque`. `SplQueue` наследуется от `SplDoublyLinkedList`, поэтому производительность будет эквивалентна сравнению `Ds\Deque` с `SplDoublyLinkedList`, показанному в предыдущем бенчмарке.
 
 ### PriorityQueue
 
