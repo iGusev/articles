@@ -134,29 +134,29 @@ PHP имеет всего одну структуру данных для упр
 
 `Ds\Queue` использует внутри себя `Ds\Deque`. `SplQueue` наследуется от `SplDoublyLinkedList`, поэтому производительность будет эквивалентна сравнению `Ds\Deque` с `SplDoublyLinkedList`, показанному в предыдущем бенчмарке.
 
-### PriorityQueue
+### Очередь с приоритетом _(PriorityQueue)_
 
-A _PriorityQueue_ is very similar to a _Queue._ Values are pushed into the queue with an assigned priority, and the value with the highest priority will always be at the front of the queue. Iterating over a _PriorityQueue_ is destructive, equivalent to successive _pop_ operations until the queue is empty.
+Очередь с приоритетом очень похожа на простую очередь. Элементы помещаются в очередь с указанным приоритетом и значение с наивысшим приоритетом всегда будет в передней части. Прямой перебор очереди с приоритетом очень деструктивен, это будет последовательный вызов операций `pop`, что является очень затратной операцией.
 
-Implemented using a _max heap._
+Реализация очереди с приоритетом использует _max-heap_.
 
-**_First in, first out_ ordering is preserved for values with the same priority**, so multiple values with the same priority will behave exactly like a _Queue._ On the other hand, _SplPriorityQueue_ will remove values in arbitrary order.
+Принцип "первый пришел — первый вышел" сохраняется для значений с одинаковым приоритетом, так что группа значений с равным приоритетом можно рассматривать как обычную очередь.
 
-The following benchmark shows the time taken and memory used to _push_ 2ⁿ random integers with a random priority into the queue. The same random numbers are used for each benchmark, and the _Queue_ benchmarkalso generates a random priority even though it doesn't use it for anything.
+А что же с производительностью? Следующий бенчмарк показывает время и память, требующиеся для операции `push` 2ⁿ случайных чисел со случайным приоритетом в очередь. Те же случайные числа будут использоваться для каждого из тестов. В тесте для `Queue` также генерируется случайный приоритет, хотя он и не используется.
 
-This is probably the most significant of all the benchmarks… _Ds\PriorityQueue_ is **more than twice as fast** as an _SplPriorityQueue,_ and uses only **5%** of its memory. That’s **20 times more memory efficient**.
+Это, наверное, самый значимый из всех бенчмарков. `Ds\PriorityQueue` работает **более чем в два раза быстрее** чем `SplPriorityQueue` и использует только **5%** от его памяти - это в *20 раз более эффективное решение по памяти*.
 
-But _how?_ How can the difference be that much when _SplPriorityQueue_ also uses a similar internal structure_?_ It all comes down to how a value is paired with a priority. _SplPriorityQueue_ allows any type of value to be used as a priority, which means that each priority pair takes up **32 bytes**.
+Но как? Как может получиться настолько большая разница, когда `SplPriorityQueue` использует аналогичную внутреннюю структуру? Все сводится к тому, как хранятся значения в паре с приоритетом. `SplPriorityQueue` позволяет использовать любой тип значения для использования в качестве переменной, это приводит к тому, что в каждой паре приоритет занимает **32 байта**.
 
-_Ds\PriorityQueue_ only supports integer priorities, so each pair only allocates **24 bytes**. But that’s not nearly a big enough difference to explain the result.
+`Ds\PriorityQueue` поддерживает только целочисленные приоритеты, поэтому каждой паре выделяется **24 байта**. Но это все еще недостаточная разница для объяснения результата.
 
-If you take a look at the [source](http://lxr.php.net/xref/PHP_7_0/ext/spl/spl_heap.c#629) for _SplPriorityQueue::insert,_ you will notice that it actually **allocates an array** **to store the pair**.
+Если вы посмотрите на [исходный код `SplPriorityQueue::insert`](http://lxr.php.net/xref/PHP_7_0/ext/spl/spl_heap.c#629), то заметите, что он **инициализирует массив** для **хранения пары значение-приоритет**.
 
-Because an array has a minimum capacity of 8, each pair actually allocates _zval + HashTable +_ 8 * (_Bucket + hash_) + 2 * _zend_string_ + (8 + 16) byte string payloads _=_ 16 + 56 + 36 * 8 + 2 * 24 + 8 + 16 = **432 bytes**_(64 bit)._
+Т.к. массив имеет минимальную емкость 8, то для каждой пары на самом деле выделяется `zval + HashTable + 8 * (Bucket + hash) + 2 * zend_string + (8 + 16) byte string payloads` _=_ `16 + 56 + 36 * 8 + 2 * 24 + 8 + 16` _=_ _**432 байта**_ (64 бит).
 
-> “So… why an array?”
+> “Так… почему же массив?”
 
-_SplPriorityQueue_ uses the same internal structure as _SplMaxHeap,_ which requires that a value must be a _zval._ An obvious (but inefficient) way to create a _zval_ pair that is also a _zval_ itself is to use an _array_.
+`SplPriorityQueue` использует ту же внутреннюю структуру `SplMaxHeap`, которая требует от значения быть типом `zval`. Очевидный (но неэффективный) способ создания `zval`-пары, т.к. `zval` сам используется как `array`.
 
 ![](https://cdn-images-1.medium.com/max/1600/1*G-jWxdZtPo7iWMCuiXKNgg.gif)
 
