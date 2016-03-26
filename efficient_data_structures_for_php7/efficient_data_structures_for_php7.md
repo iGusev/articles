@@ -118,13 +118,13 @@ PHP имеет всего одну структуру данных для упр
 
 ![](https://cdn-images-1.medium.com/max/1600/1*i8dnM0yH9dHlhL-RuK2MAg.gif)
 
-### Stack
+### Стек _(Stack)_
 
-A [_Stack_](https://en.wikipedia.org/wiki/Stack_%28abstract_data_type%29)is a _“last in, first out”_ or “_LIFO_” collection that only allows access to the value at the top of the structure and iterates in that order, destructively. You can think of it as a [firearm magazine](https://upload.wikimedia.org/wikipedia/commons/6/6c/Single_row_box_magazine.svg) with dynamic capacity.
+[Стек](https://ru.wikipedia.org/wiki/%D0%A1%D1%82%D0%B5%D0%BA) - является коллекцией, организованной по принципу _"последним пришёл — первым вышел"_ или _"LIFO" (last in — first out)_, позволяющей получить доступ только к значению на вершине структуры. Вы можете думать о нем как об [оружейном магазине](https://upload.wikimedia.org/wikipedia/commons/6/6c/Single_row_box_magazine.svg) с динамической емкостью.
 
-_Ds\Stack_ uses a _Ds\Vector_ internally.
+`Ds\Stack` использует внутри себя `Ds\Vector`.
 
-_SplStack_ extends _SplDoublyLinkedList_, so a performance comparison would be equivalent to comparing _Ds\Vector_ to _SplDoublyLinkedList_,as seen in the previous benchmarks. The following benchmark shows the time taken to perform 2ⁿ _pop_ operations, or from a size of 2ⁿ to zero.
+`SplStack` наследуется от SplDoublyLinkedList, поэтому производительность будет эквивалентна сравнению `Ds\Vector` to `SplDoublyLinkedList` из предыдущих тестов. Посмотрим на время, необходимое для выполнения 2ⁿ `pop`-операций, изменения размера от 2ⁿ до нуля.
 
 ![](https://cdn-images-1.medium.com/max/1600/1*yKfo29kCIPVkqFETXmVGRg.gif)
 
