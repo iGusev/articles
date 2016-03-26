@@ -227,37 +227,41 @@ A common way to create an _array_ of unique values is to use _array_unique,_ whi
 
 ![](https://cdn-images-1.medium.com/max/1600/1*jL3VMkV-JisdSqyuMaSMaQ.gif)
 
-### Responses to expected questions and opinions
+### Ответы на ожидаемые вопросы и мнения
 
-> Are there tests?
+> Есть ли тесты?
 
-Right now there are ~**2600 tests**. It’s possible that some of the tests are redundant but I’d rather indirectly test the same thing twice than not at all.
+Сейчас около **2600 тестов**. Вполне возможно, что некоторые тесты являются избыточными, но я предпочел бы косвенно проверить одну и ту же вещь дважды, чем не проверять совсем.
 
-> Documentation? API reference?
+> Документация? Справочник по API?
 
-At the time of this writing there is no complete documentation, but there will be proper _docbook_ documentation with the first stable release.
+На момент написания этой статьи пока еще нет полной документации, но она появится вместе с первым стабильным релизом.
 
-There are however some [**well-documented stub files**](https://github.com/php-ds/ds/tree/master/php/include).
+Однако, существуют некоторые [**хорошо документированные файлы-заглушки**](https://github.com/php-ds/ds/tree/master/php/include).
 
-> Can we see how the benchmarks were configured? Are there more of them?
+> Можем ли мы посмотреть как устроены бенчмарки? Есть что-то о них?
 
-You can find a complete list of configurable benchmarks in the dedicated benchmark repository: [php-ds/benchmarks](https://github.com/php-ds/benchmarks)
+Все бенчмарки были прогонялись на стандартном билде `PHP 7.0.3` на **2015 Macbook Pro**. Результаты могут отличаться в зависимости от версии и платформы.
 
-All featured benchmarks were created using a default build of **_PHP 7.0.3_ **on a **2015 Macbook Pro**. Results will vary between versions and platforms.
+Все рекомендуемые критерии были созданы с помощью построения по умолчанию из **_PHP 7.0.3_ **на **2015 Макбук про**. Результаты будут отличаться между версиями и платформами.
 
-> Why are Stack_,_ Queue_,_ Set_, and_ Mapnot interfaces_?_
+> Why are Stack_,_ Queue_,_ Set_, and Map not interfaces_?_
 
-I don’t believe that any of them have an alternative implementation worth including. Introducing 3 interfaces and 7 classes is a good balance between pragmatism and specialisation.
+> Почему `Stack`, `Queue`, `Set` и `Map` - не интерфейсы?
 
-> When should I use a Dequerather than a Vector?
+Я не верю, что есть необходимость в какой-либо альтернативной реализации. 3 интерфейса и 7 классов - это хороший баланс между прагматизмом и специализацией.
 
-If you know **for sure** that you won’t be using **_shift_** and **_unshift_**, use _Vector_. You can use _Sequence_ as a typehint to accept either.
+> Когда мне использовать `Deque` вместо `Vector`?
 
-> Why are all the classes **final**_?_
+Если вы **точно** знаете, что не будете использовать `shift` и `unshift`, используйте `Vector`. Для удобного тайпхинтинга можно указать в качестве типа `Sequence`.
 
-The design of the _php-ds_API enforces [composition over inheritance](https://en.wikipedia.org/wiki/Composition_over_inheritance).
+> Почему все классы являются финализированными?
 
-The SPL structures are a good example of how inheritance can be misused, eg. _SplStack_ extends _SplDoublyLinkedList_ which supports random access by index, _shift_ and _unshift — _so it’s not technically a [_Stack_](https://en.wikipedia.org/wiki/Stack_%28abstract_data_type%29)_._
+Дизайн API `php-ds` применяет парадигму [Composition over inheritance](https://en.wikipedia.org/wiki/Composition_over_inheritance).
+
+Структуры SPL являются хорошим примером того, как наследование может быть использовано не по назначение. Например, `SplStack` расширяет `SplDoublyLinkedList`, который поддерживает произвольный доступ по индексу, `shift` и `unshift` - так что технически это не [Стек](https://ru.wikipedia.org/wiki/%D0%A1%D1%82%D0%B5%D0%BA).
+
+
 
 The Java Collections Framework also has a few interesting cases where inheritance causes ambiguity. An _ArrayDeque_ has three methods for appending a value: _add, addLast,_ and _push._ This is not exactly a bad thing, because _ArrayDeque_ implements _Deque_ and _Queue,_ which is why it must implement _addLast_ and _push._ However, having three methods that do the same thing causes confusion and inconsistency.
 
@@ -275,7 +279,7 @@ It provides an alternative construction syntax:
 
 ![](https://cdn-images-1.medium.com/max/1600/1*iD41TKleXh32cgVkz18x7w.gif)
 
-> Why no linked list?
+> Почему нет связного списка _(Linked List)_? 
 
 _LinkedList_ actually came first because it seemed like a good place to start. I decided to remove it when I realised it wouldn’t be able to compete with _Vector_ or _Deque_ in any situation. The two primary reasons to support that are **allocation overhead** and **locality of reference_._**
 
@@ -285,38 +289,31 @@ A _linked list_ has to either allocate or free a _node_ whenever a value is adde
 
 Only when the collection is very small. The upper bound of a _Vector_’s memory usage is (1.5 * (_size -_ 1)) * _zval_ bytes, with a minimum of 10 * _zval_. A _doubly linked list_ would use (_size_ * (_zval_ + 8 + 8)). So a _linked list_ uses less memory than a _Vector_ if its size is less than 6.
 
-> Okay… so a linked list uses more memory. But why is it slow?
+> Окей... связный список использует больше памяти, но почему он медленный?
 
-The nodes of a _linked list_ have bad **_spatial locality_**_._ This means that the physical memory location of a node might be far away from its adjacent nodes. Iterating through a _linked list_ therefore jumps around in memory instead of utilizing the CPU cache. This is where both _Vector_ and _Deque_ have a significant advantage: values are physically right next to each other.
+Узлы _связного списка_ обладают плохой **_пространственной локальность_**. Это означает, что физическое расположение узла в памяти может быть далеко от прилегающих узлов. Таким образом итерации по связному списку скачут по памяти вместо использования кэша процессора. Значительное преимущество `Vector` и `Deque`: элементы физически находятся рядом друг с другом.
 
-> “Discontiguous data structures are the root of all performance evil. Specifically, please say no to linked lists.”
-
-> “There is almost nothing more harmful you can do to the performance of an actual modern microprocessor than to use a linked list data structure.”
-
+> "Несмежность данных в структурах является корнем всех зол производительности. Конкретно, пожалуйста, скажите нет связным спискам"
+> "Нет почти ничего вреднее из того что вы можете сделать чтобы убить все плюсы современных микропроцессоров, чем использовать связный список"
 > — Chandler Carruth ([CppCon 2014](https://youtu.be/fHNmRkzxHWs?t=34m42s))
 
+> PHP - это язык для веб-разработки — производительность не важна.
 
+**Производительность не должна быть вашим главным приоритетом**. Код должен быть последовательным, ремонтопригодным, надежным, предсказуемым, безопасным и легко понимаемым. Но это не означает, что производительность _"не важна"_.
 
-
-
-> PHP is a web development language — performance is not important.
-
-**Performance should not be your top priority**. Code should be consistent, maintainable, robust, predictable, safe, and easy to understand. But that’s not to say that performance is _“not important”_.
-
-We spend a lot of time trying to reduce the size of our assets, benchmarking frameworks, and coming up with pointless micro-optimisations:
+Мы тратим много времени, пытаясь уменьшить размер своих ассетов, делаем сравнивнительный анализ фреймворков и придумываем бесмысленные микро-оптимизации:
 
 *   [print vs echo, which one is faster?](http://fabien.potencier.org/print-vs-echo-which-one-is-faster.html)
 *   [The PHP Ternary Operator: Fast or not?](http://fabien.potencier.org/the-php-ternary-operator-fast-or-not.html)
 *   [The PHP Benchmark: setting the record straight](http://www.phpbench.com/)
 *   [Disproving the Single Quotes Performance Myth](https://nikic.github.io/2012/01/09/Disproving-the-Single-Quotes-Performance-Myth.html)
 
-The ~2x performance increase that came with PHP 7 had us all desperately eager to try it out. It’s arguably one of the most-mentioned benefits of switching from PHP 5.
+Но в конечном итоге двухкратный прирост производительности, который приносит с собой PHP7 почему-то всех взбудоражил. Абсолютно для всех это - одно из главных преимуществ для перехода с PHP5.
 
-Efficient code reduces the load on our servers, reduces the response time of our APIs and web pages, and reduces the runtime of our development tools. **Performance is important**, but maintainable code comes first.
+Эффективный код позволяет снизить нагрузку на наши сервера. уменьшить время ответа наших API и веб-страниц и снижает время работы наших утилит для разработки. **Высокая производительность важна**, но поддерживаемость кода все же стоит во главе.
 
+💬 **Обсуждения**: [Twitter](https://twitter.com/rudi_theunissen), [Reddit](https://www.reddit.com/r/PHP/comments/44qsco/efficient_data_structures_for_php_7/), [Room 11](http://chat.stackoverflow.com/rooms/11/php)
 
-💬 **Discuss**: [Twitter](https://twitter.com/rudi_theunissen), [Reddit](https://www.reddit.com/r/PHP/comments/44qsco/efficient_data_structures_for_php_7/), [Room 11](http://chat.stackoverflow.com/rooms/11/php)
+🔎 **Исходный код**: [github.com/php-ds](https://github.com/php-ds)
 
-🔎 **Explore**: [github.com/php-ds](https://github.com/php-ds)
-
-📊 **Benchmarks:** [github.com/php-ds/benchmarks](https://github.com/php-ds/benchmarks)
+📊 **Бенчмарки:** [github.com/php-ds/benchmarks](https://github.com/php-ds/benchmarks)
