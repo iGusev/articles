@@ -43,9 +43,9 @@ if (!$row->hasColumns($expectedColumns)) {
 
 В таком виде логи будут выглядеть лучше, но теперь форматирование этого небольшого сообщения стало немного шумным и отвлекающим. Тут мы сталкиваемся с дилеммой: логи выглядят лучше, но код становится уродливым. Не говоря уже о том, что может быть несколько причин по которым мы могли бы выбрасывать `InvalidRowException`, и нам придется форматировать их все, включая номера строк. Скуууука.
 
-## Moving the Formatting
+## Инкапсуляция форматирования
 
-We can remove the noise by pushing the formatting into the custom Exception class. The best way to do this is with a static factory:
+Уберем шум путем перемещения форматирования в наш класс исключения. Лучший способ сделать это - через статическую фабрику:
 
 ```php
 class InvalidRowException extends \Exception
@@ -56,7 +56,7 @@ class InvalidRowException extends \Exception
 }
 ```
 
-And now we can clean up the importing code without losing readability:
+Теперь можно использовать удобные форматированные сообщения в логах без потери читабельности:
 
 ```php
 if (!$row->hasColumns($expectedColumns)) {
@@ -64,11 +64,11 @@ if (!$row->hasColumns($expectedColumns)) {
 }
 ```
 
-The only extra code is the function block surrounding our message. That function block isn’t just noise though: it allows us to typehint and document what needs to be passed to generate a nicely formatted message. And if those requirements ever change, we can use static analysis tools to refactor those specific use cases.
+Единственным дополнительным кодом остался блок вызова функции, оборачивающей сообщение. Сама конструкция - не просто шум, она позволяет нам делать typehint и сообщает что необходимо передать для создания красиво оформленного сообщения. И если вдруг требования изменятся, мы сможем использовать инструменты статического анализа для рефакторинга этих конкретных случаев.
 
-This also frees us from the mental constraints of the space available. We’re not bound to writing code that fits into a single if clause, we have a whole method to do whatever makes sense.
+Такой подход также освобождает нас от психологического ограничения имеющегося пространства. Больше нет необходимости писать код, который умещается в одно `if`-условие, у нас есть целый метод для всего, что имеет смысл.
 
-Maybe common errors warrant more complex output, like including both the expected _and_ the received list of columns.
+Например, распространенные ошибки потребуют более сложный вывод, включающий в себя как ожидаемый, так и полученный список столбцов.
 
 ```php
 public static function incorrectColumns(Row $row, $expectedColumns)
@@ -84,7 +84,7 @@ public static function incorrectColumns(Row $row, $expectedColumns)
 }
 ```
 
-The code here got significantly richer but the consuming code only needed to pass one extra parameter.
+Код внутри стал содержать значительно больше логики, но консьюмеру потребуется передать лишь один дополнительный параметр.
 
 ```php
 if (!$row->hasColumns($expectedColumns)) {
@@ -92,9 +92,9 @@ if (!$row->hasColumns($expectedColumns)) {
 }
 ```
 
-That’s easy to consume, especially when throwing it in multiple locations. It’s the type of error messages everyone wants to read but rarely take the time to write. If it’s an important enough part of your Developer Experience, you can even unit test that the exception message contains the missing column names. Bonus points if you array_diff/array_intersect to show the actual unexpected columns.
+Его легко использовать, особенно когда мы выбрасываем исключение в нескольких местах, Это именно тот тип сообщений об ошибках, который все хотят читать, но редко бывает возможность писать. Вы можете использовать подобный подход даже в unit-тестах, передавая сообщение об исключительной ситуации, содержащей недостающие имена столбцов. Бонус - используйте `array_diff`/`array_intersect` чтобы показать реальные расхождения в столбцах.
 
-Again, that might seem like overkill and I wouldn’t recommend gold plating every error scenario to this extent. Still, if this is code you really want to own and you can anticipate the common fix for these errors, spending 1 extra minute to write a solid error message will pay big in debugging dividends.
+Опять же, это может показаться излишним и я точно не рекомендовал бы полировать до такой степени каждый сценарий обработки ошибок. Но если это код, в котором вы действительно хотите и можете предугадывать простой способ исправления ошибок, затратьте одну лишнюю минуту на написание хорошего сообщения об ошибке, это даст вам хорошие дивиденды в отладке.
 
 ## Multiple Use Cases
 
