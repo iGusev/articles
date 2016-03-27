@@ -197,33 +197,32 @@ PHP имеет всего одну структуру данных для упр
 
 ![](https://cdn-images-1.medium.com/max/1600/1*6cF3pbT_4DQfeqi12gEHZg.gif)
 
-### Set
+### Множество _(Set)_
 
-A _Set_ is a collection of **unique values**. The textbook definition of a _set_ will say that values are unordered unless an implementation specifies otherwise. Using Java as an example, _java.util.Set_ is an interface with two primary implementations: _HashSet_ and _TreeSet. HashSet_ provides _O(1) add_ and _remove_, and _TreeSet_ ensures a sorted set but _O(log n)_ _add_ and _remove._
+`Set` - коллекция **уникальных значений**. Учебники скажут вам, что в структуре `Set` значения неупорядочены, если реализация не предусматривает иное. Возьмем для примера Java, `java.util.Set` - это интерфейс с двумя основными реализациями: `HashSet` и `TreeSet`. `HashSet` обеспечивает сложность `O(1)` для `add` и `remove`, a `TreeSet` обеспечивает сортированный набор данных, но сложность `add` и `remove` возрастает до `O(log n)`.
 
-_Set_ uses the same internal structure as a _Map_, which is based on the same structure as an _array_. This means that a _Set_ can be sorted in _O(n * log(n))_ timewhenever it needs to be, just like a _Map_ and an _array_.
+`Set` использует ту же внутреннюю структуру, что и `Map`, также основываясь на `array`. Это означает, что `Set` может быть отсортирован за время `O(n * log(n))` когда это понадобится, в остальном он такой же простой как `Map` и `array`.
 
-<iframe src="https://player.vimeo.com/video/154441519" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+<video>https://player.vimeo.com/video/154441519</video>
+#### **Сильные стороны**
 
-#### **Strengths**
+* `add`, `remove` и `contains` имеют сложность `O(1)`
+* Поддерживает работу с объектами, реализующими интерфейс `Hashable`
+* Поддерживает **любой тип значений** (`SplObjectStorage` поддерживает только объекты).
+* Имеет эквивалент поразрядных логических операций (`intersection`, `difference`, `union`, `exclusive or`)
 
-* _add, remove,_ and _contains_ are _O(1)_
-* Honours the _Hashable_ interface.
-* Supports **any type of value** (_SplObjectStorage_ only supports objects).
-* Bitwise equivalents for _intersection, difference, union,_ and _exclusive or._
+#### **Недостатки**
 
-#### **Weaknesses**
+* Не поддерживает `push`, `pop`, `insert`, `shift` или `unshift`
+* `get` имеет сложность `O(n)` если есть удаленные значения до момента индексации, в ином случае - `O(1)`
 
-* Doesn’t support _push, pop, insert, shift,_ or _unshift._
-* _get_ is _O(n)_ if there are deleted values before the index, _O(1)_ otherwise.
-
-The following benchmark shows the time taken to add 2ⁿ new instances of _stdClass._ It shows that _Ds\Set_ is **slightly faster** than _SplObjectStorage,_ and uses about **half the memory**.
+Следующий бенчмарк показывает время, затраченное на добавление 2ⁿ новых экземпляров `stdClass`. Он показывает, что `Ds\Set` **немного быстрее**, чем `SplObjectStorage`, и использует **примерно в половину меньше** памяти.
 
 ![](https://cdn-images-1.medium.com/max/1600/1*5ihSMBaqzpzMS-xVDL6nNA.gif)
 
 ![](https://cdn-images-1.medium.com/max/1600/1*L5lzvjIKpm-gsW53qbNRpA.gif)
 
-A common way to create an _array_ of unique values is to use _array_unique,_ which creates a new _array_ containing only unique values. An important thing to keep in mind here is that **values in an array are not indexed**, so _in_array_ is a linear search, _O(n)._ Because _array_unique_ deals with values instead of keys, each membership test is a linear search, resulting in _O(n_²_)_ time complexity and _O(n)_ memory complexity.
+Распространенным способом создания массива с уникальными значениями является `array_unique`, который создает новый `array`, содержащий только уникальные значения. Но важно иметь ввиду, что **значения в массиве не индексируются**, `in_array` является линейным поиском со сложность `O(n)`. `array_unique` работает только со значениями, без учета ключей, каждая проверка на наличие значения массива - линейный поиск, что даем нам в сумме сложность `O(n²)` по времени и `O(n)` по потреблению памяти.
 
 ![](https://cdn-images-1.medium.com/max/1600/1*jL3VMkV-JisdSqyuMaSMaQ.gif)
 
