@@ -1,7 +1,7 @@
 >Formatting Exception Messages
 http://rosstuck.com/formatting-exception-messages/
 
-Over the last couple years, I’ve started putting my Exception messages inside static methods on custom exception classes. This is hardly a new trick, Doctrine’s been doing it for the [better part of a decade](https://github.com/doctrine/doctrine2/blob/4fc1781d78fab42377fedda843045371b14f8f1e/lib/Doctrine/ORM/ORMException.php). Still, many folks are surprised by it, so this article explains the how and why.
+За последние пару лет я пришел к тому, что начал раскладывать свои сообщения исключений внутрь статических методовов моих Exception-классов. Врядли это будет чем-то новым, Doctrine так [делает уже лет десять](https://github.com/doctrine/doctrine2/blob/4fc1781d78fab42377fedda843045371b14f8f1e/lib/Doctrine/ORM/ORMException.php). Тем не менее для многих людей это становится открытием, поэтому я решил написать статью, объясняющую что, как и почему.
 
 ## How does it work?
 
