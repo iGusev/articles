@@ -96,11 +96,11 @@ if (!$row->hasColumns($expectedColumns)) {
 
 Опять же, это может показаться излишним и я точно не рекомендовал бы полировать до такой степени каждый сценарий обработки ошибок. Но если это код, в котором вы действительно хотите и можете предугадывать простой способ исправления ошибок, затратьте одну лишнюю минуту на написание хорошего сообщения об ошибке, это даст вам хорошие дивиденды в отладке.
 
-## Multiple Use Cases
+## Варианты использования
 
-So far we’ve created a method for one specific use case, an incorrect number of columns.
+До этого момента мы делали метод только для одного варианта использовани - для неверного количества столбцов.
 
-Maybe we have other issues with our CSV file, like the existence of blank lines. Let’s add a second method to our exception:
+Вполне возможно, что есть и другие варианты проблем с нашим CSV-файлом, например, наличие пустых строк. Добавим второй метод к исключению:
 
 ```php
 class InvalidRowException extends \Exception
@@ -114,7 +114,7 @@ class InvalidRowException extends \Exception
 }
 ```
 
-Again, a bit of boilerplate but we get extra space to write more detailed messages. If the same issue keeps occurring, perhaps it’s worth adding some extra details, links or issue numbers (or you know, fixing it more permanently).
+И снова, звучит немного шаблонно, но мы получаем дополнительное пространство для написания более подробных сообщений. Если же проблема продолжает возникать, возможно, стоит добавить некоторые дополнительные детали, ссылки или номера багов.
 
 ```php
 public static function blankLine($rowNumber)
