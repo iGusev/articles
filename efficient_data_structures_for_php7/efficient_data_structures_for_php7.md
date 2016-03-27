@@ -164,13 +164,13 @@ PHP имеет всего одну структуру данных для упр
 
 ### Hashable
 
-An interface which **allows objects to be used as keys**. It’s an alternative to _spl_object_hash,_ which determines an object’s hash based on its _handle:_ this means that two objects that are considered equal by an implicit definition would not treated as equal because they are not the same instance.
+Интерфейс, позволяющий объектам **быть использоваными в качестве ключей**. Это альтернатива `spl_object_hash`, который детерминирует объект в хэш, базирующийся на его `handle:`. Это означает, что два объекта, которые считались бы равными при сравнении, не имели бы равный хэш, т.к. они не являются одним и тем же экзмепляром.
 
-_Hashable_ introduces only two methods: **hash** and **equals**. Many other languages support this natively, like Java’s _hashCode_ and _equals,_ or Python’s ___hash___ and ___eq__._ There have been a few RFC’s to add this to PHP but none of them have been accepted.
+`Hashable` вводит только два метода: `hash` и `equals`. Многие другие языки поддерживают это изначально: в Java - `hashCode` и `equals`, или в Python `___hash___` и `__eq__`. Было несколько RFC, добавляющих подобное поведение и в PHP, но ни один из не был принят.
 
-All structures that honour this interface will fall back to _spl_object_hash_ if an object key does not implement _Hashable._
+Все структуры, будут возвращать `spl_object_hash`, если ключи объектов, хранящиеся в них не реализуют в себе `Hashable`.
 
-Data structures that honour the _Hashable_ interface_:_ **_Map_ **and **_Set_**
+Структуры данных, рабтающие с интерфейсом `Hashable`: `Map` и `Set`.
 
 ### Ассоциативный массив _(Map)_
 
