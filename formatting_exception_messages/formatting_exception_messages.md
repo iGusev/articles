@@ -3,9 +3,9 @@ http://rosstuck.com/formatting-exception-messages/
 
 За последние пару лет я пришел к тому, что начал раскладывать свои сообщения исключений внутрь статических методовов моих Exception-классов. Врядли это будет чем-то новым, Doctrine так [делает уже лет десять](https://github.com/doctrine/doctrine2/blob/4fc1781d78fab42377fedda843045371b14f8f1e/lib/Doctrine/ORM/ORMException.php). Тем не менее для многих людей это становится открытием, поэтому я решил написать статью, объясняющую что, как и почему.
 
-## How does it work?
+## Как это работает?
 
-Let’s say you’re writing a large CSV import and you stumble across an invalid row, perhaps it’s missing a column. Your code might look like this:
+Предположим, вы пишите импорт большого CSV и натыкаетесь на некорректную строку с отсутствующим столбцом. Ваш код может выглядеть следующим образом:
 
 ```php
 if (!$row->hasColumns($expectedColumns)) {
@@ -13,7 +13,7 @@ if (!$row->hasColumns($expectedColumns)) {
 }
 ```
 
-This works in terms of stopping the program but it’s not very flexible for the developer. We can improve this is creating a custom exception class.
+Эта конструкция отлично работает в плане остановки выполнения программы, но она не слишком гибка для разработчика. Мы можем улучшить ее путем создания своего класса исключения.
 
 ```php
 class InvalidRowException extends \Exception
@@ -21,7 +21,7 @@ class InvalidRowException extends \Exception
 }
 ```
 
-Now we throw our custom Exception instead:
+Теперь выбрасываем наше пользовательское исключение вместо стандартного:
 
 ```php
 if (!$row->hasColumns($expectedColumns)) {
@@ -31,7 +31,7 @@ if (!$row->hasColumns($expectedColumns)) {
 
 This might look like boilerplate but it allows higher level code to recognize which error was raised and handle it accordingly. For example, we might stop the entire program on a `NoDatabaseConnectionException` but only log an `InvalidRowException` before continuing.
 
-Still, the error message isn’t very helpful from a debugging perspective. Which row failed? It would be better if we always included the row number in our error message.
+И еще, сообщение об ошибке - не слишком полезная информация с точки зрения отладки. В какой строке произошел сбой? Было бы лучше, если бы мы всегда включали номер строки в наше сообщение об ошибке.
 
 ```php
 if (!$row->hasColumns($expectedColumns)) {
@@ -41,7 +41,7 @@ if (!$row->hasColumns($expectedColumns)) {
 }
 ```
 
-That’s better in the log but now the formatting on this one little message is getting a bit noisy and distracting. There’s no upper bound on this complexity: as the log message gets complex, the code will get uglier. Not to mention, there are multiple reasons we might throw an `InvalidRowException` but we’d need to format them all to include the row number. Booorrrriiing.
+В таком виде логи будут выглядеть лучше, но теперь форматирование этого небольшого сообщения стало немного шумным и отвлекающим. Тут мы сталкиваемся с дилеммой: логи выглядят лучше, но код становится уродливым. Не говоря уже о том, что может быть несколько причин по которым мы могли бы выбрасывать `InvalidRowException`, и нам придется форматировать их все, включая номера строк. Скуууука.
 
 ## Moving the Formatting
 
