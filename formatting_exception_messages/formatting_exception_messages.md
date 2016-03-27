@@ -3,9 +3,9 @@ http://rosstuck.com/formatting-exception-messages/
 
 За последние пару лет я пришел к тому, что начал раскладывать свои сообщения исключений внутрь статических методовов моих Exception-классов. Врядли это будет чем-то новым, Doctrine так [делает уже лет десять](https://github.com/doctrine/doctrine2/blob/4fc1781d78fab42377fedda843045371b14f8f1e/lib/Doctrine/ORM/ORMException.php). Тем не менее для многих людей это становится открытием, поэтому я решил написать статью, объясняющую что, как и почему.
 
-## Как это работает?
+## How does it work?
 
-Предположим, вы пишите импорт большого CSV и натыкаетесь на некорректную строку с отсутствующим столбцом. Ваш код может выглядеть следующим образом:
+Let’s say you’re writing a large CSV import and you stumble across an invalid row, perhaps it’s missing a column. Your code might look like this:
 
 ```php
 if (!$row->hasColumns($expectedColumns)) {
@@ -13,7 +13,7 @@ if (!$row->hasColumns($expectedColumns)) {
 }
 ```
 
-Эта конструкция отлично работает в плане остановки выполнения программы, но она не слишком гибка для разработчика. Мы можем улучшить ее путем создания своего класса исключения.
+This works in terms of stopping the program but it’s not very flexible for the developer. We can improve this is creating a custom exception class.
 
 ```php
 class InvalidRowException extends \Exception
@@ -21,7 +21,7 @@ class InvalidRowException extends \Exception
 }
 ```
 
-Теперь выбрасываем наше пользовательское исключение вместо стандартного:
+Now we throw our custom Exception instead:
 
 ```php
 if (!$row->hasColumns($expectedColumns)) {
@@ -31,7 +31,7 @@ if (!$row->hasColumns($expectedColumns)) {
 
 This might look like boilerplate but it allows higher level code to recognize which error was raised and handle it accordingly. For example, we might stop the entire program on a `NoDatabaseConnectionException` but only log an `InvalidRowException` before continuing.
 
-И еще, сообщение об ошибке - не слишком полезная информация с точки зрения отладки. В какой строке произошел сбой? Было бы лучше, если бы мы всегда включали номер строки в наше сообщение об ошибке.
+Still, the error message isn’t very helpful from a debugging perspective. Which row failed? It would be better if we always included the row number in our error message.
 
 ```php
 if (!$row->hasColumns($expectedColumns)) {
@@ -41,11 +41,11 @@ if (!$row->hasColumns($expectedColumns)) {
 }
 ```
 
-В таком виде логи будут выглядеть лучше, но теперь форматирование этого небольшого сообщения стало немного шумным и отвлекающим. Тут мы сталкиваемся с дилеммой: логи выглядят лучше, но код становится уродливым. Не говоря уже о том, что может быть несколько причин по которым мы могли бы выбрасывать `InvalidRowException`, и нам придется форматировать их все, включая номера строк. Скуууука.
+That’s better in the log but now the formatting on this one little message is getting a bit noisy and distracting. There’s no upper bound on this complexity: as the log message gets complex, the code will get uglier. Not to mention, there are multiple reasons we might throw an `InvalidRowException` but we’d need to format them all to include the row number. Booorrrriiing.
 
-## Инкапсуляция форматирования
+## Moving the Formatting
 
-Уберем шум путем перемещения форматирования в наш класс исключения. Лучший способ сделать это - через статическую фабрику:
+We can remove the noise by pushing the formatting into the custom Exception class. The best way to do this is with a static factory:
 
 ```php
 class InvalidRowException extends \Exception
@@ -56,7 +56,7 @@ class InvalidRowException extends \Exception
 }
 ```
 
-Теперь можно использовать удобные форматированные сообщения в логах без потери читабельности:
+And now we can clean up the importing code without losing readability:
 
 ```php
 if (!$row->hasColumns($expectedColumns)) {
@@ -64,11 +64,11 @@ if (!$row->hasColumns($expectedColumns)) {
 }
 ```
 
-Единственным дополнительным кодом остался блок вызова функции, оборачивающей сообщение. Сама конструкция - не просто шум, она позволяет нам делать typehint и сообщает что необходимо передать для создания красиво оформленного сообщения. И если вдруг требования изменятся, мы сможем использовать инструменты статического анализа для рефакторинга этих конкретных случаев.
+The only extra code is the function block surrounding our message. That function block isn’t just noise though: it allows us to typehint and document what needs to be passed to generate a nicely formatted message. And if those requirements ever change, we can use static analysis tools to refactor those specific use cases.
 
-Такой подход также освобождает нас от психологического ограничения имеющегося пространства. Больше нет необходимости писать код, который умещается в одно `if`-условие, у нас есть целый метод для всего, что имеет смысл.
+This also frees us from the mental constraints of the space available. We’re not bound to writing code that fits into a single if clause, we have a whole method to do whatever makes sense.
 
-Например, распространенные ошибки потребуют более сложный вывод, включающий в себя как ожидаемый, так и полученный список столбцов.
+Maybe common errors warrant more complex output, like including both the expected _and_ the received list of columns.
 
 ```php
 public static function incorrectColumns(Row $row, $expectedColumns)
@@ -84,7 +84,7 @@ public static function incorrectColumns(Row $row, $expectedColumns)
 }
 ```
 
-Код внутри стал содержать значительно больше логики, но консьюмеру потребуется передать лишь один дополнительный параметр.
+The code here got significantly richer but the consuming code only needed to pass one extra parameter.
 
 ```php
 if (!$row->hasColumns($expectedColumns)) {
@@ -92,15 +92,15 @@ if (!$row->hasColumns($expectedColumns)) {
 }
 ```
 
-Его легко использовать, особенно когда мы выбрасываем исключение в нескольких местах, Это именно тот тип сообщений об ошибках, который все хотят читать, но редко бывает возможность писать. Вы можете использовать подобный подход даже в unit-тестах, передавая сообщение об исключительной ситуации, содержащей недостающие имена столбцов. Бонус - используйте `array_diff`/`array_intersect` чтобы показать реальные расхождения в столбцах.
+That’s easy to consume, especially when throwing it in multiple locations. It’s the type of error messages everyone wants to read but rarely take the time to write. If it’s an important enough part of your Developer Experience, you can even unit test that the exception message contains the missing column names. Bonus points if you array_diff/array_intersect to show the actual unexpected columns.
 
-Опять же, это может показаться излишним и я точно не рекомендовал бы полировать до такой степени каждый сценарий обработки ошибок. Но если это код, в котором вы действительно хотите и можете предугадывать простой способ исправления ошибок, затратьте одну лишнюю минуту на написание хорошего сообщения об ошибке, это даст вам хорошие дивиденды в отладке.
+Again, that might seem like overkill and I wouldn’t recommend gold plating every error scenario to this extent. Still, if this is code you really want to own and you can anticipate the common fix for these errors, spending 1 extra minute to write a solid error message will pay big in debugging dividends.
 
-## Варианты использования
+## Multiple Use Cases
 
-До этого момента мы делали метод только для одного варианта использовани - для неверного количества столбцов.
+So far we’ve created a method for one specific use case, an incorrect number of columns.
 
-Вполне возможно, что есть и другие варианты проблем с нашим CSV-файлом, например, наличие пустых строк. Добавим второй метод к исключению:
+Maybe we have other issues with our CSV file, like the existence of blank lines. Let’s add a second method to our exception:
 
 ```php
 class InvalidRowException extends \Exception
@@ -114,7 +114,7 @@ class InvalidRowException extends \Exception
 }
 ```
 
-И снова, звучит немного шаблонно, но мы получаем дополнительное пространство для написания более подробных сообщений. Если же проблема продолжает возникать, возможно, стоит добавить некоторые дополнительные детали, ссылки или номера багов.
+Again, a bit of boilerplate but we get extra space to write more detailed messages. If the same issue keeps occurring, perhaps it’s worth adding some extra details, links or issue numbers (or you know, fixing it more permanently).
 
 ```php
 public static function blankLine($rowNumber)
@@ -157,11 +157,11 @@ Which might be useful but is probably pretty far out there. I haven’t seen a c
 
 ## The Big Picture
 
-Осталась одна последняя вещь, которую я бы хотел затронуть.
+There’s one final benefit I’d like to touch on.
 
-Обычно, когда вы пишете сообщения исключений прямо в коде, то ошибки могут находиться в различных файлах. Это делает намного тяжелее поддержку и понимание их происхождения, что в свою очередь отражается на качестве всего продукта.
+Normally, when you write your exception messages inline, the various error cases might be split across different files. This makes it harder to see the reasons you’re raising them, which is a shame since exception types are an important part of your API.
 
-Когда вы агрегируете сообщения внутри исключения, вы получаете полный обзор случившейся ошибки. Если же количество типов ошибок слишком быстро растет и вы начинаете путаться - это сигнал к разделению класса `Exception` и созданию лучшего интерфейса API.
+When you co-locate the messages inside the exception, however, you gain an overview of the error cases. If these cases multiply too fast or diverge significantly, it’s a strong smell to split the exception class and create a better API.
 
 ```php
 // One of these isn’t like the others and should probably be a different Exception class
