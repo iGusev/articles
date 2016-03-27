@@ -155,13 +155,13 @@ class InvalidRowException extends \Exception
 
 Which might be useful but is probably pretty far out there. I haven’t seen a convenient way to enforce it though.
 
-## The Big Picture
+## Картина в целом
 
-There’s one final benefit I’d like to touch on.
+Осталась одна последняя вещь, которую я бы хотел затронуть.
 
-Normally, when you write your exception messages inline, the various error cases might be split across different files. This makes it harder to see the reasons you’re raising them, which is a shame since exception types are an important part of your API.
+Обычно, когда вы пишете сообщения исключений прямо в коде, то ошибки могут находиться в различных файлах. Это делает намного тяжелее поддержку и понимание их происхождения, что в свою очередь отражается на качестве всего продукта.
 
-When you co-locate the messages inside the exception, however, you gain an overview of the error cases. If these cases multiply too fast or diverge significantly, it’s a strong smell to split the exception class and create a better API.
+Когда вы агрегируете сообщения внутри исключения, вы получаете полный обзор случившейся ошибки. Если же количество типов ошибок слишком быстро растет и вы начинаете путаться - это сигнал к разделению класса `Exception` и созданию лучшего интерфейса API.
 
 ```php
 // One of these isn’t like the others and should probably be a different Exception class
