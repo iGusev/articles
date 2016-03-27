@@ -260,8 +260,6 @@ PHP имеет всего одну структуру данных для упр
 
 Структуры SPL являются хорошим примером того, как наследование может быть использовано не по назначение. Например, `SplStack` расширяет `SplDoublyLinkedList`, который поддерживает произвольный доступ по индексу, `shift` и `unshift` - так что технически это не [Стек](https://ru.wikipedia.org/wiki/%D0%A1%D1%82%D0%B5%D0%BA).
 
-
-
 The Java Collections Framework also has a few interesting cases where inheritance causes ambiguity. An _ArrayDeque_ has three methods for appending a value: _add, addLast,_ and _push._ This is not exactly a bad thing, because _ArrayDeque_ implements _Deque_ and _Queue,_ which is why it must implement _addLast_ and _push._ However, having three methods that do the same thing causes confusion and inconsistency.
 
 The old _java.util.Stack_ extends _java.util.Vector,_ andstates that “a more complete and consistent set of LIFO stack operations is provided by the Deque interface and its implementations”, but the Deque interface includes methods like _addFirst_ and _remove(x),_ which shouldn't be part of a _stack_ API.
@@ -272,21 +270,21 @@ That’s actually a fair point, but I still believe that composition is more app
 
 Inheritance would also introduce unnecessary internal complexity.
 
-> Why is there also a **ds**class in the global namespace?
+> Зачем нужен еще и `ds` класс в глобальном пространстве имен?
 
-It provides an alternative construction syntax:
+Он обеспечивает альтернативный синтаксис:
 
 ![](https://cdn-images-1.medium.com/max/1600/1*iD41TKleXh32cgVkz18x7w.gif)
 
 > Почему нет связного списка _(Linked List)_? 
 
-_LinkedList_ actually came first because it seemed like a good place to start. I decided to remove it when I realised it wouldn’t be able to compete with _Vector_ or _Deque_ in any situation. The two primary reasons to support that are **allocation overhead** and **locality of reference_._**
+Класс `LinkedList` на самом деле появился первым, это казалось хорошим стартом. Но в итоге я решил удалить его, когда понял, что он не сможет конкурировать с `Vector` или `Deque` при любом раскладе. Две основные причины возможной поддержки: **распределение накладных расходов** и **локальность ссылок**.
 
-A _linked list_ has to either allocate or free a _node_ whenever a value is added or removed. A _node_ also has two pointers (in the case of a doubly linked list) to reference another _node_ that comes before, and one that comes after. Both _Vector_ and _Deque_ allocate a buffer of memory in advance, so there’s no need to allocate and free as often. They also don’t need additional pointers to know what value comes before or after another, so there’s less overhead.
+В связном списке мы добавляем или убираем зарезервированную память для элемента структуры _(node)_ всякий раз, когда значение добавляется или удаляется. Нода содержит в себе два указателя (в случае с двусвязным списком), чтобы ссылаться на предыдудщую и последующую ноды. Обе структуры, `Vector` и `Deque`, выделяют буфер памяти заранее, поэтому нет необходимости делать это настолько часто. Они также не нуждаются в дополнительных указателях, чтобы знать какое значение до и какое после, тем самым снижаются накладные расходы.
 
-> Would a linked list have lower peak memory because there’s no buffer?
+> Будет ли связный список использовать меньше памяти, т.к. там нет буфера?
 
-Only when the collection is very small. The upper bound of a _Vector_’s memory usage is (1.5 * (_size -_ 1)) * _zval_ bytes, with a minimum of 10 * _zval_. A _doubly linked list_ would use (_size_ * (_zval_ + 8 + 8)). So a _linked list_ uses less memory than a _Vector_ if its size is less than 6.
+Только когда коллекция очень мала. Верхней границей количества памяти для `Vector` будет `(1.5 * (size - 1)) * zval` байт, не менее *10 * zval*. В двусвязном списке же будет использоваться `(size * (zval + 8 + 8))`. Поэтому связный список будет использовать меньше памяти, чем `Vector` только тогда, когда его размер меньше 6 элементов.
 
 > Окей... связный список использует больше памяти, но почему он медленный?
 
