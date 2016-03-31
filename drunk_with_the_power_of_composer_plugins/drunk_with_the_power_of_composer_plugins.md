@@ -95,13 +95,13 @@ _В подобных ситуациях все же будет предпочт�
 
 _Я рекомендую использовать команду `rm -rf vendor composer.lock; composer install` во время разработки. Особенно, когда вы начнете работать с папками для установки!_
 
-## Exploring Plugin Capabilities
+## Исследуем возможности
 
-_It’s also a good idea to require `composer<span class="token operator">/</span>composer`, as this will download the interfaces and classes we’re about to work with into the vendor folder._
+_ Также хорошей идеей будет поставить в зависимости `composer/composer`, это упростит нам работу с интерфейсами и классами, которые в будущем нам понадобятся._
 
-Most of what you’ll learn about plugins, you can find just by looking through the Composer source code. Alternatively, you can “inspect” the two instances provided to your plugin’s `activate` method. It also helps if you’re using an IDE like [PHPStorm](https://www.jetbrains.com/phpstorm), so you can jump to definitions easily.
+Большую часть того, что вы узнаете о плагинах, вы можете найти глядя на исходные коды `Composer`. В качестве альтернативы вы можете воспользоваться дебаггером и проверить весь ход исполнения, начиная с метода `activate`. Также, если вы используете IDE, например [PHPStorm](https://www.jetbrains.com/phpstorm), наличие исходников облегчит изучение и поможет легко перемещаться между вашим кодом и кодом менеджера зависимостей.
 
-For instance, we can inspect `<span class="token variable">$composer</span>-<span class="token operator">></span><span class="token function">getPackage</span>(<span class="token punctuation">)</span>` to see what’s in the root `composer.json` file. We can use `<span class="token variable">$io</span>-<span class="token operator">></span><span class="token function">ask</span>(<span class="token string">"..."</span><span class="token punctuation">)</span>` to ask questions during the installation process.
+Например, мы можем проинспектировать `$composer->getPackage()`, чтобы увидеть для чего нужна та или иная переменная в файле `composer.json`. Мы можем использовать `$io->ask("...")`, чтобы задавать вопросы во время процесса установки.
 
 ## Putting These to Use
 
