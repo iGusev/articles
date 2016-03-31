@@ -15,9 +15,9 @@ Drunk with the Power of Composer Plugins
 
 _Вы можете найти код этого плагина на [github.com/assertchris-tutorials/tutorial-composer-plugins](https://github.com/assertchris-tutorials/tutorial-composer-plugins)._
 
-## Getting Started
+## Приступая к работе
 
-To begin, we need to create a plugin repository, separate from the application we’ll use it with. Plugins are installed like any regular dependency. Let’s create a new folder with a `composer.json` file:
+Для начала, нам нужно создать репозиторий с плагином, отдельно от приложения, в котором мы будем его использовать. Плагины устанавливаются как и обычные зависимости. Давайте созданим новую папку и положим туда `composer.json` файл:
 
 ```
 {
@@ -29,29 +29,29 @@ To begin, we need to create a plugin repository, separate from the application w
 }
 ```
 
-All of these things are important! We give this plugin a type of `composer-plugin` or it will never be treated as such. `composer-plugin` dependencies are privy to hooks in the Composer lifecycle, which we’ll tap into.
+Каждая из этих строчек важна! Мы присваиваем этому плагину тип `composer-plugin` для того, чтобы иметь доступ к хукам жизненного цикла `Composer`, которые мы будем использовать.
 
-We name the plugin, so our app can require it as a dependency. You can use whatever you like here, but you’ll need to remember the name for later.
+Мы даем имя плагину, чтобы наше приложение могло добавить его в зависимости. Вы можете использовать все остальные переменные по вашему усмотрению, но запомните как вы назвали плагин, это нам понадобится позже.
 
-We also need to require the `composer-plugin-api`. The version here is important, because our plugin will be treated as being compatible with a specific version of the plugin API, which may affect things like method signatures.
+Также мы должны проставить зависимость с `composer-plugin-api`. Указанная версия важна, потому что наш плагин будет рассматриваться как совместимый с определенной версией API плагинов, что в свою очередь влияет на такие вещи, как, например, метод подписей.
 
-Next, we need to autoload a plugin class, and tell Composer what it is called:
+Далее нам необходимо указать класс для автозагрузки плагина:
 
 ```
 "autoload": {
     "psr-4": {
-        "SitePoint\\": "src"
+        "HabraHabr\\": "src"
     }
 },
 "extra": {
-    "class": "SitePoint\\Plugin"
+    "class": "HabraHabr\\Plugin"
 }
 ```
 
-We’ll create a `src` folder, with a `Plugin.php` file. That’s the file Composer is going to load (as the first hook in the Composer lifecycle):
+Создаем папку `src` с файлом `Plugin.php`. Вот код, который отработает на первом хуке в жизненном цикле `Composer`:
 
 ```php
-namespace SitePoint;
+namespace HabraHabr;
 
 use Composer\Composer;
 use Composer\IO\IOInterface;
@@ -66,18 +66,18 @@ class Plugin implements PluginInterface
 }
 ```
 
-`PluginInterface` requires a public `activate` method, which is called when the plugin is loaded. It’s a good time to verify that the plugin code is working thus far. Now we have to create the app folder, with a `composer.json` file of its own:
+`PluginInterface` описывает наличие публичного метода `activate`, который вызывается после загрузки плагина. Давайте убедимся, что наш плагин работае. Перейдем в наше приложение и создадим для него `composer.json`:
 
 ```
 {
-    "name": "sitepoint/app",
+    "name": "habrahabr/app",
     "require": {
-        "sitepoint/plugin": "*"
+        "habrahabr/plugin": "*"
     },
     "repositories": [
         {
             "type": "path",
-            "url": "../sitepoint-plugin"
+            "url": "../habrahabr-plugin"
         }
     ],
     "minimum-stability": "dev",
@@ -85,15 +85,15 @@ class Plugin implements PluginInterface
 }
 ```
 
-This one is significantly easier than before, and more likely to resemble how people will use your plugin. The best thing would be to release stable versions of your plugin through Packagist, but while you’re developing, this is ok. It tells Composer to require any available version of `sitepoint<span class="token operator">/</span>plugin`, and where to source that dependency from.
+Это значительно проще, чем раньше и больше похоже на то, как люди будут использовать ваш плагин. Лучшим решением было бы выпустить стабильные версии вашего плагина через Packagist, но пока вы разрабатываете и так нормально. Конфиг сообщает `Composer`'у что нужно запросить любые имеющиеся версии `habrahabr/plugin` и указывает источник для зависимости.
 
-Path repositories are a relatively recent addition to Composer, and they automatically manage symlinking of dependencies so you don’t have to. Since we’re requiring an unstable dependency, we tell Composer to drop the minimum stability to `dev`.
+Путь к репозиторию относительный, поэтому Composer автоматически сделает symlink и заботится об этом вам не придется. Раз уж мы завязываемся на нестабильной зависимости, то давайте укажем минимально-требуемый уровень как `dev`.
 
-_In situations like this, it’s a good idea to also prefer stable dependencies where possible…_
+_В подобных ситуациях все же будет предпочтительней завязываться на стабильных версиях библиотек там, где это возможно..._
 
-You should now be able to run `composer install` from your app folder, and see the `hello world` message! All without putting any code on [Github](https://github.com) or [Packagist](https://packagist.org).
+Теперь при запуске `composer install` из папки приложения вы увидите сообщение `hello world`! И все это без какого либо размещения кода на [на github](https://github.com) или [Packagist](https://packagist.org).
 
-_I recommend running `rm -rf vendor composer.lock; composer install` during development, as it will reset the application and/or plugin state regularly. Especially when you start messing with installation folders!_
+_Я рекомендую использовать команду `rm -rf vendor composer.lock; composer install` во время разработки. Особенно, когда вы начнете работать с папками для установки!_
 
 ## Exploring Plugin Capabilities
 
