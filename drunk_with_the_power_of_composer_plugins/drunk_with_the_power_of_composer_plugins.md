@@ -103,9 +103,14 @@ _ Также хорошей идеей будет поставить в зави
 
 Например, мы можем проинспектировать `$composer->getPackage()`, чтобы увидеть для чего нужна та или иная переменная в файле `composer.json`. Мы можем использовать `$io->ask("...")`, чтобы задавать вопросы во время процесса установки.
 
-## Putting These to Use
+## Давайте это используем!
 
 Let’s build something practical, though perhaps a little diabolical. Let’s make our plugin track users and the dependencies they require. We begin by finding their Git username and email:
+
+
+Давайте построим что-то практичное, хотя, возможно, немного дьявольской. Давайте сделаем наш плагин отслеживает действия пользователей и зависимости, которые они требуют. Мы начинаем поиск их в git username и email:
+
+Начнем же наконец-то делать что-то практичное и, возможно, немного дьявольское! Давайте сделаем так, чтобы наш плагин отслеживал действия пользователей и зависимости, которые они требуют. Начнем с поиска их имени и почты, указанных в `git`:
 
 ```php
 public function activate(Composer $composer, IOInterface $io)
@@ -125,9 +130,9 @@ public function activate(Composer $composer, IOInterface $io)
 }
 ```
 
-Git user names and email addresses are usually stored in global config, which means running `git config --<span class="token keyword">global</span> user.name` from terminal will return them. We can take that a step further, by running them through `exec`, and inspecting the results.
+Имена пользователей и адреса электронной почты обычно хранятся в глобальном конфиге `git`, команда `git config --global user.name`, выполненная в терминале, вернет их. Выполнив их через `exec` мы получим результаты в нашем плагине.
 
-Next, let’s track the name of the application (if one is defined) as well as the dependencies and their versions. We can do the same for the development dependencies, so let’s create a method for both:
+Теперь, давайте отследим имя приложения (если оно определено), а также набор зависимостей и их версий. То же самое сделаем для `dev`-зависимостей, сделаем обеих групп общий метод:
 
 ```php
 private function addDependencies($type, array $dependencies, array $payload)
@@ -149,11 +154,11 @@ private function addDependencies($type, array $dependencies, array $payload)
 }
 ```
 
-We get the name and version constraint for each dependency, and add them to the `<span class="token variable">$payload</span>` array. Calling `array_slice` on the payload array ensures no side-effects for this method, so it can be called any number of times with exactly the same results.
+Мы получаем название и ограничения по версии для каждой из библитоек и добавляем их в массив `$payload`. Вызов `array_slice` гарантирует нам отсутствие побочных эффектов этого метода, при многократном вызове мы получим точно такие же результаты.
 
-_This is often referred to as a pure function, or an example of immutable variable usage._
+_Подобную реазилацию часто называют `pure function`, или примером использования неизменяемых переменных._
 
-Then we call this method with the dependency arrays:
+Теперь давайте используем этот метод и передадим ему массивы с зависимостями:
 
 ```php
 public function activate(Composer $composer, IOInterface $io)
@@ -180,7 +185,7 @@ public function activate(Composer $composer, IOInterface $io)
 }
 ```
 
-Finally, we can send this data somewhere:
+И наконец, мы можем отправить эти данные куда-нибудь:
 
 ```php
 public function activate(Composer $composer, IOInterface $io)
@@ -201,7 +206,7 @@ public function activate(Composer $composer, IOInterface $io)
 }
 ```
 
-We could use [Guzzle](http://docs.guzzlephp.org) for this, but `file_get_contents` works just as well. We send a `<span class="token constant">POST</span>` request to `https<span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span>evil.com`, with a serialized payload.
+Мы могли бы использовать [Guzzle](http://docs.guzzlephp.org) для этого, но `file_get_contents` работает также хорошо. По сути, все что нужно сделать - `POST` запрос на `https://evil.com` с сериализированными данными.
 
 ## Be Good
 
