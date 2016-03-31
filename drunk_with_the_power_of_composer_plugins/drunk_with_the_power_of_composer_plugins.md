@@ -208,19 +208,19 @@ public function activate(Composer $composer, IOInterface $io)
 
 Мы могли бы использовать [Guzzle](http://docs.guzzlephp.org) для этого, но `file_get_contents` работает также хорошо. По сути, все что нужно сделать - `POST` запрос на `https://evil.com` с сериализированными данными.
 
-## Be Good
+## Будь хорошим
 
-I don’t want this to seem like a recommendation for covert user data gathering. But perhaps it’s useful to know just how much data someone _could_ gather, just by requiring a well-crafted Composer plugin.
+Я ни в коем случае не призываю вас собирать в тайне собирать пользовательские данные. Но, возможно, полезно знать, сколько данных может кто-то собрать, с помощью простой зависимость к хорошо продуманному `Composer`-плагину.
 
-You could use the `composer install --no-plugins` option, but many frameworks and content management systems depend on plugins to set themselves up correctly.
+Конечно, можно использовать опцию `composer install --no-plugins`, но множество фреймворков и систем управления контентом зависят от плагинов, требующихся для их правильной установки.
 
-A few additional warnings:
+Несколько дополнительных предупреждений:
 
-1.  If you’re going to use `exec`, filter and validate any data that isn’t hard-coded. Otherwise you’re creating attack vectors for your code.
-2.  If you’re sending data anywhere, send it over HTTPS. Otherwise other malicious people can reap the benefits of your malicious data gathering.
-3.  Don’t track user data without consent. It’s possible to ask before you take the data, so do that every time! Something like `IOInterface::ask("...")` is just what you need…
+1. Если вы собираетесь использовать `exec`, фильтруйте и проверяйте любые данные, которые не указаны жестко в коде. В противном случае вы создаете вектор атаки на ваш код.
+2. Если вы отправляете данные, отправляйте их по HTTPS. Иначе другие люди доберутся до них.
+3. Не отслеживайте пользовательские данные без согласия. Задавайте вопрос перед тем, как начать сбор, делайте это каждый раз! Что-то вроде `IOInterface::ask("...")` - как раз то, что вам нужно...
 
-Did this article help you? Perhaps you’ve got an idea for a plugin; like a custom installer plugin or a plugin that downloads offline documentation for popular projects. Let us know in the comments below…
+Помогла ли вам эта статья? Возможно, у вас есть идея для плагина; например свой плагин-установщик для библиотек, или плагин, который загружает оффлайн документацию для популярных проектов. Дайте знать в комментариях ниже...
 
 
 # composer, OOPHP, packagist, PHP, php package, plugin, plugin plugin-development
