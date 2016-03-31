@@ -1,19 +1,19 @@
 >http://www.sitepoint.com/drunk-with-the-power-of-composer-plugins/
 Drunk with the Power of Composer Plugins
 
-# Drunk with the Power of Composer Plugins
+# Опьяняющая сила Composer Plugins
 
-Composer is the sharpest tool in the toolbox of the modern PHP developer. The days of manual dependency management are in the distant past, and in their place we have wonderful things like Semver. Things that help us sleep at night, because we can update our dependencies without smashing rocks together.
+`Composer` - это самый важный инструмент в наборе современного PHP-разработчика. Времена ручного управления зависимостями остались в далеком прошлом, и их место заняли такие замечательные вещи как `Semver`. Вещи, которые помогают нам спать по ночам, ведь мы можем обновлять наши зависимости не обрушивая все вокруг. 
 
 ![neanderthal smashing rocks](http://dab1nmslvvntp.cloudfront.net/wp-content/uploads/2016/03/1458601093neanderthal-785x1024.jpg)
 
-Even though we use Composer so frequently, there’s not a lot of shared knowledge about how to extend it. It’s as if it does such a good job in its default state, that extending it isn’t worth the time or effort to do or document. Even the official docs [skirt around the issue](https://getcomposer.org/doc/articles/plugins.md). Probably because nobody is asking for it…
+Хоть мы и используем `Composer` довольно часто, не все знают о том, как расширить его возможности. Такая мысль даже не возникает, ведь он и так делает свою работу хорошо по-умолчанию, и кажется, что это не стоит времени или усилий, чтобы попытаться или хотя бы изучить. Даже в официальной документации [обходят стороной этот вопрос](https://getcomposer.org/doc/articles/plugins.md). Наверное, потому что никто не спрашивает...
 
-Yet, recent changes have made it much easier to develop Composer plugins. Composer has also recently moved from alpha to beta, in perhaps the most conservative release cycle ever conceived. This thing that makes modern PHP possible in its current form. This cornerstone of professional PHP development. Just moved from alpha to beta.
+Однако, недавние изменения сделали разработку плагинов для `Composer` намного легче. Сам же `Composer` также недавно перешел из альфа-версии в бету, пожалуй, это самый консервативный цикл релизов из когда-либо задуманных. Этот инструмент, который изменил современный PHP-мир, сделал его таким, каким мы видим его сейчас. Этот краеугольный камень профессиональной разработки PHP. Он просто перешел из альфы в бету.
 
-So, today I thought we would explore the possibilities of Composer plugin development, and create a fresh bit of documentation as we go.
+Итак, сегодня я подумал, что мне бы хотелось исследовать возможности composer-плагинов, и по ходу дела создать немного свежей документации.
 
-_You can find the code for this plugin at [github.com/assertchris-tutorials/tutorial-composer-plugins](https://github.com/assertchris-tutorials/tutorial-composer-plugins)._
+_Вы можете найти код этого плагина на [github.com/assertchris-tutorials/tutorial-composer-plugins](https://github.com/assertchris-tutorials/tutorial-composer-plugins)._
 
 ## Getting Started
 
