@@ -77,7 +77,7 @@ class Plugin implements PluginInterface
 
 Теперь при запуске <code>composer install</code> из папки приложения вы увидите сообщение <code>hello world</code>! И все это без какого либо размещения кода на <a href="https://github.com">на github</a> или <a href="https://packagist.org">Packagist</a>.
 
-<i>Я рекомендую использовать команду <code>rm -rf vendor composer.lock; composer install</code> во время разработки. Особенно, когда вы начнете работать с папками для установки!</i>
+<i>Я рекомендую использовать команду <code>rm -rf vendor composer.lock; composer install</code> во время разработки, она позволит сбросить приложение/плагин к исходному состоянию. Особенно это пригодится, когда вы начнете работать с папками для установки!</i>
 
 <h2>Исследуем возможности</h2>
 <i>Также хорошей идеей будет поставить в зависимости <code>composer/composer</code>, это упростит нам работу с интерфейсами и классами, которые в будущем нам понадобятся.</i>
