@@ -1,11 +1,11 @@
 >http://www.sitepoint.com/how-to-contribute-to-phps-documentation/
 Contributing to PHP: How to Contribute to PHP’s Manual
 
-# Contributing to PHP: How to Contribute to PHP’s Manual
+# Contributing to PHP: Как внести свой вклад в документацию
 
-In this two-part article series, we’ll be covering how to contribute to the PHP project. This will hopefully clarify what steps need to be taken for those looking to become more involved with PHP.
+В этом цикле из двух статей, мы ответим для себя на все вопросы о принятии участия в проекте PHP. Надеюсь, эта статья разъяснит все шаги, необходимые для тех, кто хочет стать более активным участником PHP-сообщества.
 
-This first part will be covering how to contribute to PHP’s documentation, including how to request a [php.net](http://php.net) Account and what to do once an account has been granted.
+Первая часть покроет часть вопросов об участии в подготовке документации к языку, в том числе как запросить доступ к [php.net](http://php.net) и что делать, когда ваш аккаунт получит соответствующие права.
 
 ![PHP logo](http://dab1nmslvvntp.cloudfront.net/wp-content/uploads/2016/04/1459870313PHP-logo.svg.png)
 
