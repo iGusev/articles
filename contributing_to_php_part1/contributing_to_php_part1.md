@@ -9,13 +9,13 @@ Contributing to PHP: How to Contribute to PHP’s Manual
 
 ![PHP logo](http://dab1nmslvvntp.cloudfront.net/wp-content/uploads/2016/04/1459870313PHP-logo.svg.png)
 
-## Why Contribute to PHP?
+## Зачем все это?
 
-Why should you consider contributing to PHP?
+Почему вы вообще должны задумываться о внесении своего вклада в PHP?
 
-PHP is an open source project that relies upon the willingness of its community to invest their time into the project. The more people become involved, the more the community at large stands to benefit. Whether it’s improving the documentation around the language or contributing bug fixes or features to the core, the cumulative efforts of every developer quickly add up.
+PHP - это проект с открытым исходным кодом, который опирается на готовность сообщества вкладывать свое время в него. Чем больше людей вовлечено, тем больше выиграет все сообщество в целом. Будет ли это небольшая правка в документации или внесение исправления/нового функционала в ядро, совокупными стараниями каждый разработчик поднимает планку проекта все выше и выше.
 
-Becoming more involved with PHP will also help to take your knowledge of the language to the next level. Contributing to the documentation will give you a more thorough knowledge of the language, and contributing to the core will keep you up to date with any changes that are happening to it. Becoming a contributor will also enable you to ultimately request a [php.net](http://php.net) account, which will put you in a position to help decide what direction the language is heading in. It is therefore definitely a worthwhile thing to do, if you enjoy working with PHP.
+Активное участие в разработке PHP также поможет поднять ваши знания языка новый уровень. Вклад в докуменатцию даст глубину знаний и позволит быть в курсе любых изменений, происходящих в проекте. Будучи активным контрибьютором, вы в конечном итоге получите ультимативные права на [php.net](http://php.net), позволяющие лично вам принимать участие в решении того, в каком направлении движется язык. Поэтому, если вам нравится работать с PHP, контрибьютинг - это, безусловно, именно то, что вам нужно!
 
 ## About PHP’s Documentation
 
